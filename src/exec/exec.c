@@ -62,21 +62,22 @@ void	ft_init_pipe(t_data *data)
 
 int	ft_is_builtin(t_data *data, t_dlist *cmd)
 {
-	if (((t_cmd *)cmd->content)->cmd[0])
-	{
-		if (!ft_strncmp(((t_cmd *)cmd->content)->cmd[0], "echo", 4))
-			return (ft_echo(((t_cmd *)cmd->content)->cmd), 1);
-		if (!ft_strncmp(((t_cmd *)cmd->content)->cmd[0], "cd", 2))
-			return (ft_cd(data, ((t_cmd *)cmd->content)->cmd), 1);
-		if (!ft_strncmp(((t_cmd *)cmd->content)->cmd[0], "pwd", 3))
-			return (ft_pwd(data), 1);
-		if (!ft_strncmp(((t_cmd *)cmd->content)->cmd[0], "export", 6))
-			return (ft_export(data, ((t_cmd *)cmd->content)->cmd), 1);
-		if (!ft_strncmp(((t_cmd *)cmd->content)->cmd[0], "unset", 5))
-			return (ft_unset(data, ((t_cmd *)cmd->content)->cmd), 1);
-		if (!ft_strncmp(((t_cmd *)cmd->content)->cmd[0], "env", 3))
-			return (ft_env(data->envlist), 1);
-	}
+	if (!((t_cmd *)cmd->content)->cmd && !((t_cmd *)cmd->content)->prg)
+		return (0);
+	if (!ft_strncmp(((t_cmd *)cmd->content)->cmd[0], "echo", 4))
+		return (ft_echo(((t_cmd *)cmd->content)->cmd), 1);
+	if (!ft_strncmp(((t_cmd *)cmd->content)->cmd[0], "cd", 2))
+		return (ft_cd(data, ((t_cmd *)cmd->content)->cmd), 1);
+
+	if (!ft_strncmp(((t_cmd *)cmd->content)->cmd[0], "pwd", 3))
+		return (ft_pwd(data), 1);
+
+	if (!ft_strncmp(((t_cmd *)cmd->content)->cmd[0], "export", 6))
+		return (ft_export(data, ((t_cmd *)cmd->content)->cmd), 1);
+	if (!ft_strncmp(((t_cmd *)cmd->content)->cmd[0], "unset", 5))
+		return (ft_unset(data, ((t_cmd *)cmd->content)->cmd), 1);
+	if (!ft_strncmp(((t_cmd *)cmd->content)->cmd[0], "env", 3))
+		return (ft_env(data->envlist), 1);
 	return (0);
 }
 

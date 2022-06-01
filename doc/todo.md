@@ -46,6 +46,9 @@ CLEM
 CLEM
 * Protect malloc with `ft_clear_exit("malloc error")` with an strdup wrapper.
 
+???
+* Add './minishell' or './usr/bin/pwd' should be executed.
+
 ##  MID
 
 CLEM

@@ -201,7 +201,7 @@ int		ft_cd(t_data *data, char **cmd);
  ** [ builtin/pwd.c ]
  */
 
-int		ft_pwd();
+int		ft_pwd(t_data *data);
 
 /*
  ** [ builtin/export.c ]
