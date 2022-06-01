@@ -17,15 +17,16 @@ static void     ft_here_doc(t_dlist *cmd)
         /*      ft_exit(cmd, errno, NULL); */
         while (1)
         {
-                write(1, ">", 2);
+                write(1, "> ", 2);
                 temp = get_next_line(0);
                 if (temp == NULL)
                 {
                         ft_end_heredoc(cmd);
                         break;
                 }
-                if (!ft_strncmp(temp, ((t_cmd *)cmd->content)->stop_word, ft_strlen(((t_cmd *)cmd->content)->stop_word)))
-                        break;
+				if (ft_strlen(((t_cmd *)cmd->content)->stop_word) == (ft_strlen(temp) - 1) 
+					&& !(ft_strncmp(temp, ((t_cmd *)cmd->content)->stop_word, ft_strlen(temp) - 1)))
+					 break;
 				// EXPAND VAR DE TEMP
                 write(fd_file, temp, ft_strlen(temp));
         }
