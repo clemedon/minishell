@@ -2,7 +2,7 @@
 
 void	ft_cmd_error(t_dlist *cmd, int error)
 {
-	if (((t_cmd *)cmd->content)->cmd[0])
+	if (((t_cmd *)cmd->content)->cmd)
 	{
 		ft_putstr_fd(((t_cmd *)cmd->content)->cmd[0], 2);
 		if (error == 127)
@@ -17,10 +17,13 @@ void	ft_cmd_error(t_dlist *cmd, int error)
 }
 
 void	ft_exit(t_dlist *cmd, int error)
-{	
-	ft_putstr_fd("minishell: ", 2);
+{
+
+	if (((t_cmd *)cmd->content)->cmd)
+		ft_putstr_fd("minishell: ", 2);
+
 	if (error == 127 || error == 126)
-	{	
+	{
 		ft_cmd_error(cmd, error);
 	}
 	else if (errno)

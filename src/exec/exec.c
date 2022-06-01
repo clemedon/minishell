@@ -60,9 +60,8 @@ void	ft_init_pipe(t_data *data)
 }
 
 
-int	ft_is_builtin(t_data *data, t_dlist *cmd, int status)
+int	ft_is_builtin(t_data *data, t_dlist *cmd)
 {
-	(void) status;
 	if (((t_cmd *)cmd->content)->cmd[0])
 	{
 		if (!ft_strncmp(((t_cmd *)cmd->content)->cmd[0], "echo", 4))
@@ -110,7 +109,7 @@ int	ft_exec(t_data *data)
 	cmd = data->cmdlist;
 	while (cmd)
 	{
-		if (ft_is_builtin(data, cmd, status))
+		if (ft_is_builtin(data, cmd))
 			;
 		else
 			ft_exec_cmd(data, cmd, &status, environ);

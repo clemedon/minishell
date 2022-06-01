@@ -9,8 +9,6 @@
 - echo "$NOP"
 - echo "something"
 - echo "$USER"
-- echo " " $USER
-- echo $123A
 - echo $UU $USER
 - $U$USER
 
