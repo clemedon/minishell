@@ -24,7 +24,7 @@ int	ft_is_n_flag(char *arg)
  ** Tiny 'echo' builtin that handle the '-n' flag.
  */
 
-int	ft_echo(char **arg)
+int	ft_echo(char **cmd)
 {
 	int		i;
 	int		argcount;
@@ -32,19 +32,22 @@ int	ft_echo(char **arg)
 
 	n_flag = 0;
 	i = 1;
-	while (arg[i] && ft_is_n_flag(arg[i]))
+	while (cmd[i] && ft_is_n_flag(cmd[i]))
 		n_flag = (i++, 1);
 	argcount = 0;
-	while (arg[argcount])
+	while (cmd[argcount])
 		argcount++;
-	while (arg[i])
+	while (cmd[i])
 	{
-		write (1, arg[i], strlen(arg[i]));
+		write (1, cmd[i], strlen(cmd[i]));
 		if (i != argcount - 1)
 			write (1, " ", 1);
 		i++;
 	}
-	if (!n_flag)
+
+	if (n_flag && !cmd[2])
+		;
+	else if (!n_flag)
 		write (1, "\n", 1);
 	return (SUCCESS);
 }
