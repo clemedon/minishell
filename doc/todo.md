@@ -32,12 +32,13 @@ CLEM
 * $EMPTYVAR
 > Shoudln't print anything (instead print cmd not found)
 
-CLEM
-* ft_pwd print $PWD not $CWD.
+    CLEM
+    * mkdir a; cd a; rmdir ../a; pwd; cd -; cd -
+    > ft_pwd should use data->cwd not CWD
 
-CLEM
-* echo -nnnnn"salu"
-> Should display -nnnnn"salu"
+    CLEM
+    * echo -nnnnn"salu"
+    > Should display -nnnnn"salu"
 
 ***???***
 * export var="'cat Makefile'"
