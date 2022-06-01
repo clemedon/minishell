@@ -18,16 +18,13 @@ void	ft_cmd_error(t_dlist *cmd, int error)
 
 void	ft_exit(t_dlist *cmd, int error)
 {
-
-	if (((t_cmd *)cmd->content)->cmd)
-		ft_putstr_fd("minishell: ", 2);
-
 	if (error == 127 || error == 126)
 	{
 		ft_cmd_error(cmd, error);
 	}
 	else if (errno)
 	{
+		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd("error: ", 2);
 		ft_putendl_fd(strerror(errno), 2);
 	}

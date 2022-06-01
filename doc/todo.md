@@ -24,9 +24,9 @@ ARCHI
 * export var1="|" var2="ls"
 > Should work fine (*check expand quote timing*)
 
-ARCHI
-* sjsjs
-> Should print 'sjsjs: command not found' without 'minishell'
+    ARCHI
+    * sjsjs
+    > Should print 'sjsjs: command not found' without 'minishell'
 
 CLEM
 * $EMPTYVAR
@@ -46,16 +46,13 @@ CLEM
 CLEM
 * Protect malloc with `ft_clear_exit("malloc error")` with an strdup wrapper.
 
-???
-* Add './minishell' or './usr/bin/pwd' should be executed.
-
 ##  MID
 
 CLEM
 - export +=
 
-ARCHI
-- Add && strlen(stop word) to here_doc stopword checker
+    ARCHI
+    - Add && strlen(stop word) to here_doc stopword checker
 
 ***???***
 - 'ls: command not found' if there is a 'ls' file in the CWD.
