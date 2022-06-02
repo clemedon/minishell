@@ -36,7 +36,7 @@ mode).
     git pull
     git stash pop
 
-Transfert uncommited changes made in a wrong branch to the right branch:
+*Transfert uncommited changes* made in a wrong branch to the right branch:
     git stash
     git switch my-right-branch
     git stash apply
