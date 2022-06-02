@@ -1,6 +1,13 @@
-#  HELP
 
-##  TODO.MD
+
+#           HELP
+
+#INDEX
+------
+##  ISSUES
+##  GIT
+
+##  ISSUES
 
 **Issues** title verbs are *imperative*, start with a *Maj* and no '.' in
 the title, like this:
@@ -29,14 +36,20 @@ mode).
     git pull
     git stash pop
 
+Transfert uncommited changes made in a wrong branch to the right branch:
+    git stash
+    git switch my-right-branch
+    git stash apply
+
 *Update the last commit* instead of creating a new one:
     git commit --amend
-> Only work if not pushed yet!!
+> Only work if not pushed yet***!!***
 > Also useful when we want to fix the last commit message if there is
 > a typo.
 
-*Uncommit* unwanted file:
+*Uncommit* unwanted file (remove the last commit without to lost the changes):
     git reset --soft HEAD~1
+> Only work if not pushed yet***!!***
 > Then `git reset` the unwanted files and commit again with `-c` flag
 > to preserve the prev commit message.
 

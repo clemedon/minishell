@@ -1,4 +1,16 @@
-#  220419 - MINISHELL
+
+
+#           220419 - MINISHELL
+
+#INDEX
+------
+##  Misc
+##  Interactive Non-Login Shell Behavior:
+##  Fonctions autorisées
+##  Error management
+##  Parsing
+##  Termios
+##  Tests
 
 ##  Misc
 
@@ -10,19 +22,17 @@ Builtins:
 - env       (!opts && !args)
 - exit      (!opts)
 
-Bash:
-    <Esc>p
-    <Esc>N
+Invoke Bash in POSIX mode:
+    $ bash --posix
+Invoke last command matching pattern:
+    $ <Esc>p<pattern>
+Access readline params:
+    $ <Esc>n<argument>
 
 Display all the fds that are open by minishell:
     $ lsof | grep "minishell"
-Invoke Bash in POSIX mode:
-    $ bash --posix
 
-- Errors stored in a LIFO?
-
-> Bash outputs the prompt to '/dev/tty'
-> not '/dev/stdout' or '/dev/stdin'.
+- Bash outputs the prompt to '/dev/tty' not '/dev/stdout' or '/dev/stdin'.
 
 [Bash Variables](https://www.gnu.org/software/bash/manual/html_node/Bash-Variables.html)
 
@@ -140,7 +150,7 @@ execve          : execute an executable file
     char *argList[] = { "ls", "-l", NULL };
     dprintf(2, "%i\n", execve("/bin/ls", argList, NULL));
 
-add_history     : ***???***
+add_history     : readline history
 stat            : return info about a file pointed to by 'pathname' (like ls)
 fstat           : same as stat but return info about a file pointed to by a fd
 lstat           : return info about a file (or a symlink itself if 'pathname' is a symlink)
@@ -148,9 +158,10 @@ getcwd          : return the cwd abs path (size max = PATH_MAX)
 chdir           : change working directory
 getenv          : take an env key and return its value or NULL
 opendir         : open a directory and return a pointer to it
-readdir         : ***???*** lit l'entrée suivante dans le fichier descriptif du dossier
-readline        : read a line from thje terminal and return it using prompt as prompt
+readdir         : ***???*** lit l'entrée suivante dans le fd du dossier
+readline        : read a line from the terminal and return it prefixed with the given 'prompt'
     vi mode possible
+
 rl_clear_history:
 rl_on_new_line  : tell the update functions that we have moved onto a new (empty) line, usually after outputting a new line.
 rl_replace_line : repl the contents of rl_line_buffer with text
@@ -180,7 +191,6 @@ ttyslot         : return the index of the current user's entry in some file
 'builtin' commands can be executed by the minishell.
 'external' commands need a *fork process*.
 
-
 ##  Error management
 
 1       Catchall for general errors impermissible operations
@@ -200,7 +210,7 @@ https://www.grymoire.com/Unix/Quote.html
 https://www.gnu.org/software/bash/manual/bash.html#Double-Quotes
 https://pubs.opengroup.org/onlinepubs/9699919799.2018edition/utilities/V3_chap02.html
 
-## Termios
+##  Termios
 
 https://blog.nelhage.com/2009/12/a-brief-introduction-to-termios/
 
@@ -214,176 +224,58 @@ https://blog.nelhage.com/2009/12/a-brief-introduction-to-termios/
     (console)===(master pty)===(termios)===(slave pty)===(shell)
      <----------------------------------------------------- OUT
 
-***Constante pour l'attribut c_iflag :***
+##  Tests
 
-IGNBRK
-    Ignorer les signaux BREAK en entrée.
-BRKINT
-    Si IGNBRK est indiqué, un caractère BREAK en entrée est ignoré. S'il n'est pas indiqué, mais si BRKINT est présent, alors un BREAK videra les files d'attente en entrée et sortie, et si le terminal contrôle un groupe de processus en avant-plan, un signal SIGINT sera envoyé à ce groupe. Si ni IGNBRK ni BRKINT ne sont indiqués, un caractère BREAK sera lu comme un octet nul (« \0 »), sauf si PARMRK est présent, auquel cas il sera lu comme une séquence \377 \0 \0.
-IGNPAR
-    Ignorer les erreurs de format et de parité.
-PARMRK
-    Si IGNPAR n'est pas indiqué, un caractère ayant une erreur de parité ou de format est préfixé avec \377 \0. Si ni IGNPAR ni PARMRK ne sont indiqués, un caractère contenant une erreur de parité ou de format est lu comme \0.
-INPCK
-    Valider la vérification de parité en entrée.
-ISTRIP
-    Éliminer le huitième bit.
-INLCR
-    Convertir NL en CR en entrée.
-IGNCR
-    Ignorer CR en entrée.
-ICRNL
-    Convertir CR en NL en entrée, sauf si IGNCR est indiqué.
-IUCLC
-    (Pas dans POSIX) Transformer les majuscules en minuscules en entrée.
-IXON
-    Valider le contrôle de flux XON/XOFF en sortie.
-IXANY
-    (XSI) Redémarrer le flux de sortie par n'importe quel caractère. (Le comportement par défaut est de seulement permettre le caractère START pour redémarrer le flux de sortie.)
-IXOFF
-    Valider le contrôle de flux XON/XOFF en entrée.
-IMAXBEL
-    (Pas dans POSIX) Faire sonner le terminal quand le tampon d'entrée est plein. Linux n'implémente pas ce bit, et considère qu'il est toujours actif.
-IUTF8 (depuis Linux 2.6.4)
-    (Pas dans POSIX) L'entrée est en UTF8 ; cela permet de gérer correctement le caractère d'effacement en mode affiné.
+**Commandline:**
 
-***Constantes POSIX.1 pour l'attribut c_oflag :***
+    [ ] tofix
+    [X] fixed
 
-OPOST
-    Traitement en sortie dépendant de l'implémentation.
+    [X] echo ""
+    [X] echo "$NOP"
+    [X] echo "something"
+    [X] echo "$USER"
+    [X] echo $UU $USER
+    [X] $U$USER
 
-Les autres constantes pour c_oflag sont définies dans POSIX.1-2001 sauf indication contraire.
+    [ ] < Makefile > out | echo salut > out
+    [ ] < Makefile cat > out | echo salut > out
+    [ ] < Makefile cat > out | wc -l > out
+    [ ] < Makefile cat > out | wc -l >> out
+    [ ] << STOP cat > out | wc -l >> out
+    [ ] < Makefile wc -l > out | < Makefile grep CC >> out
 
-OLCUC
-    (Pas dans POSIX) Convertir les minuscules en majuscules en sortie.
-ONLCR
-    (XSI) Convertir NL en CR-NL en sortie.
-OCRNL
-    Convertir CR en NL en sortie.
-ONOCR
-    Ne pas émettre de CR en colonne 0.
-ONLRET
-    Ne pas émettre de CR.
-OFILL
-    Utiliser des caractères de remplissage pour le délai, plutôt qu'une temporisation.
-OFDEL
-    (Pas dans POSIX) Le caractère de remplissage est ASCII DEL (0177). Sinon c'est ASCII NUL (« \0 »). (Pas implémenté sous Linux.)
-NLDLY
-    Masque du délai du saut de ligne. Les valeurs sont NL0 et NL1. [Nécessite _BSD_SOURCE ou _SVID_SOURCE ou _XOPEN_SOURCE]
-CRDLY
-    Masque du délai du retour chariot. Les valeurs sont CR0, CR1, CR2 ou CR3. [Nécessite _BSD_SOURCE ou _SVID_SOURCE ou _XOPEN_SOURCE]
-TABDLY
-    Masque du délai de tabulation horizontale. Les valeurs sont TAB0, TAB1, TAB2, TAB3 ou XTABS. Une valeur TAB3, c'est-à-dire XTABS, convertit les tabulations en espaces (positions toutes les huit colonnes). [Nécessite _BSD_SOURCE ou _SVID_SOURCE ou _XOPEN_SOURCE]
-BSDLY
-    Masque du délai du retour en arrière (backspace). Les valeurs sont BS0 ou BS1 (n'a jamais été implémenté). [Nécessite _BSD_SOURCE ou _SVID_SOURCE ou _XOPEN_SOURCE]
-VTDLY
-    Masque du délai de tabulation verticale. Les valeurs sont VT0 ou VT1.
-FFDLY
-    Masque du délai de saut de page. Les valeurs sont FF0 ou FF1. [Nécessite _BSD_SOURCE ou _SVID_SOURCE ou _XOPEN_SOURCE]
+    [ ] chmod 000 /home/user42; cd -
+    [ ] cat;ls puis ctrl-c, le ls ne dois pas s'exécuter.
+    [ ] export +=
+    [ ] export var="cat Makefile | grep p" puis $var
+    [ ] SHLVL augmente à chaque couche de minishell
+    [ ] echo bonjour > $var
+    [ ] Export var=" f1 f2 "
 
-***Constantes pour l'attribut c_cflag :***
+    [ ] echo bonjour ;|
+    [ ] echo bonjour |;
+    [ ] echo bonjour ||||;
+    [ ] echo bonjour <<<<
+    [ ] echo bonjour >>>
+    [ ] echo bonjour >>>>>
+    [ ] echo bonjour <<<;
 
-CBAUD
-    (Pas dans POSIX) Masque des vitesses (4+1 bits). [Nécessite _BSD_SOURCE ou _SVID_SOURCE]
-CBAUDEX
-    (Pas dans POSIX) Masque étendu des vitesses (1 bit) inclus dans CBAUD. [Nécessite _BSD_SOURCE ou _SVID_SOURCE]
+    [ ] mkdir test_dir ; cd test_dir ; rm -rf ../test_dir ; cd . ; pwd ; cd . ; pwd ; cd .. ; pwd
 
-    POSIX dit que la vitesse est stockée dans une structure termios sans dire précisément où, et fournit cfgetispeed() et cfsetispeed() pour la lire ou l'écrire. Certains systèmes utilisent les bits de CBAUD dans c_cflag, d'autres systèmes utilisent des champs distincts, par exemple sg_ispeed et sg_ospeed.
-CSIZE
-    Masque de longueur des caractères. Les valeurs sont CS5, CS6, CS7 ou CS8.
-CSTOPB
-    Utiliser deux bits de stop plutôt qu'un.
-CREAD
-    Valider la réception.
-PARENB
-    Valider le codage de parité en sortie, et la vérification de parité en entrée.
-PARODD
-    S'il est positionné, la parité en entrée et en sortie sera impaire ; sinon, une parité paire sera utilisée.
-HUPCL
-    Abaisser les signaux de contrôle du modem lorsque le dernier processus referme le périphérique (raccrochage).
-CLOCAL
-    Ignorer les signaux de contrôle du modem.
-LOBLK
-    (Pas POSIX) Bloquer la sortie depuis un niveau de shell non concurrent. Utilisé par shl (couches shell). (Pas implémenté sous Linux.)
-CIBAUD
-    (Pas dans POSIX) Masque des vitesses d'entrée. Les bits pour CIBAUD sont les mêmes que ceux de CBAUD, décalés à gauche de IBSHIFT bits. [Nécessite _BSD_SOURCE ou _SVID_SOURCE] (Pas implémenté sous Linux.)
-CMSPAR
-    (Pas dans POSIX) Parité fixe (marque/espace), prise en charge par certains périphériques série : si PARODD est positionné, le bit de parité vaut toujours 1 ; si PARODD n'est pas positionné, le bit de parité vaut toujours 0. [Nécessite _BSD_SOURCE ou _SVID_SOURCE]
-CRTSCTS
-    (Pas dans POSIX) Contrôle de flux RTS/CTS.
+    [ ] echo "$TEST$TEST=lol$TEST"
+    [ ] echo $TEST$TEST=lol$TEST""lol
+    [ ] echo "$=TEST"
+    [ ] echo "$1TEST"
 
-***Constantes pour l'attribut c_lflag : [Nécessite _BSD_SOURCE ou _SVID_SOURCE]***
+    [ ] echo -nnnnnnnn
+    [ ] echo -nnn -nnnn -nnn
 
-ISIG
-    Lorsqu'un caractère INTR, QUIT, SUSP ou DSUSP arrive, engendrer le signal correspondant.
-ICANON
-    Active le mode canonique (décrit plus loin).
-XCASE
-    (Pas dans POSIX, non pris en charge sous Linux) Si ICANON est également indiqué, le terminal est en mode majuscule uniquement. Les entrées sont converties en minuscules, sauf pour les caractères précédés par « \ ». En sortie, les caractères majuscules sont précédés par « \ » et les minuscules sont converties en majuscules. [Nécessite _BSD_SOURCE ou _SVID_SOURCE ou _XOPEN_SOURCE]
-ECHO
-    Effectuer un écho des caractères saisis.
-ECHOE
-    Si ICANON est également activé, la touche ERASE efface le caractère précédent, et WERASE efface le mot précédent.
-ECHOK
-    Si ICANON est également activé, la touche KILL efface la ligne en cours.
-ECHONL
-    Si ICANON est également activé, la touche NL dispose d'un écho local, même si ECHO n'est pas activé.
-ECHOCTL
-    (Pas dans POSIX) Si ECHO est également activé, les signaux de contrôle ASCII autres que TAB, NL, START, et STOP sont représentés en écho local par ^X, où X est le caractère dont le code ASCII est supérieur de 0x40 à celui du signal de contrôle. Par exemple 0x08 (BS) est représenté par ^H. [Nécessite _BSD_SOURCE ou _SVID_SOURCE]
-ECHOPRT
-    (Pas dans POSIX) Si ICANON et IECHO sont aussi activés, les caractères sont imprimés lorsqu'ils sont effacés. [Nécessite _BSD_SOURCE ou _SVID_SOURCE]
-ECHOKE
-    (Pas dans POSIX) Si ICANON est également activé, la touche KILL efface chaque caractère de la ligne, comme indiqué par ECHOE et ECHOPRT. [Nécessite _BSD_SOURCE ou _SVID_SOURCE]
-DEFECHO
-    (Pas dans POSIX) N'effectuer l'écho que lorsque le caractère est lu. (Pas implémenté sous Linux.)
-FLUSHO
-    (Pas dans POSIX, non pris en charge sous Linux) Le tampon de sortie est vidé. Cet attribut est déclenché en tapant le caractère DISCARD. [Nécessite _BSD_SOURCE ou _SVID_SOURCE]
-NOFLSH
-    Désactive le vidage des files d'entrée et de sortie pendant les signaux SIGINT, SIGQUIT et SIGSUSP.
-TOSTOP
-    Envoie le signal SIGTTOU au groupe d'un processus en arrière-plan essayant d'écrire sur son terminal de contrôle.
-PENDIN
-    (Pas dans POSIX, non pris en charge sous Linux) Tous les caractères de la file d'entrée sont réimprimés quand le caractère suivant est lu. (bash(1) utilise ceci pour la complétion de commande.) [Nécessite _BSD_SOURCE ou _SVID_SOURCE]
-IEXTEN
-    Traitement de l'entrée dépendant de l'implémentation. Cet attribut, tout comme ICANON, doit être actif pour que les caractères spéciaux EOL2, LNEXT, REPRINT et WERASE soient interprétés, et pour que l'attribut IUCLC prenne effet.
+    [ ] export A=a; echo $A;
 
-***Le tableau c_cc définit des caractères de contrôle spéciaux. Les symboles (valeurs initiales) et significations sont :***
+**Behavior:**
 
-VINTR
-    (003, ETX, Ctrl-C, ou encore 0177, DEL, rubout) Caractère d'interruption. Envoie le signal SIGINT. Reconnu quand ISIG est présent, et n'est pas transmis en entrée.
-VQUIT
-    (034, FS, Ctrl-\) Caractère Quit. Envoie le signal SIGQUIT. Reconnu quand ISIG est présent, et n'est pas transmis en entrée.
-VERASE
-    (0177, DEL, rubout, ou 010, BS, Ctrl-H, ou encore #) Caractère d'effacement. Ceci efface le caractère précédent pas encore effacé, mais ne revient pas en-deça de EOF ou du début de ligne. Reconnu quand ICANON est actif, et n'est pas transmis en entrée.
-VKILL
-    (025, NAK, Ctrl-U ou Ctrl-X, ou encore @) Caractère Kill. Ceci efface tous les caractères en entrée, jusqu'au dernier EOF ou début de ligne. Reconnu quand ICANON est actif, et pas transmis en entrée.
-VEOF
-    (004, EOT, Ctrl-D) Caractère de fin de fichier. Plus précisément : ce caractère oblige l'envoi du contenu du tampon vers le programme lecteur sans attendre la fin de ligne. S'il s'agit du premier caractère de la ligne, l'appel à read(2) renvoie zéro dans le programme appelant, ce qui correspond à une fin de fichier. Reconnu quand ICANON est actif, et pas transmis en entrée.
-VMIN
-    Nombre minimum de caractères lors d'une lecture en mode non canonique.
-VEOL
-    (0, NUL) Caractère fin de ligne supplémentaire. Reconnu quand ICANON est actif.
-VTIME
-    Délai en dixièmes de seconde pour une lecture en mode non canonique.
-VEOL2
-    (Pas dans POSIX ; 0, NUL) Encore un autre caractère fin de ligne. Reconnu quand ICANON est actif.
-VSWTCH
-    (Pas dans POSIX et non pris en charge sous Linux ; 0, NUL) Caractère de basculement (utilisé uniquement par shl).
-VSTART
-    (021, DC1, Ctrl-Q) Caractère de démarrage. Relance la sortie interrompue par un caractère d'arrêt. Reconnu quand IXON est actif, et pas transmis en entrée.
-VSTOP
-    (023, DC3, Ctrl-S) Caractère d'arrêt. Interrompt la sortie jusqu'à la pression d'un caractère de démarrage. Reconnu quand IXON est actif, et pas transmis en entrée.
-VSUSP
-    (032, SUB, Ctrl-Z) Caractère de suspension. Envoie le signal SIGTSTP. Reconnu quand ISIG est actif, et pas transmis en entrée.
-VDSUSP
-    (Pas dans POSIX et non pris en charge sous Linux ; 031, EM, Ctrl-Y) Caractère de suspension retardée. Envoie le signal SIGTSTP quand le caractère est lu par le programme utilisateur. Reconnu quand IEXTEN et ISIG sont actifs, et quand le système prend en charge le contrôle des tâches, et non transmis en entrée.
-VLNEXT
-    (Pas dans POSIX ; 026, SYN, Ctrl-V) Protège le caractère suivant en lui supprimant toute signification spéciale. Reconnu quand IEXTEN est actif, et pas transmis en entrée.
-VWERASE
-    (Pas dans POSIX ; 027, ETB, Ctrl-W) Effacement de mot. Reconnu quand ICANON et IEXTEN sont actifs, et pas transmis en entrée.
-VREPRINT
-    (Pas dans POSIX ; 022, DC2, Ctrl-R) Réafficher les caractères pas encore lus. Reconnu quand ICANON et IEXTEN sont actifs, et pas transmis en entrée.
-VDISCARD
-    (Pas dans POSIX, non pris en charge sous Linux ; 017, SI, Ctrl-O) Bascule start/stop pour ignorer les caractères en attente de sortie. Reconnu quand IEXTEN est actif, et pas transmis en entrée.
-VSTATUS
-    (Pas dans POSIX, non pris en charge sous Linux ; interrogation d'état : 024, DC4, Ctrl-T)
+Should not write 'salut' while 'yes' command is running:
+    $ yes<CR>
+    $ salut<CR>
+    $ <C-C>
