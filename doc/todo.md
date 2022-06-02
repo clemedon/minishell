@@ -1,24 +1,6 @@
 #  MINISHELL - 220419
 
-**Issues** title verbs are *imperative*, start with a *Maj* and no '.' in
-the title, like this:
-
-- Issue/Commit message *title* (action + subject).
-> Issue/Commit message *body*: any details about the issue or to reproduce it.
-> Can be multiline
-
-**Commit** message should be exact *copy/paste of the issue* without
-the '-' and '>' chars, and without temporary notes in the title
-like: '(parsing?or exec?)'.
-Title and Body should be separated with *one blank line*.
-
- If the issue has a body, use `git commit` instead `git commit -m`.
-
-**Tasks** must be organized from top to bottom (*priority at the top*).
-Tasks that concern the *same subject* must be *close to each other*.
-
-*Completed task* can be removed from todo.md with '*dap*' (vim normal
-mode).
+>       help
 
 # ------------------------ ( ATHIRION )
 
@@ -39,8 +21,6 @@ mode).
 > 'echo $123A' should display '23A'.
 
 # ------------------------ ( CVIDON )
-
-- Create help.md
 
 - Fix parsing
 > '$EMPTYVAR' shoudln't print anything instead of 'command not found'.
