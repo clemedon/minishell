@@ -58,8 +58,8 @@
 > Might be fixed with the handling of './file' execution. Or the
 > environ check for path before the exec a command.
 
-- Add error code management.
+- Add error code management
 
-- Add SHLVL feature.
+- Add SHLVL feature
 
 - Remove tokpos

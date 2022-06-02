@@ -35,10 +35,17 @@ mode).
 > Also useful when we want to fix the last commit message if there is
 > a typo.
 
-*Uncommit* unwanted file
+*Uncommit* unwanted file:
     git reset --soft HEAD~1
 > Then `git reset` the unwanted files and commit again with `-c` flag
 > to preserve the prev commit message.
+
+*Explore* commit history:
+
+Quick look (one commit per line + graph):
+     git log --oneline  --graph --all
+More in depth (detail of all modified files + author):
+     git log --pretty=format:"%an %cr : %s" --stat --graph -2
 
 ###     Branch
 
