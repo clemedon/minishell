@@ -6,7 +6,7 @@ void	ft_cmd_error(t_dlist *cmd, int error)
 	{
 		ft_putstr_fd(((t_cmd *)cmd->content)->cmd[0], 2);
 		if (error == 127)
-			ft_putendl_fd(" :command not found", 2);
+			ft_putendl_fd(": command not found", 2);
 		else if (error == 126)
 		{
 			ft_putstr_fd(": ", 2);

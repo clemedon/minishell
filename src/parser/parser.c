@@ -30,8 +30,8 @@ void	ft_parser(t_data *data)
 	/* ft_printlist_tok(data->toklist); */
 	ft_count_pipe(data);
 	ft_create_cmdlist(data);
-	/* printf("----------- cmd_list ----------\n"); */
-	/* ft_printlist_cmd(data->cmdlist); */
+	printf("----------- cmd_list ----------\n");
+	ft_printlist_cmd(data->cmdlist);
 	ft_create_redlist(data);
 	/* printf("----------- redir_list ---------\n"); */
 	/* ft_printlist_redir(data->redlist); */

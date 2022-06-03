@@ -1,70 +1,124 @@
-DG	include/minishell.h	50
-DL	include/minishell.h	52
-DO	include/minishell.h	46
-DQ	include/minishell.h	48
-FAILURE	include/minishell.h	62
-FALSE	include/minishell.h	64
-FI	include/minishell.h	53
-GT	include/minishell.h	49
-LS	include/minishell.h	51
-MINISHELL_H	include/minishell.h	2
-PP	include/minishell.h	45
-QT	include/minishell.h	47
-SUCCESS	include/minishell.h	61
-SW	include/minishell.h	54
-TRUE	include/minishell.h	65
-WD	include/minishell.h	55
-WS	include/minishell.h	44
-cmd	include/minishell.h	103
-cmd_path	include/minishell.h	168
-cmdcount	include/minishell.h	153
-cmdid	include/minishell.h	101
-cmdid	include/minishell.h	152
-cmdline	include/minishell.h	154
-cmdlist	include/minishell.h	158
-cmdpos	include/minishell.h	102
-cwd	include/minishell.h	163
-cwdpath	include/minishell.h	167
-environ	include/minishell.h	155
-envlist	include/minishell.h	159
-error	include/minishell.h	100
-explist	include/minishell.h	160
-fd	include/minishell.h	106
-fd_in	include/minishell.h	117
-fd_out	include/minishell.h	118
-file	include/minishell.h	140
-file_in	include/minishell.h	111
-file_out	include/minishell.h	112
-is_here_doc	include/minishell.h	115
-key	include/minishell.h	89
-key	include/minishell.h	128
-last_in	include/minishell.h	169
-last_out	include/minishell.h	170
-nb_pipes	include/minishell.h	166
-next	include/minishell.h	141
-oldcwd	include/minishell.h	164
-prev	include/minishell.h	142
-prg	include/minishell.h	104
-redlist	include/minishell.h	161
-s_cmd	include/minishell.h	98
-s_data	include/minishell.h	150
-s_env	include/minishell.h	87
-s_exp	include/minishell.h	126
-s_redir	include/minishell.h	137
-s_tok	include/minishell.h	75
-stop_word	include/minishell.h	114
-t_cmd	include/minishell.h	120
-t_data	include/minishell.h	172
-t_env	include/minishell.h	92
-t_exp	include/minishell.h	131
-t_redir	include/minishell.h	144
-t_tok	include/minishell.h	81
-tok	include/minishell.h	79
-tokid	include/minishell.h	77
-toklist	include/minishell.h	157
-tokpos	include/minishell.h	78
-type	include/minishell.h	139
-type_in	include/minishell.h	108
-type_out	include/minishell.h	109
-val	include/minishell.h	90
-val	include/minishell.h	129
+Mmain	src/main.c	/^int	main(int ac, char **av)$/
+ft_add_cmd	src/utils/cmdlist.c	/^void    ft_add_cmd(t_data *data)$/
+ft_add_env	src/utils/envlist.c	/^void	ft_add_env(t_data *data, char *key, char *val/
+ft_add_exp	src/utils/explist.c	/^void	ft_add_exp(t_data *data, char *key, char *val/
+ft_add_red	src/utils/redlist.c	/^void	ft_add_red(t_data *data, t_dlist *token)$/
+ft_add_tok	src/utils/toklist.c	/^void	ft_add_tok(t_data *data, int tokid, int tokpo/
+ft_arg_cmd	src/parser/parse_command.c	/^char	**ft_arg_cmd(char *cmd)$/
+ft_cd	src/builtin/cd.c	/^int	ft_cd(t_data *data, char **cmd)$/
+ft_cd_alone	src/builtin/cd.c	/^int	ft_cd_alone(t_data *data)$/
+ft_cd_hyphen	src/builtin/cd.c	/^int	ft_cd_hyphen(t_data *data)$/
+ft_cd_path	src/builtin/cd.c	/^int	ft_cd_path(t_data *data, char *cmd)$/
+ft_chdir	src/builtin/cd.c	/^int	ft_chdir(char *path)$/
+ft_check_env_entry	src/utils/envlist.c	/^int	ft_check_env_entry (t_dlist *envlist, char *ke/
+ft_check_exp_entry	src/utils/explist.c	/^int	ft_check_exp_entry (t_dlist *explist, char *ke/
+ft_check_last_tok	src/parser/parse_quote.c	/^static int	ft_check_last_tok(t_dlist *toklist)$/
+ft_check_quote_pairs	src/parser/parse_quote.c	/^static int	ft_check_quote_pairs(t_dlist *toklist)$/
+ft_child	src/exec/exec.c	/^void	ft_child(t_data *data, t_dlist *cmd, char **e/
+ft_clear_exit	src/utils/utils.c	/^void	ft_clear_exit(t_data *data)$/
+ft_clearlist_cmd	src/utils/cmdlist.c	/^void	ft_clearlist_cmd(t_dlist **lst, void (*del)(v/
+ft_clearlist_env	src/utils/envlist.c	/^void	ft_clearlist_env(t_dlist **envlist, void (*de/
+ft_clearlist_exp	src/utils/explist.c	/^void	ft_clearlist_exp(t_dlist **explist, void (*de/
+ft_clearlist_red	src/utils/redlist.c	/^void	ft_clearlist_red (t_dlist **lst, void (*del)(/
+ft_clearlist_tok	src/utils/toklist.c	/^void	ft_clearlist_tok(t_dlist **toklist, void (*de/
+ft_cmd_error	src/exec/error.c	/^void	ft_cmd_error(t_dlist *cmd, int error)$/
+ft_command	src/parser/parse_command.c	/^char	*ft_command(t_data *data, char *command)$/
+ft_concat_all_words	src/parser/expand_word.c	/^static char	*ft_concat_all_words(t_dlist *toklist)/
+ft_concat_path	src/parser/expand_tilde.c	/^char *ft_concat_path(char *home, char *path)$/
+ft_concat_quoted_words	src/parser/expand_quote.c	/^static char	*ft_concat_quoted_words(t_dlist *tokli/
+ft_count_pipe	src/utils/pipe.c	/^void	ft_count_pipe(t_data *data)$/
+ft_create_cmdlist	src/utils/cmdlist.c	/^void    ft_create_cmdlist(t_data *data)$/
+ft_create_redlist	src/utils/redlist.c	/^void	ft_create_redlist(t_data *data)$/
+ft_data_export	src/builtin/export.c	/^static void	ft_data_export (t_data *data, char *cm/
+ft_data_unset	src/builtin/unset.c	/^static void	ft_data_unset (t_data *data, char *cmd/
+ft_dlst_elem_dup	src/utils/utils.c	/^void	ft_dlst_elem_dup(t_dlist **lst, t_dlist *dup)/
+ft_echo	src/builtin/echo.c	/^int	ft_echo(char **cmd)$/
+ft_end_heredoc	src/exec/open.c	/^static void     ft_end_heredoc(t_dlist *cmd)$/
+ft_env	src/builtin/env.c	/^int	ft_env(t_dlist *envlist)$/
+ft_envlist_export	src/builtin/export.c	/^static void	ft_envlist_export(t_data *data, char */
+ft_envlist_unset	src/builtin/unset.c	/^static void	ft_envlist_unset(t_data *data, char *k/
+ft_exec	src/exec/exec.c	/^int	ft_exec(t_data *data)$/
+ft_exec_cmd	src/exec/exec.c	/^void	ft_exec_cmd(t_data *data, t_dlist *cmd, int */
+ft_exit	src/exec/error.c	/^void	ft_exit(t_dlist *cmd, int error)$/
+ft_expand_dollar	src/parser/expand_var.c	/^static void ft_expand_dollar(t_data *data)$/
+ft_expand_quote	src/parser/expand_quote.c	/^void	ft_expand_quote(t_data *data)$/
+ft_expand_quote2	src/parser/expand_quote.c	/^static void	ft_expand_quote2(t_dlist **new, t_dlis/
+ft_expand_tilde	src/parser/expand_tilde.c	/^void	ft_expand_tilde(t_data *data)$/
+ft_expand_var	src/parser/expand_var.c	/^void	ft_expand_var(t_data *data)$/
+ft_expand_word	src/parser/expand_word.c	/^void	ft_expand_word(t_data *data)$/
+ft_explist_export	src/builtin/export.c	/^static void	ft_explist_export(t_data *data, char */
+ft_explist_unset	src/builtin/unset.c	/^static void	ft_explist_unset(t_data *data, char *k/
+ft_export	src/builtin/export.c	/^int	ft_export(t_data *data, char **cmd)$/
+ft_free	src/utils/utils.c	/^void	ft_free(void *ptr)$/
+ft_free_tab	src/utils/utils.c	/^void	ft_free_tab(char **tab)$/
+ft_getenv	src/utils/envlist.c	/^char	*ft_getenv(t_dlist *envlist, char *key)$/
+ft_getenv_var	src/parser/expand_var.c	/^static char *ft_getenv_var(t_dlist *envlist, char /
+ft_getexp	src/utils/explist.c	/^char	*ft_getexp(t_dlist *explist, char *key)$/
+ft_handle_sigint	src/utils/signals.c	/^static void	ft_handle_sigint(void)$/
+ft_handle_signal	src/utils/signals.c	/^static void	ft_handle_signal(int signal, void (*ha/
+ft_here_doc	src/exec/open.c	/^static void     ft_here_doc(t_dlist *cmd)$/
+ft_heredoc_dollar	src/parser/expand_var.c	/^static void	ft_heredoc_dollar(t_data *data)$/
+ft_ignore_signal	src/utils/signals.c	/^static void	ft_ignore_signal(int signal)$/
+ft_init_cmd	src/utils/cmdlist.c	/^void    ft_init_cmd(t_data *data, t_cmd **cmd)$/
+ft_init_data	src/main.c	/^static void	ft_init_data(t_data *data)$/
+ft_init_env	src/utils/envlist.c	/^void	ft_init_env(t_data *data)$/
+ft_init_exp	src/utils/explist.c	/^void	ft_init_exp(t_data *data)$/
+ft_init_minimal_env	src/utils/envlist.c	/^void	ft_init_minimal_env(t_data *data)$/
+ft_init_minimal_exp	src/utils/explist.c	/^void	ft_init_minimal_exp(t_data *data)$/
+ft_init_pipe	src/exec/exec.c	/^void	ft_init_pipe(t_data *data)$/
+ft_init_signals	src/utils/signals.c	/^void	ft_init_signals(void)$/
+ft_init_tty	src/utils/tty.c	/^void	ft_init_tty(void)$/
+ft_is_builtin	src/exec/exec.c	/^int	ft_is_builtin(t_data *data, t_dlist *cmd)$/
+ft_is_n_flag	src/builtin/echo.c	/^int	ft_is_n_flag(char *arg)$/
+ft_is_tokid	src/parser/parser_utils.c	/^int	ft_is_tokid(t_dlist *toklist, int tokid)$/
+ft_is_valid_export	src/builtin/export.c	/^static int	ft_is_valid_export(char *key)$/
+ft_is_valid_unset	src/builtin/unset.c	/^static int	ft_is_valid_unset(char *key)$/
+ft_lexer	src/lexer/lexer.c	/^void	ft_lexer(t_data *data)$/
+ft_multiple_dollar	src/parser/expand_var.c	/^static void	ft_multiple_dollar(t_data *data)$/
+ft_open	src/exec/open.c	/^void    ft_open(t_dlist *cmd)$/
+ft_open_file	src/exec/exec.c	/^void	ft_open_file(t_data *data)$/
+ft_parent	src/exec/exec.c	/^int	ft_parent(t_data *data, t_dlist *cmd, int stat/
+ft_parse_command	src/utils/cmdlist.c	/^void    ft_parse_command(t_data *data)$/
+ft_parse_pipe	src/parser/parse_pipe.c	/^int	ft_parse_pipe(t_data *data)$/
+ft_parse_quote	src/parser/parse_quote.c	/^int	ft_parse_quote(t_dlist *toklist)$/
+ft_parse_redir	src/parser/parse_redir.c	/^void	ft_parse_redir(t_data *data)$/
+ft_parse_space	src/parser/parse_space.c	/^void	ft_parse_space(t_data *data)$/
+ft_parser	src/parser/parser.c	/^void	ft_parser(t_data *data)$/
+ft_pre_checks	src/parser/parse_pipe.c	/^static int	ft_pre_checks(t_dlist **token)$/
+ft_printlist_cmd	src/utils/cmdlist.c	/^void	ft_printlist_cmd(t_dlist *lst)$/
+ft_printlist_elem_env	src/utils/envlist.c	/^void	ft_printlist_elem_env(t_dlist *envlist, char /
+ft_printlist_elem_exp	src/utils/explist.c	/^void	ft_printlist_elem_exp(t_dlist *explist, char /
+ft_printlist_env	src/utils/envlist.c	/^void	ft_printlist_env(t_dlist *envlist)$/
+ft_printlist_exp	src/utils/explist.c	/^void	ft_printlist_exp(t_dlist *explist)$/
+ft_printlist_redir	src/utils/redlist.c	/^void	ft_printlist_redir(t_dlist *lst)$/
+ft_printlist_tok	src/utils/toklist.c	/^void	ft_printlist_tok(t_dlist *toklist)$/
+ft_prompt	src/utils/prompt.c	/^void	ft_prompt(t_data *data)$/
+ft_prompt_line	src/utils/prompt.c	/^static char	*ft_prompt_line(t_data *data)$/
+ft_prompt_prefix	src/utils/prompt.c	/^static char	*ft_prompt_prefix(void)$/
+ft_pwd	src/builtin/pwd.c	/^int	ft_pwd(t_data *data)$/
+ft_quoted_becomes_words	src/parser/parse_quote.c	/^static void	ft_quoted_becomes_words(t_dlist *tokli/
+ft_readline	src/utils/prompt.c	/^static void	ft_readline(t_data *data)$/
+ft_remove_cmd	src/utils/cmdlist.c	/^void	ft_remove_cmd(t_dlist *cmdlist, t_dlist *cmd)/
+ft_remove_dollar	src/parser/expand_var.c	/^static void	ft_remove_dollar(t_data *data)$/
+ft_remove_empty_quotes	src/parser/expand_quote.c	/^static void	ft_remove_empty_quotes(t_data *data)$/
+ft_remove_env	src/utils/envlist.c	/^t_dlist	*ft_remove_env(t_dlist *envlist, t_dlist */
+ft_remove_exp	src/utils/explist.c	/^t_dlist	*ft_remove_exp(t_dlist *explist, t_dlist */
+ft_remove_spaces	src/parser/parse_space.c	/^static void	ft_remove_spaces(t_data *data)$/
+ft_remove_tok	src/utils/toklist.c	/^void	ft_remove_tok(t_dlist *toklist, t_dlist *toke/
+ft_set_token	src/lexer/lexer.c	/^static int	ft_set_token(char *tok)$/
+ft_set_word_token	src/parser/parse_quote.c	/^static void	ft_set_word_token(t_dlist **token)$/
+ft_simple_quote	src/parser/expand_var.c	/^static void	ft_simple_quote(t_data *data)$/
+ft_sort_exp	src/utils/explist.c	/^void	ft_sort_exp(t_dlist *explist)$/
+ft_split_path	src/utils/path.c	/^char	**ft_split_path(t_data *data)$/
+ft_strjoin_free	src/utils/utils.c	/^char	*ft_strjoin_free(char *s1, char *s2)$/
+ft_strjoin_free_s1	src/utils/utils.c	/^char	*ft_strjoin_free_s1(char *s1, char *s2)$/
+ft_strjoin_free_s2	src/utils/utils.c	/^char	*ft_strjoin_free_s2(char *s1, char *s2)$/
+ft_token_size	src/lexer/lexer.c	/^static size_t	ft_token_size(char *cmdline)$/
+ft_tokenize	src/lexer/lexer.c	/^static void	ft_tokenize(t_data *data, char **cmdli/
+ft_trim_toklist	src/parser/parse_pipe.c	/^static void	ft_trim_toklist(t_dlist *toklist, t_dl/
+ft_unset	src/builtin/unset.c	/^int	ft_unset(t_data *data, char **cmd)$/
+ft_update_env	src/utils/envlist.c	/^void	ft_update_env(t_data *data)$/
+ft_update_oldpwd	src/builtin/cd.c	/^void	ft_update_oldpwd(t_data *data, char *oldpwd)$/
+ft_update_pwd	src/builtin/cd.c	/^void	ft_update_pwd(t_data *data, char *newpwd)$/
+ft_update_tokpos	src/utils/toklist.c	/^void	ft_update_tokpos(t_dlist *toklist)$/
+ft_var_exit_status	src/parser/expand_var.c	/^static void	ft_var_exit_status(t_data *data)$/
