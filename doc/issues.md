@@ -14,8 +14,11 @@
 - Fix here_stopword checker
 > Maybe with a '&& strlen(stop word)'
 
+##  Parsing
+
 - Fix spaces parsing
 > 'echo " " $USER' shouldn't remove the "space".
+> "      " Shouldnt be reduced to ""
 
 - Fix var expansion parsing
 > 'echo "~"' shouldnt expand.
@@ -59,9 +62,9 @@
 
 - Comply to norm
 
-- Add remove_tok to libft
-
 ##  Other
+
+- Add remove_tok to libft
 
 # ------------------------ ( ? )
 

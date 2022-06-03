@@ -273,6 +273,9 @@ https://blog.nelhage.com/2009/12/a-brief-introduction-to-termios/
 
     [ ] export A=a; echo $A;
 
+    [ ] export ffff="   "; ffff; "    "
+
+
 **Behavior:**
 
 Should not write 'salut' while 'yes' command is running:
