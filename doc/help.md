@@ -73,6 +73,9 @@ Zsh prompt with branch indicator:
 *Create* a new branch (don't switch to it):
     git branch <branch_name>
 *Delete* a branch (has to be done from another branch):
+1. Delete the remote branch
+    git push origin --delete <branch_name>
+2. Delete the local
     git branch -d <branch_name>
 
 *Switch* to a branch:
