@@ -24,7 +24,7 @@ static void     ft_here_doc(t_dlist *cmd)
                         ft_end_heredoc(cmd);
                         break;
                 }
-				if (ft_strlen(((t_cmd *)cmd->content)->stop_word) == (ft_strlen(temp) - 1) 
+				if (ft_strlen(((t_cmd *)cmd->content)->stop_word) == (ft_strlen(temp) - 1)
 					&& !(ft_strncmp(temp, ((t_cmd *)cmd->content)->stop_word, ft_strlen(temp) - 1)))
 					 break;
 				// EXPAND VAR DE TEMP

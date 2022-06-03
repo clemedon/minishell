@@ -12,7 +12,7 @@ int	ft_parent(t_data *data, t_dlist *cmd, int status, int pid)
 		close(((t_cmd *)cmd->content)->fd_out);
 	if (!cmd->next)
 		if (waitpid(pid, &status, 0) == -1)
-			ft_exit(cmd, errno);
+			ft_perror(data, cmd, errno);
 	if (WIFEXITED(status) == EXIT_FAILURE)
 		status = WEXITSTATUS(status);
 	return (status);
@@ -30,9 +30,9 @@ void	ft_child(t_data *data, t_dlist *cmd, char **environ)
 	else if (cmd->next)
 		dup2(((t_cmd *)cmd->content)->fd[1], STDOUT_FILENO);
 	if (!((t_cmd *)cmd->content)->prg)
-		ft_exit(cmd, 127);
+		ft_perror(data, cmd, 127);
 	if (execve(((t_cmd *)cmd->content)->prg, ((t_cmd *)cmd->content)->cmd, environ) == -1)
-		ft_exit(cmd, 126);
+		ft_perror(data, cmd, 126);
 }
 
 void	ft_open_file(t_data *data)
@@ -87,7 +87,7 @@ void	ft_exec_cmd(t_data *data, t_dlist *cmd, int *status, char **environ)
 
 	pid = fork();
 	if (pid == -1)
-		ft_exit(cmd, errno);
+		ft_perror(data, cmd, errno);
 	if (pid > 0)
 	{
 		signal(2 & 3, SIG_IGN);

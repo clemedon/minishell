@@ -16,7 +16,7 @@ void	ft_cmd_error(t_dlist *cmd, int error)
 	exit(error);
 }
 
-void	ft_exit(t_dlist *cmd, int error)
+void	ft_perror(t_data *data, t_dlist *cmd, int error)
 {
 	if (error == 127 || error == 126)
 	{
@@ -30,5 +30,5 @@ void	ft_exit(t_dlist *cmd, int error)
 	}
 	else
 		ft_putendl_fd("error: Something went wrong", 2);
-	exit(EXIT_FAILURE);
+	ft_clear_exit(data);
 }

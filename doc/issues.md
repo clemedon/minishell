@@ -31,12 +31,12 @@
 
 # ------------------------ ( CVIDON )
 
+##  Exec
+
 - Fix leaks
-> From parsing? exec?
+> From lexer?
 > When we input one space followed by a dollar and any word:
 > <space> + $ANY_WORD
-
-##  Exec
 
 - Fix exec quoted space
 > exec.c: ft_is_builtin / ft_exec

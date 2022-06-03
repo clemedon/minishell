@@ -256,7 +256,7 @@ void	ft_open(t_dlist *cmd);
  */
 
 void    ft_cmd_error(t_dlist *cmd, int error);
-void    ft_exit(t_dlist *cmd, int error);
+void    ft_perror(t_data *data, t_dlist *cmd, int error);
 
 /*
  ** [ exec/close.c ]

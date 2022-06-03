@@ -16,6 +16,7 @@ void	ft_parser(t_data *data)
 		return ;
 	if (!ft_parse_pipe(data))
 		return ;
+
 	ft_expand_var(data);
 	ft_expand_quote(data);
 	/* printf("----------- BEFORE PARSE SPACE ---------\n"); */

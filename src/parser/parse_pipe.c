@@ -42,6 +42,7 @@ int	ft_parse_pipe(t_data *data)
 	t_dlist	*temp;
 
 	temp = data->toklist;
+	ft_printlist_tok (temp);
 	if (!ft_pre_checks (&data->toklist))
 		return (0);
 	while (temp)
@@ -57,7 +58,10 @@ int	ft_parse_pipe(t_data *data)
 					return (ft_trim_toklist (data->toklist, temp->prev), 1);
 			}
 		}
+		// TODO LEAK
+		/* ft_printlist_tok (temp); */
 		temp = temp->next;
+		/* ft_clear_exit (data); */
 	}
 	return (1);
 }
