@@ -7,6 +7,9 @@
 
 # ------------------------ ( ATHIRION )
 
+- Fix piping and redir builtins
+> Multipipe commandline with pipes and redir should work
+
 - Fix error message
 > 'sjsjs' should print 'sjsjs: command not found' without
 > 'minishell' prefix.
