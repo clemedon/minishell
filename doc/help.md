@@ -85,8 +85,10 @@ Fully *rename* a branch name
 3. now remove the still existing local wrong_name
     git push <remote_name> --delete <bad_branch_name>
 
-*List* the existing branches:
+*List* existing branches:
     git branch
+*List ALL* existing branches:
+    git branch -a
 Shows the last *commit* of each branches:
     git branch -v
 
