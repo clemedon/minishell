@@ -62,11 +62,20 @@ More in depth (detail of all modified files + author):
 
 ###     Branch
 
+Zsh prompt with branch indicator:
+    setopt PROMPT_SUBST
+    autoload -Uz vcs_info && precmd() { vcs_info }
+    zstyle ':vcs_info:git:*' formats '(%b)'
+    PROMPT='%m%{%F{green}%}${vcs_info_msg_0_}%{%F{none}%}%# '
+
 **Manage branches:**
 
 *Create* a new branch (don't switch to it):
     git branch <branch_name>
 *Delete* a branch (has to be done from another branch):
+1. Delete the remote branch
+    git push origin --delete <branch_name>
+2. Delete the local
     git branch -d <branch_name>
 
 *Switch* to a branch:
@@ -85,8 +94,10 @@ Fully *rename* a branch name
 3. now remove the still existing local wrong_name
     git push <remote_name> --delete <bad_branch_name>
 
-*List* the existing branches:
+*List* existing branches:
     git branch
+*List ALL* existing branches:
+    git branch -a
 Shows the last *commit* of each branches:
     git branch -v
 
