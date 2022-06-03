@@ -62,6 +62,12 @@ More in depth (detail of all modified files + author):
 
 ###     Branch
 
+Zsh prompt with branch indicator:
+    setopt PROMPT_SUBST
+    autoload -Uz vcs_info && precmd() { vcs_info }
+    zstyle ':vcs_info:git:*' formats '(%b)'
+    PROMPT='%m%{%F{green}%}${vcs_info_msg_0_}%{%F{none}%}%# '
+
 **Manage branches:**
 
 *Create* a new branch (don't switch to it):
