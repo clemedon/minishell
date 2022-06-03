@@ -65,6 +65,10 @@
 
 # ------------------------ ( ? )
 
+- Fix error message
+> Space after the ':' not before:
+> `salut :command not found` should be `salut: command not found`
+
 - Fix var expansion parsing
 > Var names is ONLY made of ALPHANUMERIC and UNDERSCORE characters.
 > Test with: 'echo "$=TEST" $TEST='
