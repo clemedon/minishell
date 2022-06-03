@@ -25,22 +25,43 @@
 
 # ------------------------ ( CVIDON )
 
-- Fix parsing
-> '$EMPTYVAR' shoudln't print anything instead of 'command not found'.
-
 - Fix leaks
 > From parsing? exec?
 > When we input one space followed by a dollar and any word:
-> <space> + $ANYTHING
+> <space> + $ANY_WORD
+
+##  Exec
+
+- Fix exec emptyvar
+> '$EMPTYVAR' shoudln't print anything instead of 'command not found'.
+> ***TODO*** exec.c: ft_is_builtin:
+> + `if (!((t_cmd *)cmd->content)->cmd[0])`
+> +     `return (FALSE);`
+> Fixes segfault but perror ':command not found'
+
+- Fix exec quoted space
+> exec.c: ft_is_builtin / ft_exec
+> '" "' = segfault
+
+- Fix exec when cwd files named as programs are called
+> 'ls: command not found' if there is a 'ls' file in the CWD.
+> Might be fixed with the handling of './file' execution. Or the
+> environ check for path before the exec a command.
+
+##  Builtins
+
+- Add export '+=' feature
+
+##  Global
 
 - Protect all the malloc
 > Create a 'ft_clear_exit("malloc error")' and a 'ft_strdup' wrapper.
 
 - Comply to norm
 
-- Add export '+=' feature
-
 - Add remove_tok to libft
+
+##  Other
 
 # ------------------------ ( ? )
 
@@ -55,11 +76,6 @@
 - Fix export builtin (linked to quote timing?)
 > export var="'cat Makefile'" OR export var='"cat Makefile"' shouldn't
 > print errors.
-
-- Fix exec when cwd files named as programs are called
-> 'ls: command not found' if there is a 'ls' file in the CWD.
-> Might be fixed with the handling of './file' execution. Or the
-> environ check for path before the exec a command.
 
 - Add error code management
 
