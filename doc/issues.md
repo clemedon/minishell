@@ -38,13 +38,6 @@
 
 ##  Exec
 
-- Fix exec emptyvar
-> '$EMPTYVAR' shoudln't print anything instead of 'command not found'.
-> ***TODO*** exec.c: ft_is_builtin:
-> + `if (!((t_cmd *)cmd->content)->cmd[0])`
-> +     `return (FALSE);`
-> Fixes segfault but perror ':command not found'
-
 - Fix exec quoted space
 > exec.c: ft_is_builtin / ft_exec
 > '" "' = segfault
