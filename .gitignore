@@ -7,7 +7,6 @@
 *.swo
 *.swp
 *~
-tags
 
 # OSX Generated Files #
 #######################
@@ -21,3 +20,4 @@ tags
 #########
 *.nfs*
 minishell
+a.out
