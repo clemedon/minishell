@@ -7,6 +7,9 @@
 
 # ------------------------ ( ATHIRION )
 
+- Fix piping and redir builtins
+> Multipipe commandline with pipes and redir should work 
+
 - Fix error message
 > 'sjsjs' should print 'sjsjs: command not found' without
 > 'minishell' prefix.
@@ -81,7 +84,17 @@
 > export var="'cat Makefile'" OR export var='"cat Makefile"' shouldn't
 > print errors.
 
-- Add error code management
+- Fix exec when cwd files named as programs are called
+> 'ls: command not found' if there is a 'ls' file in the CWD.
+> Might be fixed with the handling of './file' execution. Or the
+> environ check for path before the exec a command.
+
+- Fix cd when used with other command
+> 'cd: command not found' if cd is used among others commands
+> cd ~ | echo salut
+> echo salut | cd ~
+
+- Add error code management.
 
 - Add SHLVL feature
 

@@ -17,7 +17,7 @@ void	ft_parser(t_data *data)
 	if (!ft_parse_pipe(data))
 		return ;
 	ft_expand_var(data);
-	ft_expand_quote(data);
+	/* ft_expand_quote(data); */
 	/* printf("----------- BEFORE PARSE SPACE ---------\n"); */
 	/* ft_printlist_tok(data->toklist); */
 	ft_parse_space(data);

@@ -1,5 +1,34 @@
 #include "minishell.h"
 
+/* void ft_redir_builtin(t_dlist *cmd) */
+/* { */
+/* 	if (((t_cmd *)cmd->content)->file_in) */
+/* 		dup2(((t_cmd *)cmd->content)->fd_in, STDIN_FILENO); */
+/* 	if (((t_cmd *)cmd->content)->file_out) */
+/* 		dup2(((t_cmd *)cmd->content)->fd_out, STDOUT_FILENO); */
+/* } */
+
+int	ft_is_builtin(t_data *data, t_dlist *cmd)
+{
+	if (!((t_cmd *)cmd->content)->cmd && !((t_cmd *)cmd->content)->prg)
+		return (0);
+	/* ft_redir_builtin(cmd); */
+	if (!ft_strcmp(((t_cmd *)cmd->content)->cmd[0], "echo"))
+		return (ft_echo(((t_cmd *)cmd->content)->cmd), 1);
+	if (!ft_strcmp(((t_cmd *)cmd->content)->cmd[0], "cd"))
+		return (ft_cd(data, ((t_cmd *)cmd->content)->cmd), 1);
+	if (!ft_strcmp(((t_cmd *)cmd->content)->cmd[0], "pwd"))
+		return (ft_pwd(data), 1);
+	if (!ft_strcmp(((t_cmd *)cmd->content)->cmd[0], "export"))
+		return (ft_export(data, ((t_cmd *)cmd->content)->cmd), 1);
+	if (!ft_strcmp(((t_cmd *)cmd->content)->cmd[0], "unset"))
+		return (ft_unset(data, ((t_cmd *)cmd->content)->cmd), 1);
+	if (!ft_strcmp(((t_cmd *)cmd->content)->cmd[0], "env"))
+		return (ft_env(data->envlist), 1);
+	return (0);
+}
+
+
 int	ft_parent(t_data *data, t_dlist *cmd, int status, int pid)
 {
 	if (cmd->next)
@@ -24,13 +53,14 @@ void	ft_child(t_data *data, t_dlist *cmd, char **environ)
 		dup2(((t_cmd *)cmd->content)->fd_in, STDIN_FILENO);
 	else if (!(cmd == data->cmdlist))
 		dup2(((t_cmd *)cmd->prev->content)->fd[0], STDIN_FILENO);
-
 	if (((t_cmd *)cmd->content)->file_out)
 		dup2(((t_cmd *)cmd->content)->fd_out, STDOUT_FILENO);
 	else if (cmd->next)
 		dup2(((t_cmd *)cmd->content)->fd[1], STDOUT_FILENO);
 	if (!((t_cmd *)cmd->content)->prg)
 		ft_exit(cmd, 127);
+	if (ft_is_builtin(data, cmd))
+		exit(EXIT_FAILURE);
 	if (execve(((t_cmd *)cmd->content)->prg, ((t_cmd *)cmd->content)->cmd, environ) == -1)
 		ft_exit(cmd, 126);
 }
@@ -60,26 +90,6 @@ void	ft_init_pipe(t_data *data)
 }
 
 
-int	ft_is_builtin(t_data *data, t_dlist *cmd)
-{
-	if (!((t_cmd *)cmd->content)->cmd && !((t_cmd *)cmd->content)->prg)
-		return (0);
-	if (!ft_strcmp(((t_cmd *)cmd->content)->cmd[0], "echo"))
-		return (ft_echo(((t_cmd *)cmd->content)->cmd), 1);
-	if (!ft_strcmp(((t_cmd *)cmd->content)->cmd[0], "cd"))
-		return (ft_cd(data, ((t_cmd *)cmd->content)->cmd), 1);
-
-	if (!ft_strcmp(((t_cmd *)cmd->content)->cmd[0], "pwd"))
-		return (ft_pwd(data), 1);
-
-	if (!ft_strcmp(((t_cmd *)cmd->content)->cmd[0], "export"))
-		return (ft_export(data, ((t_cmd *)cmd->content)->cmd), 1);
-	if (!ft_strcmp(((t_cmd *)cmd->content)->cmd[0], "unset"))
-		return (ft_unset(data, ((t_cmd *)cmd->content)->cmd), 1);
-	if (!ft_strcmp(((t_cmd *)cmd->content)->cmd[0], "env"))
-		return (ft_env(data->envlist), 1);
-	return (0);
-}
 
 void	ft_exec_cmd(t_data *data, t_dlist *cmd, int *status, char **environ)
 {
@@ -110,7 +120,7 @@ int	ft_exec(t_data *data)
 	cmd = data->cmdlist;
 	while (cmd)
 	{
-		if (ft_is_builtin(data, cmd))
+		if (data->cmdid == 1 && ft_is_builtin(data, cmd))
 			;
 		else
 			ft_exec_cmd(data, cmd, &status, environ);

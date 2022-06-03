@@ -33,7 +33,8 @@ void	ft_parse_space(t_data *data)
 	temp = data->toklist;
 	while (temp)
 	{
-		if (ft_is_tokid (temp, WS))
+		if (temp->prev && ft_is_tokid (temp, WS)
+			&& !ft_is_tokid(temp->prev, DQ) && !ft_is_tokid(temp->prev, QT))
 		{
 			while (temp->prev && temp->next && ft_is_tokid (temp, WS))
 			{
