@@ -105,8 +105,6 @@ void	ft_prompt(t_data *data)
 			ft_clearlist_cmd (&data->cmdlist, ft_free);
 			ft_clearlist_tok (&data->toklist, ft_free);
 		}
-		else
-			ft_free (data->cmdline);
 		ft_free_tab (data->cmd_path);
 	}
 	ft_clear_exit (data);
