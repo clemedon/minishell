@@ -82,6 +82,9 @@ Zsh prompt with branch indicator:
     git switch <branch_name>
 > Same as 'git checkout <branch_name>
 
+*Diff* two branches:
+    git diff <branch1>..<branch2>
+
 Switch to the *previous* branch.
     git switch -
 
@@ -103,15 +106,15 @@ Shows the last *commit* of each branches:
 
 **Merge the branch:**
 
-1. specify mergetool:
+Specify mergetool:
     git mergetool --tool=vimdiff
 > Vimdiff recap: 'do' to obtain from the other window, 'dp' to put
 > into the other side.
 
-2. diff a branch with HEAD:
+Diff a branch with HEAD:
     git diff <branch_name>
 
-3. merge branch_name with the current branch:
+Merge branch_name with the current branch:
     git merge <branch_name>
 > If there is a *conflict*, `git status` to see unmerged files, manually
 > fix them then `git add` / `git commit -a`.  + describe my merge in
