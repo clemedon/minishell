@@ -12,24 +12,52 @@ static void	ft_data_export (t_data *data, char *cmd)
 	if (ft_strchr (cmd, '='))
 	{
 		val = ft_strdup(ft_strchr (cmd, '=') + 1);
-		key = ft_substr (cmd, 0, ft_strlen (cmd) - ft_strlen (val) - 1);
+		key = ft_substr (cmd, 0, ft_strlen (cmd) - ft_strlen (val) - 1
+				- (cmd[ft_strlen (cmd) - ft_strlen(val) - 2] == '+'));
 	}
 	else
 	{
 		val = NULL;
 		key = ft_strdup(cmd);
 	}
-
-	if (ft_strlen(key) == 3 && ft_strcmp (key, "PWD") == SUCCESS)
+	if (ft_strlen(key) == 3 && ft_strcmp (key, "PWD") == SUCCESS) // TODO
 	{
-		ft_free (data->cwd);
-		data->cwd = ft_strdup(val);
+		if (cmd[ft_strlen (cmd) - ft_strlen(val) - 2] == '+')
+		{
+			dprintf (2, " #####> 0 <##### \n");
+			data->cwd = ft_strjoin_free_s1 (data->cwd, val);
+		}
+		else
+		{
+			dprintf (2, " #####> 1 <##### \n");
+			ft_free (data->cwd);
+			data->cwd = ft_strdup(val);
+		}
 	}
 	if (ft_strlen(key) == 6 && ft_strcmp (key, "OLDPWD") == SUCCESS)
 	{
-		ft_free (data->oldcwd);
-		data->oldcwd = ft_strdup(val);
+		if (cmd[ft_strlen (cmd) - ft_strlen(val) - 2] == '+')
+		{
+			dprintf (2, " #####> 2 <##### \n");
+			data->oldcwd = ft_strjoin_free_s1 (data->oldcwd, val);
+		}
+		else
+		{
+			dprintf (2, " #####> 3 <##### \n");
+			ft_free (data->oldcwd);
+			data->oldcwd = ft_strdup(val);
+		}
 	}
+
+	// TODO check export enregistre deux variables:
+	// 'PWD' et 'PWD+'
+	// PS. remember that ft_data_export doesn't export to ENV and EXPORT lists.
+
+	dprintf (2, "valu [%s]\n", val);
+	dprintf (2, "data->cwd [%s]\n", data->cwd);
+	dprintf (2, "keyy [%s]\n", key);
+	dprintf (2, "data->oldcwd [%s] <##### \n", data->oldcwd);
+
 	ft_free (val);
 	ft_free (key);
 }
@@ -130,7 +158,7 @@ static int	ft_is_valid_export(char *key)
 			key++;
 		if (*key == '\0')
 			return (TRUE);
-		if (*key == '=')
+		if ((*key == '=') || (*key == '+' && *(key + 1) == '='))
 			return (TRUE + 1);
 	}
 	ft_putstr_fd ("minishell: export: `", 2);
