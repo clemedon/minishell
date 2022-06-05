@@ -33,14 +33,9 @@
 
 ##  Exec
 
-- Fix leaks
-> From lexer?
+- Fix leaks parsing
 > When we input one space followed by a dollar and any word:
 > <space> + $ANY_WORD
-
-- Fix exec quoted space
-> exec.c: ft_is_builtin / ft_exec
-> '" "' = segfault
 
 - Fix exec when cwd files named as programs are called
 > 'ls: command not found' if there is a 'ls' file in the CWD.
@@ -50,6 +45,8 @@
 ##  Builtins
 
 - Add export '+=' feature
+
+- Add ft_exit
 
 ##  Global
 
@@ -63,6 +60,13 @@
 - Add remove_tok to libft
 
 # ------------------------ ( ? )
+
+- Fix quote parsing:
+> '" "' = " instead " "
+> "' '" = ' instead ' '
+
+- Fix empty var errmsg
+> '$notavar' should not print anything
 
 - Fix error message
 > Space after the ':' not before:
@@ -81,6 +85,8 @@
 > print errors.
 
 - Add error code management
+
+- Add $? feature
 
 - Add SHLVL feature
 

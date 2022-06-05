@@ -178,7 +178,7 @@ void	ft_init_exp(t_data *data)
 }
 
 /*
- ** Init a export list or add a variable to it.
+ ** Init an export list or add a variable to it.
  */
 
 void	ft_add_exp(t_data *data, char *key, char *val)

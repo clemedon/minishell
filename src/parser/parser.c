@@ -16,7 +16,6 @@ void	ft_parser(t_data *data)
 		return ;
 	if (!ft_parse_pipe(data))
 		return ;
-
 	ft_expand_var(data);
 	ft_expand_quote(data);
 	/* printf("----------- BEFORE PARSE SPACE ---------\n"); */
@@ -27,8 +26,8 @@ void	ft_parser(t_data *data)
 	ft_parse_redir(data);
 	ft_expand_tilde(data);
 	ft_expand_word(data);
-	/* printf("----------- ft_parser ---------\n"); */
-	/* ft_printlist_tok(data->toklist); */
+	printf("----------- ft_parser ---------\n");
+	ft_printlist_tok(data->toklist);
 	ft_count_pipe(data);
 	ft_create_cmdlist(data);
 	printf("----------- cmd_list ----------\n");

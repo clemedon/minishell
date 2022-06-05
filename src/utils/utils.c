@@ -104,13 +104,12 @@ void	ft_free_tab(char **tab)
 void	ft_clear_exit(t_data *data)
 {
 	ft_free (data->cwd);
-	/* ft_free (data->cmdline); */
 	ft_free_tab (data->cmd_path);
 	ft_clearlist_cmd (&data->cmdlist, ft_free);
-	ft_clearlist_exp (&data->explist, ft_free);
 	ft_clearlist_env (&data->envlist, ft_free);
-	ft_clearlist_tok (&data->toklist, ft_free);
+	ft_clearlist_exp (&data->explist, ft_free);
 	ft_clearlist_red (&data->redlist, ft_free);
+	ft_clearlist_tok (&data->toklist, ft_free);
 	rl_clear_history ();
 	exit(EXIT_FAILURE);
 }

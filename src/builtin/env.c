@@ -2,9 +2,6 @@
 
 /*
  ** Tiny 'env' builtin.
- **
- ** TODO _=/usr/bin/env
- ** TODO order
  */
 
 int	ft_env(t_dlist *envlist)

@@ -50,10 +50,12 @@ void	ft_add_tok(t_data *data, int tokid, int tokpos, char *token)
 	tok = malloc (sizeof(t_tok));
 	if (!tok)
 		exit (EXIT_FAILURE);
+
 	tok->tokid = tokid;
 	tok->tokpos = tokpos;
 	tok->tok = token;
-	ft_dlstadd_back(&data->toklist, ft_dlstnew(tok));
+
+	ft_dlstadd_back (&data->toklist, ft_dlstnew(tok));
 }
 
 /*

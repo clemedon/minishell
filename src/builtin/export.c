@@ -83,15 +83,12 @@ static void	ft_explist_export(t_data *data, char *cmd)
  ** Export the variable to 'envlist'.
  **
  ** - ENVLIST saves variables from RIGHT to LEFT.
- **
- ** TODO malloc env at init !!!
  */
 
 static void	ft_envlist_export(t_data *data, char *cmd)
 {
 	char	*val;
 	char	*key;
-	(void)data;
 	t_dlist	*temp;
 
 	temp = data->envlist;

@@ -98,10 +98,8 @@ void	ft_prompt(t_data *data)
 		if (ft_strlen (data->cmdline))
 		{
 			ft_lexer (data);
-
 			ft_parser (data);
-
-			/* ft_exec (data); */
+			ft_exec (data);
 			/* printf("EXIT STATUS >>> [%d] <<<\n", ft_exec (data)); */
 			ft_clearlist_red (&data->redlist, ft_free);
 			ft_clearlist_cmd (&data->cmdlist, ft_free);

@@ -25,13 +25,16 @@ static void	ft_trim_toklist(t_dlist *toklist, t_dlist *token)
 
 static int	ft_pre_checks(t_dlist **token)
 {
-	if (ft_is_tokid (*token, PP))
+	t_dlist	*temp;
+
+	temp = *token;
+	if (ft_is_tokid (temp, PP))
 		return (0);
-	if (ft_is_tokid (*token, WS))
+	if (ft_is_tokid (temp, WS))
 	{
-		while (*token && ft_is_tokid (*token, WS))
-			*token = (*token)->next;
-		if (ft_is_tokid (*token, PP))
+		while (temp && ft_is_tokid (temp, WS))
+			temp = (temp)->next;
+		if (ft_is_tokid (temp, PP))
 			return (0);
 	}
 	return (1);
@@ -42,7 +45,6 @@ int	ft_parse_pipe(t_data *data)
 	t_dlist	*temp;
 
 	temp = data->toklist;
-	ft_printlist_tok (temp);
 	if (!ft_pre_checks (&data->toklist))
 		return (0);
 	while (temp)
@@ -58,10 +60,7 @@ int	ft_parse_pipe(t_data *data)
 					return (ft_trim_toklist (data->toklist, temp->prev), 1);
 			}
 		}
-		// TODO LEAK
-		/* ft_printlist_tok (temp); */
 		temp = temp->next;
-		/* ft_clear_exit (data); */
 	}
 	return (1);
 }

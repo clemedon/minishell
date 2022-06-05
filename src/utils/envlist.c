@@ -62,9 +62,6 @@ void	ft_update_env(t_data *data)
 	t_dlist	*env;
 	t_dlist	*exp;
 	char	*temp;
-	(void)env;
-	(void)exp;
-	(void)temp;
 
 	env = data->envlist;
 	while (env && data->explist)
@@ -73,7 +70,7 @@ void	ft_update_env(t_data *data)
 		exp = data->explist;
 		while (exp)
 		{
-			// TODO replace expcontentkey with key = expcontentkey -> key
+			// TODO replace exp->contentkey with key = exp->contentkey -> key
 			if (ft_strcmp (((t_env *) env->content)->key, ((t_exp *) exp->content)->key) == 0)
 			{
 				temp = ft_strdup (((t_exp *) exp->content)->val);
