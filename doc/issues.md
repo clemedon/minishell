@@ -31,18 +31,18 @@
 
 # ------------------------ ( CVIDON )
 
+##  Builtins
+
+- Add export '+=' feature
+
+- Add ft_exit
+
 ##  Exec
 
 - Fix exec when cwd files named as programs are called
 > 'ls: command not found' if there is a 'ls' file in the CWD.
 > Might be fixed with the handling of './file' execution. Or the
 > environ check for path before the exec a command.
-
-##  Builtins
-
-- Add export '+=' feature
-
-- Add ft_exit
 
 ##  Global
 
