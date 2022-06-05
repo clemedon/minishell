@@ -94,7 +94,10 @@ void	ft_prompt(t_data *data)
 		data->nb_pipes = 0;
 		ft_readline (data);
 		if (!ft_strncmp(data->cmdline, "q", 1))
+		{
+			ft_free (data->cmdline);
 			break ;
+		}
 		if (ft_strlen (data->cmdline))
 		{
 			ft_lexer (data);
@@ -105,6 +108,8 @@ void	ft_prompt(t_data *data)
 			ft_clearlist_cmd (&data->cmdlist, ft_free);
 			ft_clearlist_tok (&data->toklist, ft_free);
 		}
+		else
+			ft_free (data->cmdline);
 		ft_free_tab (data->cmd_path);
 	}
 	ft_clear_exit (data);

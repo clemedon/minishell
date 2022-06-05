@@ -33,10 +33,6 @@
 
 ##  Exec
 
-- Fix leaks parsing
-> When we input one space followed by a dollar and any word:
-> <space> + $ANY_WORD
-
 - Fix exec when cwd files named as programs are called
 > 'ls: command not found' if there is a 'ls' file in the CWD.
 > Might be fixed with the handling of './file' execution. Or the
@@ -62,15 +58,12 @@
 # ------------------------ ( ? )
 
 - Fix quote parsing:
-> '" "' = " instead " "
-> "' '" = ' instead ' '
+> `'" "'`      prints> `"` instead `" "`
+> `"' '"`      prints> `'` instead `' '`
+> `"a    b"` prints> `a` instead `a    b`
 
 - Fix empty var errmsg
-> '$notavar' should not print anything
-
-- Fix error message
-> Space after the ':' not before:
-> `salut :command not found` should be `salut: command not found`
+> '$notavar' should not print ': command not found'
 
 - Fix var expansion parsing
 > Var names is ONLY made of ALPHANUMERIC and UNDERSCORE characters.
@@ -84,10 +77,12 @@
 > export var="'cat Makefile'" OR export var='"cat Makefile"' shouldn't
 > print errors.
 
-- Add error code management
-
 - Add $? feature
 
 - Add SHLVL feature
+
+- Add error code management
+
+- Add 'exit' builtin
 
 - Remove tokpos
