@@ -36,6 +36,12 @@ void	ft_expand_tilde(t_data *data)
 	temp = data->toklist;
 	while (temp)
 	{
+		if (ft_is_tokid(temp, QT) || ft_is_tokid(temp, DQ))
+		{
+			temp = temp->next;
+			while (temp && !ft_is_tokid(temp, QT) && !ft_is_tokid(temp, DQ))
+				temp = temp->next;
+		}
 		if (ft_is_tokid(temp, WD) && !ft_strncmp(((t_tok *)temp->content)->tok, "~", 1))
 		{
 			if (ft_strlen(((t_tok *)temp->content)->tok) == 1)

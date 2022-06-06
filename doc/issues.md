@@ -15,9 +15,6 @@
 > "      " Shouldnt be reduced to ""
 
 - Fix var expansion parsing
-> 'echo "~"' shouldnt expand.
-
-- Fix var expansion parsing
 > 'echo $123A' should display '23A'.
 
 # ------------------------ ( CVIDON )
