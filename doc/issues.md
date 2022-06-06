@@ -19,6 +19,11 @@
 - Fix var expansion parsing
 > 'echo $123A' should display '23A'.
 
+## Builtins
+
+- Fix fd redir
+> cd ~ | echo salut 
+
 # ------------------------ ( CVIDON )
 
 ##  Builtins

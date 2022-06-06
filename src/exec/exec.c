@@ -20,6 +20,8 @@ int	ft_parent(t_data *data, t_dlist *cmd, int status, int pid)
 
 void	ft_child(t_data *data, t_dlist *cmd, char **environ)
 {
+	if (ft_is_builtin(cmd) && !ft_fork_builtin(cmd))
+		exit(EXIT_FAILURE);
 	if (((t_cmd *)cmd->content)->file_in)
 		dup2(((t_cmd *)cmd->content)->fd_in, STDIN_FILENO);
 	else if (!(cmd == data->cmdlist))
@@ -34,9 +36,9 @@ void	ft_child(t_data *data, t_dlist *cmd, char **environ)
 		exit(EXIT_FAILURE);
 	}
 	if (!ft_is_builtin(cmd) && !((t_cmd *)cmd->content)->prg)
-		ft_exit(cmd, 127);
+		ft_perror(data, cmd, 127);
 	if (!ft_is_builtin(cmd) && execve(((t_cmd *)cmd->content)->prg, ((t_cmd *)cmd->content)->cmd, environ) == -1)
-		ft_exit(cmd, 126);
+		ft_perror(data, cmd, 126);
 }
 
 void	ft_open_file(t_data *data)
@@ -72,7 +74,7 @@ void	ft_exec_cmd(t_data *data, t_dlist *cmd, int *status, char **environ)
 		ft_perror(data, cmd, errno);
 	if (pid > 0)
 	{
-		signal(2 & 3, SIG_IGN);
+		/* signal(2 & 3, SIG_IGN); */
 		ft_parent(data, cmd, *status, pid);
 	}
 	if (pid == 0)
