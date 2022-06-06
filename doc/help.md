@@ -4,8 +4,52 @@
 
 #INDEX
 ------
+##  WORKFLOW
 ##  ISSUES
 ##  GIT
+
+##  WORKFLOW
+
+0. Choose an issue, create a branch, fix the issue.
+
+1. Copy the issue into clipboard and remove it from issues.md.
+
+2. Add/commit/push the branch.
+    $ git add .
+    $ git commit
+> Commit message according to the issue title and body.
+    $ git push
+> Or 'git push --set-upstream origin <branch_name>' if first push.
+
+3. Merge main with the branch:
+
+Switch from the branch to 'main' and update it:
+    $ git switch main
+    $ git pull
+
+Merge 'main' with the branch:
+    $ git merge main
+    $ git status
+
+Manually fix the conflicts then commit the result:
+    $ git status
+> 'Unmerged paths' files
+
+    <<<<<<< HEAD
+    Here is 'main' version
+    =======
+    Here is 'the-branch' version
+    >>>>>>> the-branch
+
+    $ git add .
+    $ git commit
+> Do not change the commit title but feel free to add details about the merge
+> in the body if needed.
+
+4. Push main and delete the branch:
+    $ git push
+    $ git push origin --delete <branch_name>
+    $ git branch -d <branch_name>
 
 ##  ISSUES
 
@@ -31,6 +75,8 @@ mode).
 
 ##  GIT
 
+**General:**
+
 *Pull* when we have unstaged modified files:
     git stash
     git pull
@@ -53,25 +99,18 @@ mode).
 > Then `git reset` the unwanted files and commit again with `-c` flag
 > to preserve the prev commit message.
 
-*Explore* commit history:
+*Explore commit* history:
 
 Quick look (one commit per line + graph):
      git log --oneline  --graph --all
 More in depth (detail of all modified files + author):
      git log --pretty=format:"%an %cr : %s" --stat --graph -2
 
-###     Branch
-
-Zsh prompt with branch indicator:
-    setopt PROMPT_SUBST
-    autoload -Uz vcs_info && precmd() { vcs_info }
-    zstyle ':vcs_info:git:*' formats '(%b)'
-    PROMPT='%m%{%F{green}%}${vcs_info_msg_0_}%{%F{none}%}%# '
-
 **Manage branches:**
 
 *Create* a new branch (don't switch to it):
     git branch <branch_name>
+
 *Delete* a branch (has to be done from another branch):
 1. Delete the remote branch
     git push origin --delete <branch_name>

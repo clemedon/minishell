@@ -90,6 +90,4 @@
 
 - Add error code management
 
-- Add 'exit' builtin
-
 - Remove tokpos
