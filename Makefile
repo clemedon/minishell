@@ -35,6 +35,7 @@ SRCS		= main.c 				\
 			  parser/parser_utils.c	\
 			  utils/cmdlist.c		\
 			  exec/exec.c			\
+			  exec/exec_builtin.c	\
 			  exec/open.c			\
 			  exec/error.c			\
 			  builtin/env.c			\

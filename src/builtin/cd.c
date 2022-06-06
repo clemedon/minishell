@@ -115,6 +115,7 @@ void	ft_update_pwd(t_data *data, char *newpwd)
 	}
 	ft_free (data->cwd);
 	data->cwd = ft_strdup(newpwd);
+	/* printf("NEW PWD -> [%s]\n", data->cwd); */
 }
 
 /*
@@ -186,8 +187,12 @@ int	ft_cd_path(t_data *data, char *cmd)
 		return (FAILURE);
 	ft_update_oldpwd (data, data->cwd);
 	// UPDATE
+	/* printf("before cwd\n"); */
 	cwd = getcwd (NULL, PATH_MAX);
+	/* printf("after cwd\n"); */
 	ft_update_pwd (data, cwd);
+	/* printf("after update pwd\n"); */
+	/* printf(">>> CWD [%s]\n", cwd); */
 	free (cwd);
 	return (SUCCESS);
 }
@@ -261,6 +266,7 @@ int	ft_cd(t_data *data, char **cmd)
 	int	ret;
 
 	ret = SUCCESS;
+	/* printf(">>> Entering CD <<<\n"); */
 	if (!cmd[1])
 		return (ft_cd_alone (data));
 	if (cmd[2])
@@ -268,5 +274,6 @@ int	ft_cd(t_data *data, char **cmd)
 	if (ft_strncmp (cmd[1], "-", 2) == 0)
 		return (ft_cd_hyphen (data));
 	ret = ft_cd_path (data, cmd[1]);
+	/* printf(">>> Exiting CD <<<\n"); */
 	return (ret);
 }
