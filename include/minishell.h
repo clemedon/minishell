@@ -246,6 +246,14 @@ int		ft_env(t_dlist *envlist);
 int	ft_exec(t_data *data);
 
 /*
+ ** [ exec/exec_builtin.c ]
+ */
+
+int ft_fork_builtin(t_dlist *cmd);
+int ft_is_builtin(t_dlist *cmd);
+int ft_exec_builtin(t_data *data, t_dlist *cmd, int builtin_id);
+
+/*
  ** [ exec/open.c ]
  */
 

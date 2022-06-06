@@ -29,6 +29,7 @@ static void     ft_here_doc(t_dlist *cmd)
 					 break;
 				// EXPAND VAR DE TEMP
                 write(fd_file, temp, ft_strlen(temp));
+				ft_free(temp);
         }
         ft_free(temp);
         /* ft_close(cmd, &fd_file); */

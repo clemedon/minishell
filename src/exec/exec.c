@@ -24,15 +24,19 @@ void	ft_child(t_data *data, t_dlist *cmd, char **environ)
 		dup2(((t_cmd *)cmd->content)->fd_in, STDIN_FILENO);
 	else if (!(cmd == data->cmdlist))
 		dup2(((t_cmd *)cmd->prev->content)->fd[0], STDIN_FILENO);
-
 	if (((t_cmd *)cmd->content)->file_out)
 		dup2(((t_cmd *)cmd->content)->fd_out, STDOUT_FILENO);
 	else if (cmd->next)
-		dup2(((t_cmd *)cmd->content)->fd[1], STDOUT_FILENO);
-	if (!((t_cmd *)cmd->content)->prg)
-		ft_perror(data, cmd, 127);
-	if (execve(((t_cmd *)cmd->content)->prg, ((t_cmd *)cmd->content)->cmd, environ) == -1)
-		ft_perror(data, cmd, 126);
+		dup2(((t_cmd *)cmd->content)->fd[1], STDOUT_FILENO);	
+	if (ft_is_builtin(cmd) && ft_fork_builtin(cmd))
+	{
+		ft_exec_builtin(data, cmd, ft_is_builtin(cmd));
+		exit(EXIT_FAILURE);
+	}
+	if (!ft_is_builtin(cmd) && !((t_cmd *)cmd->content)->prg)
+		ft_exit(cmd, 127);
+	if (!ft_is_builtin(cmd) && execve(((t_cmd *)cmd->content)->prg, ((t_cmd *)cmd->content)->cmd, environ) == -1)
+		ft_exit(cmd, 126);
 }
 
 void	ft_open_file(t_data *data)
@@ -59,28 +63,6 @@ void	ft_init_pipe(t_data *data)
 	}
 }
 
-
-int	ft_is_builtin(t_data *data, t_dlist *cmd)
-{
-	if (!((t_cmd *)cmd->content)->cmd && !((t_cmd *)cmd->content)->prg)
-		return (FALSE);
-	if (!((t_cmd *)cmd->content)->cmd[0])
-		return (FALSE);
-	if (!ft_strcmp(((t_cmd *)cmd->content)->cmd[0], "echo"))
-		return (ft_echo(((t_cmd *)cmd->content)->cmd), TRUE);
-	if (!ft_strcmp(((t_cmd *)cmd->content)->cmd[0], "cd"))
-		return (ft_cd(data, ((t_cmd *)cmd->content)->cmd), TRUE);
-	if (!ft_strcmp(((t_cmd *)cmd->content)->cmd[0], "pwd"))
-		return (ft_pwd(data), TRUE);
-	if (!ft_strcmp(((t_cmd *)cmd->content)->cmd[0], "export"))
-		return (ft_export(data, ((t_cmd *)cmd->content)->cmd), TRUE);
-	if (!ft_strcmp(((t_cmd *)cmd->content)->cmd[0], "unset"))
-		return (ft_unset(data, ((t_cmd *)cmd->content)->cmd), TRUE);
-	if (!ft_strcmp(((t_cmd *)cmd->content)->cmd[0], "env"))
-		return (ft_env(data->envlist), TRUE);
-	return (FALSE);
-}
-
 void	ft_exec_cmd(t_data *data, t_dlist *cmd, int *status, char **environ)
 {
 	int pid;
@@ -94,7 +76,9 @@ void	ft_exec_cmd(t_data *data, t_dlist *cmd, int *status, char **environ)
 		ft_parent(data, cmd, *status, pid);
 	}
 	if (pid == 0)
+	{
 		ft_child(data, cmd, environ);
+	}
 }
 
 
@@ -103,6 +87,7 @@ int	ft_exec(t_data *data)
 	t_dlist		*cmd;
 	extern char	**environ;
 	int			status;
+	int			builtin_id;
 
 	status = 0;
 	ft_open_file(data);
@@ -110,8 +95,9 @@ int	ft_exec(t_data *data)
 	cmd = data->cmdlist;
 	while (cmd)
 	{
-		if (ft_is_builtin(data, cmd))
-			;
+		builtin_id = ft_is_builtin(cmd);
+		if (data->cmdid == 1 && builtin_id && !ft_fork_builtin(cmd))
+			ft_exec_builtin(data, cmd, builtin_id);
 		else
 			ft_exec_cmd(data, cmd, &status, environ);
 		cmd = cmd->next;
