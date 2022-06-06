@@ -2,9 +2,7 @@
 
 #           ISSUES
 
-
 >       help
-
 
 # ------------------------ ( ATHIRION )
 
@@ -21,8 +19,6 @@
 
 ##  Builtins
 
-- Add export '+=' feature
-
 - Add ft_exit
 
 ##  Exec
@@ -32,59 +28,64 @@
 > Might be fixed with the handling of './file' execution. Or the
 > environ check for path before the exec a command.
 
-##  Builtins
-
-- Add ft_exit
-
-##  Global
-
-- Protect all the malloc
-> Create a 'ft_clear_exit("malloc error")' and a 'ft_strdup' wrapper.
-
-- Comply to norm
-
-##  Other
-
-- Add remove_tok to libft
-
 # ------------------------ ( ? )
 
-- Add errmsg:
+##  Execution
+
+- Add errmsg management:
 > `" "`     missing a `<space>` at `:command not found` errmsg first char.
 > `""`      and `''` should output `""` / `'': command not found` instead nothing.
 > `|`       should print `bash: syntax error near unexpected token \`|'`
 > `||`      should print `bash: syntax error near unexpected token \`||'`
 > `|||…`    should print `bash: syntax error near unexpected token \`||'`
 > `&`       should print `bash: syntax error near unexpected token \`&'`
-> `.`       should print:
+> `.`       should print
     bash: .: filename argument required
     .: usage: . filename [arguments]
 > `~`       should print `bash: /mnt/nfs/homes/cvidon: Is a directory`
+> `echo ciao > ~`           should print `bash: /mnt/nfs/homes/cvidon: Is a directory`
+> `echo ciao > $notavar`    should print: `bash: $notavar: ambiguous redirect`
+> `$notavar`                should not print `: command not found`
 
-- Fix quote parsing:
-> `'" "'`      prints> `"` instead `" "`
-> `"' '"`      prints> `'` instead `' '`
-> `"a    b"` prints> `a` instead `a    b`
+- Add execution error code management
 
-- Fix empty var errmsg
-> '$notavar' should not print ': command not found'
+- Add execution $? feature
+
+- Add execution '`./<program>`' feature
+
+- Add SHLVL feature
+
+- Fix execution errors:
+> `cat | cat | cat` then `<C-C>` shouldn't quit minishell.
+> `cat | ls` then `<C-C>` shouldn't duplicate the prompt + should print `ls`.
+
+##  Expansion
 
 - Fix var expansion parsing
 > Var names is ONLY made of ALPHANUMERIC and UNDERSCORE characters.
 > Test with: 'echo "$=TEST" $TEST='
 > Cf. export.c: ft_is_valid_export()
 
+##  Quotes parsing
+
+- Fix quote parsing:
+> `'" "'`       prints `"` instead `" "`
+> `"' '"`       prints `'` instead `' '`
+> `"a    b"`    prints `a` instead `a    b`
+
 - Fix expand quote timing
-> 'export var1="|" var2="ls"' should work fine.
+> `export var1="|" var2="ls"` should work fine.
+> `cat Makefile` should print `cat Makefile: command not found`
 
 - Fix export builtin (linked to quote timing?)
 > export var="'cat Makefile'" OR export var='"cat Makefile"' shouldn't
 > print errors.
 
-- Add $? feature
+##  Final
 
-- Add SHLVL feature
-
-- Add error code management
+- Protect all the malloc
+> Create a 'ft_clear_exit("malloc error")' and a 'ft_strdup' wrapper.
 
 - Remove tokpos
+
+- Comply to norm

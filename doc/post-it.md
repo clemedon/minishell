@@ -231,24 +231,32 @@ https://blog.nelhage.com/2009/12/a-brief-introduction-to-termios/
     [ ] tofix
     [X] fixed
 
+* Parsing:
     [X] echo ""
     [X] echo "$NOP"
     [X] echo "something"
     [X] echo "$USER"
     [X] echo $UU $USER
     [X] $U$USER
+    [X] echo -nnnnnnnn
+    [X] echo -nnn -nnnn -nnn
+    [X] echo -nSalut
+    [ ] echo "$TEST$TEST=lol$TEST"
+    [ ] echo $TEST$TEST=lol$TEST""lol
+    [ ] echo "$=TEST"
+    [ ] echo "$1TEST"
+    [ ] echo ciao ;|
+    [ ] echo ciao |;
+    [ ] echo ciao ||||;
+    [ ] echo ciao <<<<
+    [ ] echo ciao >>>
+    [ ] echo ciao >>>>>
+    [ ] echo ciao <<<;
 
 * Path:
     [ ] mkdir a; cd a; rmdir a; unset PWD; pwd
 
-    [ ] < Makefile > out | echo salut > out
-    [ ] < Makefile cat > out | echo salut > out
-    [ ] < Makefile cat > out | wc -l > out
-    [ ] < Makefile cat > out | wc -l >> out
-    [ ] << STOP cat > out | wc -l >> out
-    [ ] < Makefile wc -l > out | < Makefile grep CC >> out
-
-    [ ] chmod 000 /home/user42; cd -
+    [x] chmod 000 /home; cd -
     [ ] cat;ls puis ctrl-c, le ls ne dois pas s'exécuter.
     [ ] export +=
     [ ] export var="cat Makefile | grep p" puis $var
@@ -256,27 +264,20 @@ https://blog.nelhage.com/2009/12/a-brief-introduction-to-termios/
     [ ] echo bonjour > $var
     [ ] Export var=" f1 f2 "
 
-    [ ] echo bonjour ;|
-    [ ] echo bonjour |;
-    [ ] echo bonjour ||||;
-    [ ] echo bonjour <<<<
-    [ ] echo bonjour >>>
-    [ ] echo bonjour >>>>>
-    [ ] echo bonjour <<<;
-
     [ ] mkdir test_dir ; cd test_dir ; rm -rf ../test_dir ; cd . ; pwd ; cd . ; pwd ; cd .. ; pwd
-
-    [ ] echo "$TEST$TEST=lol$TEST"
-    [ ] echo $TEST$TEST=lol$TEST""lol
-    [ ] echo "$=TEST"
-    [ ] echo "$1TEST"
-
-    [ ] echo -nnnnnnnn
-    [ ] echo -nnn -nnnn -nnn
 
     [ ] export A=a; echo $A;
 
     [ ] export ffff="   "; ffff; "    "
+
+* Redir:
+    [ ] < Makefile > out | echo salut > out
+    [ ] < Makefile cat > out | echo salut > out
+    [ ] < Makefile cat > out | wc -l > out
+    [ ] < Makefile cat > out | wc -l >> out
+    [ ] << STOP cat > out | wc -l >> out
+    [ ] < Makefile wc -l > out | < Makefile grep CC >> out
+
 
 **Behavior:**
 
