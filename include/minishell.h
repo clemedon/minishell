@@ -181,6 +181,7 @@ typedef struct s_data
 
 char	*ft_strjoin_free_s2(char *s1, char *s2);
 char	*ft_strjoin_free_s1(char *s1, char *s2);
+char	*ft_strjoin_free(char *s1, char *s2);
 void	ft_free(void *ptr);
 void	ft_free_tab(char **tab);
 void	*ft_backfree(char **tab, int i);

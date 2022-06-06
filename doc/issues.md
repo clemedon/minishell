@@ -5,6 +5,7 @@
 
 >       help
 
+
 # ------------------------ ( ATHIRION )
 
 - Fix piping and redir builtins
@@ -40,8 +41,6 @@
 
 ##  Builtins
 
-- Add export '+=' feature
-
 - Add ft_exit
 
 ##  Global
@@ -56,6 +55,18 @@
 - Add remove_tok to libft
 
 # ------------------------ ( ? )
+
+- Add errmsg:
+> `" "`     missing a `<space>` at `:command not found` errmsg first char.
+> `""`      and `''` should output `""` / `'': command not found` instead nothing.
+> `|`       should print `bash: syntax error near unexpected token \`|'`
+> `||`      should print `bash: syntax error near unexpected token \`||'`
+> `|||…`    should print `bash: syntax error near unexpected token \`||'`
+> `&`       should print `bash: syntax error near unexpected token \`&'`
+> `.`       should print:
+    bash: .: filename argument required
+    .: usage: . filename [arguments]
+> `~`       should print `bash: /mnt/nfs/homes/cvidon: Is a directory`
 
 - Fix quote parsing:
 > `'" "'`      prints> `"` instead `" "`

@@ -225,7 +225,6 @@ void	ft_printlist_env(t_dlist *envlist)
 	t_dlist	*temp;
 
 	temp = envlist;
-	ft_putstr_fd("-------- ENV --------\n", 1);
 	while (temp)
 	{
 		ft_printf ("%s=%s\n",
@@ -233,7 +232,6 @@ void	ft_printlist_env(t_dlist *envlist)
 				((t_env *)temp->content)->val);
 		temp = temp->next;
 	}
-	ft_putstr_fd("---------------------\n", 1);
 }
 
 /*

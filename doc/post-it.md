@@ -238,6 +238,9 @@ https://blog.nelhage.com/2009/12/a-brief-introduction-to-termios/
     [X] echo $UU $USER
     [X] $U$USER
 
+* Path:
+    [ ] mkdir a; cd a; rmdir a; unset PWD; pwd
+
     [ ] < Makefile > out | echo salut > out
     [ ] < Makefile cat > out | echo salut > out
     [ ] < Makefile cat > out | wc -l > out
@@ -274,7 +277,6 @@ https://blog.nelhage.com/2009/12/a-brief-introduction-to-termios/
     [ ] export A=a; echo $A;
 
     [ ] export ffff="   "; ffff; "    "
-
 
 **Behavior:**
 
