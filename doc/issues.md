@@ -5,6 +5,7 @@
 
 >       help
 
+
 # ------------------------ ( ATHIRION )
 
 ##  Parsing
@@ -34,6 +35,10 @@
 > Might be fixed with the handling of './file' execution. Or the
 > environ check for path before the exec a command.
 
+##  Builtins
+
+- Add ft_exit
+
 ##  Global
 
 - Protect all the malloc
@@ -46,6 +51,18 @@
 - Add remove_tok to libft
 
 # ------------------------ ( ? )
+
+- Add errmsg:
+> `" "`     missing a `<space>` at `:command not found` errmsg first char.
+> `""`      and `''` should output `""` / `'': command not found` instead nothing.
+> `|`       should print `bash: syntax error near unexpected token \`|'`
+> `||`      should print `bash: syntax error near unexpected token \`||'`
+> `|||…`    should print `bash: syntax error near unexpected token \`||'`
+> `&`       should print `bash: syntax error near unexpected token \`&'`
+> `.`       should print:
+    bash: .: filename argument required
+    .: usage: . filename [arguments]
+> `~`       should print `bash: /mnt/nfs/homes/cvidon: Is a directory`
 
 - Fix quote parsing:
 > `'" "'`      prints> `"` instead `" "`

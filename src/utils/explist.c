@@ -236,7 +236,6 @@ void	ft_printlist_exp(t_dlist *explist)
 
 	ft_sort_exp (explist);
 	temp = explist;
-	/* dprintf(1, "-------- EXP --------\n"); */
 	while (temp)
 	{
 		ft_putstr_fd("declare -x ", 1);
@@ -259,7 +258,6 @@ void	ft_printlist_exp(t_dlist *explist)
 		}
 		temp = temp->next;
 	}
-	/* dprintf(1, "---------------------\n"); */
 }
 
 /*

@@ -3,6 +3,16 @@
 
 /*
  ** Export data->cwd and data->oldcwd.
+ **
+ ** If   cmd has    '=' then 'key=value'
+ ** Else cmd = 'key' and value is NULL
+ **
+ ** If 'key' == "PWD"
+ **   If   cmd has '+' -> concate
+ **   Else             -> replace
+ ** If 'key' == "OLDPWD"
+ **   If   cmd has '+' -> concate
+ **   Else             -> replace
  */
 
 static void	ft_data_export (t_data *data, char *cmd)
@@ -12,24 +22,34 @@ static void	ft_data_export (t_data *data, char *cmd)
 
 	if (ft_strchr (cmd, '='))
 	{
-		val = ft_strdup(ft_strchr (cmd, '=') + 1);
-		key = ft_substr (cmd, 0, ft_strlen (cmd) - ft_strlen (val) - 1);
+		val = ft_strdup (ft_strchr (cmd, '=') + 1);
+		key = ft_substr (cmd, 0, ft_strlen (cmd) - ft_strlen (val) - 1
+				- (cmd[ft_strlen (cmd) - ft_strlen(val) - 2] == '+'));
 	}
 	else
 	{
 		val = NULL;
-		key = ft_strdup(cmd);
+		key = ft_strdup (cmd);
 	}
-
 	if (ft_strlen(key) == 3 && ft_strcmp (key, "PWD") == SUCCESS)
 	{
-		ft_free (data->cwd);
-		data->cwd = ft_strdup(val);
+		if (cmd[ft_strlen (cmd) - ft_strlen (val) - 2] == '+')
+			data->cwd = ft_strjoin_free_s1 (data->cwd, val);
+		else
+		{
+			ft_free (data->cwd);
+			data->cwd = ft_strdup (val);
+		}
 	}
 	if (ft_strlen(key) == 6 && ft_strcmp (key, "OLDPWD") == SUCCESS)
 	{
-		ft_free (data->oldcwd);
-		data->oldcwd = ft_strdup(val);
+		if (cmd[ft_strlen (cmd) - ft_strlen (val) - 2] == '+')
+			data->oldcwd = ft_strjoin_free_s1 (data->oldcwd, val);
+		else
+		{
+			ft_free (data->oldcwd);
+			data->oldcwd = ft_strdup (val);
+		}
 	}
 	ft_free (val);
 	ft_free (key);
@@ -54,13 +74,14 @@ static void	ft_explist_export(t_data *data, char *cmd)
 	temp = data->explist;
 	if (ft_strchr (cmd, '='))
 	{
-		val = ft_strdup(ft_strchr (cmd, '=') + 1);
-		key = ft_substr (cmd, 0, ft_strlen (cmd) - ft_strlen (val) - 1);
+		val = ft_strdup (ft_strchr (cmd, '=') + 1);
+		key = ft_substr (cmd, 0, ft_strlen (cmd) - ft_strlen (val) - 1
+				- (cmd[ft_strlen (cmd) - ft_strlen(val) - 2] == '+'));
 	}
 	else
 	{
 		val = NULL;
-		key = ft_strdup(cmd);
+		key = ft_strdup (cmd);
 	}
 	if (ft_check_exp_entry (data->explist, key))
 	{
@@ -68,14 +89,29 @@ static void	ft_explist_export(t_data *data, char *cmd)
 		{
 			if (ft_strncmp(((t_exp *) temp->content)->key, key, 3) == SUCCESS)
 			{
-				ft_free (((t_exp *) temp->content)->val);
-				((t_exp *) temp->content)->val = ft_strdup(val);
+				if (val && cmd[ft_strlen (cmd) - ft_strlen (val) - 2] == '+')
+				{
+					val = ft_strjoin_free (((t_exp *) temp->content)->val, val);
+					((t_exp *) temp->content)->val = ft_strdup (val);
+				}
+				else if (val && ((t_exp *) temp->content)->val)
+				{
+					ft_free (((t_exp *) temp->content)->val);
+					((t_exp *) temp->content)->val = ft_strdup (val);
+				}
+				else if (val && !*val && !((t_exp *) temp->content)->val)
+				{
+					ft_free (((t_exp *) temp->content)->val);
+					((t_exp *) temp->content)->val = ft_strdup (val);
+				}
 			}
 			temp = temp->next;
 		}
 	}
 	else
+	{
 		ft_add_exp (data, ft_strdup (key), ft_strdup (val));
+	}
 	ft_free (val);
 	ft_free (key);
 }
@@ -94,15 +130,24 @@ static void	ft_envlist_export(t_data *data, char *cmd)
 
 	temp = data->envlist;
 	val = ft_strdup(ft_strchr (cmd, '=') + 1);
-	key = ft_substr (cmd, 0, ft_strlen (cmd) - ft_strlen (val) - 1);
+	key = ft_substr (cmd, 0, ft_strlen (cmd) - ft_strlen (val) - 1
+			- (cmd[ft_strlen (cmd) - ft_strlen(val) - 2] == '+'));
 	if (ft_check_env_entry (data->envlist, key))
 	{
 		while (temp)
 		{
 			if (ft_strncmp(((t_env *) temp->content)->key, key, 3) == SUCCESS)
 			{
-				ft_free (((t_env *) temp->content)->val);
-				((t_env *) temp->content)->val = ft_strdup(val);
+				if (val && cmd[ft_strlen (cmd) - ft_strlen (val) - 2] == '+')
+				{
+					val = ft_strjoin_free (((t_env *) temp->content)->val, val);
+					((t_env *) temp->content)->val = ft_strdup (val);
+				}
+				else if (val && ((t_env *) temp->content)->val)
+				{
+					ft_free (((t_env *) temp->content)->val);
+					((t_env *) temp->content)->val = ft_strdup(val);
+				}
 			}
 			temp = temp->next;
 		}
@@ -130,9 +175,9 @@ static int	ft_is_valid_export(char *key)
 		while (*key && (ft_isalnum (*key) || *key == '_'))
 			key++;
 		if (*key == '\0')
-			return (TRUE);
-		if (*key == '=')
-			return (TRUE + 1);
+			return (1);
+		if ((*key == '=') || (*key == '+' && *(key + 1) == '='))
+			return (2);
 	}
 	ft_putstr_fd ("minishell: export: `", 2);
 	ft_putstr_fd (keyptr, 2);
@@ -178,7 +223,7 @@ int	ft_export(t_data *data, char **cmd)
 		{
 			ft_explist_export (data, cmd[i]);
 		}
-		else
+		else if (valid == 2)
 		{
 			ft_data_export (data, cmd[i]);
 			ft_explist_export (data, cmd[i]);
