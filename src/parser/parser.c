@@ -17,15 +17,22 @@ void	ft_parser(t_data *data)
 	if (!ft_parse_pipe(data))
 		return ;
 	ft_expand_var(data);
-	/* ft_expand_quote(data); */
-	/* printf("----------- BEFORE PARSE SPACE ---------\n"); */
+	/* printf("----------- AFTER EXPAND VAR ---------\n"); */
+	/* ft_printlist_tok(data->toklist); */
+	ft_expand_tilde(data);
+	/* printf("----------- AFTER EXPAND TILDE ---------\n"); */
+	/* ft_printlist_tok(data->toklist); */
+	ft_expand_quote(data);
+	/* printf("----------- AFTER PARSE QUOTE ---------\n"); */
 	/* ft_printlist_tok(data->toklist); */
 	ft_parse_space(data);
 	/* printf("----------- AFTER PARSE SPACE ---------\n"); */
 	/* ft_printlist_tok(data->toklist); */
 	ft_parse_redir(data);
-	ft_expand_tilde(data);
+	/* printf("----------- AFTER PARSE REDIR ---------\n"); */
+	/* ft_printlist_tok(data->toklist); */
 	ft_expand_word(data);
+	/* printf("----------- AFTER EXPAND WORD ---------\n"); */
 	/* printf("----------- ft_parser ---------\n"); */
 	/* ft_printlist_tok(data->toklist); */
 	ft_count_pipe(data);
