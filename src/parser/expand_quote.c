@@ -46,7 +46,15 @@ static void	ft_remove_empty_quotes(t_data *data)
 	{
 		if ((ft_is_tokid (temp, QT) && ft_is_tokid (temp->next, QT))
 			|| (ft_is_tokid (temp, DQ) && ft_is_tokid (temp->next, DQ)))
-			temp = temp->next->next;
+		{	
+			free(((t_tok *)temp->next->content)->tok);
+			if (ft_is_tokid(temp, QT))
+				((t_tok *)temp->next->content)->tok = ft_strdup("''");
+			else
+				((t_tok *)temp->next->content)->tok = ft_strdup("\"\"");
+			((t_tok *)temp->next->content)->tokid = WD;
+			temp = temp->next;
+		}
 		else
 		{
 			ft_dlst_elem_dup (&new, temp);
@@ -60,6 +68,18 @@ static void	ft_remove_empty_quotes(t_data *data)
 	ft_free (ptrcpy[1]);
 }
 
+int	ft_is_equal_sign(char *str)
+{
+	size_t len;
+
+	if (!str)
+		return (0);
+	len = ft_strlen(str);
+	if (str[len -1] == '=')
+		return (1);
+	return (0);
+}
+
 /*
  ** Expand QUOTED WORDS to a single WORD.
  */
@@ -71,8 +91,21 @@ static void	ft_expand_quote2(t_dlist **new, t_dlist **temp)
 	while ((*temp)->next
 		&& !ft_is_tokid (*temp, QT) && !ft_is_tokid (*temp, DQ))
 	{
+		if (!ft_is_equal_sign(((t_tok *)(*temp)->content)->tok))
 		ft_dlst_elem_dup (new, *temp);
 		*temp = (*temp)->next;
+	}
+	if ((ft_is_tokid(*temp, QT) || ft_is_tokid(*temp, DQ)) && ft_is_equal_sign(((t_tok *)(*temp)->prev->content)->tok))
+	{
+		if (ft_is_tokid((*temp)->prev, WD))
+		{
+			str = ft_strjoin(((t_tok *)(*temp)->prev->content)->tok, ((t_tok *)(*temp)->next->content)->tok);
+			*temp = (*temp)->next;
+			free(((t_tok *)(*temp)->content)->tok);
+			((t_tok *)(*temp)->content)->tok = ft_strdup(str);
+			free(str);
+			*temp = (*temp)->prev;
+		}
 	}
 	if ((*temp)->next && (ft_is_tokid (*temp, QT) || ft_is_tokid (*temp, DQ)))
 	{
