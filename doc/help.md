@@ -35,9 +35,11 @@ Quicklook on the changes that've been made before to push:
 Switch from the branch to 'main' and update it:
     $ git switch main
     $ git pull
-
 Merge 'main' with the branch:
     $ git merge my-branch
+
+5. In case of conflicts:
+
 Manually fix the conflicts then commit the result:
     $ git status
 > 'Unmerged paths' files
@@ -52,7 +54,7 @@ Manually fix the conflicts then commit the result:
 > Do not change the commit title but feel free to add details about the merge
 > in the body if needed.
 
-5. Push main and delete the branch:
+6. Push main and delete the branch:
     $ git push
     $ git push origin --delete my-branch
     $ git branch -d my-branch
