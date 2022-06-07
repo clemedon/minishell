@@ -4,7 +4,7 @@
 
 >       help
 
-# ------------------------ ( ATHIRION )
+# //////////////////////// ATHIRION
 
 ##  Parsing
 
@@ -12,10 +12,13 @@
 > 'echo " " $USER' shouldn't remove the "space".
 > "      " Shouldnt be reduced to ""
 
-- Fix var expansion parsing
-> 'echo $123A' should display '23A'.
+# //////////////////////// CVIDON
 
-# ------------------------ ( CVIDON )
+- Fix var expansion parsing
+> Var names is ONLY made of ALPHANUMERIC and UNDERSCORE characters.
+> Test with: 'echo "$=TEST" $TEST='
+> Cf. export.c: ft_is_valid_export()
+> 'echo $123A' should display '23A'.
 
 ##  Builtins
 
@@ -23,12 +26,7 @@
 
 ##  Exec
 
-- Fix exec when cwd files named as programs are called
-> 'ls: command not found' if there is a 'ls' file in the CWD.
-> Might be fixed with the handling of './file' execution. Or the
-> environ check for path before the exec a command.
-
-# ------------------------ ( ? )
+# //////////////////////// ???
 
 ##  Execution
 
@@ -53,6 +51,12 @@
 
 - Add execution '`./<program>`' feature
 
+- Fix exec when cwd files named as programs are called
+> 'ls: command not found' if there is a 'ls' file in the CWD.
+> Might be fixed with the handling of *'./<program>' feature*. Or the
+> environ check for path before the exec a command.
+
+
 - Add SHLVL feature
 
 - Fix execution errors:
@@ -60,11 +64,6 @@
 > `cat | ls` then `<C-C>` shouldn't duplicate the prompt + should print `ls`.
 
 ##  Expansion
-
-- Fix var expansion parsing
-> Var names is ONLY made of ALPHANUMERIC and UNDERSCORE characters.
-> Test with: 'echo "$=TEST" $TEST='
-> Cf. export.c: ft_is_valid_export()
 
 ##  Quotes parsing
 
@@ -77,7 +76,7 @@
 > `export var1="|" var2="ls"` should work fine.
 > `cat Makefile` should print `cat Makefile: command not found`
 
-- Fix export builtin (linked to quote timing?)
+- Fix export builtin (linked to *quote timing*?)
 > export var="'cat Makefile'" OR export var='"cat Makefile"' shouldn't
 > print errors.
 
