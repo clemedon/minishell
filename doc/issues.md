@@ -67,3 +67,8 @@
 - Remove tokpos
 
 - Comply to norm
+
+##  Wtf
+
+- Add 'env' ability to export variables to env.
+> `env z=salut`
