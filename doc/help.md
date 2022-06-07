@@ -1,4 +1,7 @@
 
+- Fix var expansion parsing
+> Var names is ONLY made of ALPHANUMERIC and UNDERSCORE characters.
+> echo 1. "$t=TEST" 2. $USER=USER 3. $USERR 4. $USER= 5. $=42 6. $100 7. $0tray
 
 #           HELP
 
@@ -10,18 +13,24 @@
 
 ##  WORKFLOW
 
-0. Choose an issue, create a branch, fix the issue.
+0. Choose an issue, create a branch, **FIX** the issue…
 
-1. Copy the issue into clipboard and remove it from issues.md.
+1. Copy the issue into clipboard and remove it from `issues.md`.
 
-2. Add/commit/push the branch.
+2. Add/commit/*check*/push all changes:
     $ git add .
     $ git commit
-> Commit message according to the issue title and body.
-    $ git push
-> Or 'git push --set-upstream origin <branch_name>' if first push.
+> Commit message according to the issue title and body (paste from clipboard).
 
-3. Merge main with the branch:
+Quicklook on the changes that've been made before to push:
+    $ git diff main..my-branch
+> Use 'git commit --amend' last commit modif needed.
+
+    $ git push
+> Or 'git push --set-upstream origin my-branch' if first push.
+
+
+4. Merge main with the branch:
 
 Switch from the branch to 'main' and update it:
     $ git switch main
@@ -38,18 +47,18 @@ Manually fix the conflicts then commit the result:
     <<<<<<< HEAD
     Here is 'main' version
     =======
-    Here is 'the-branch' version
-    >>>>>>> the-branch
+    Here is 'my-branch' version
+    >>>>>>> ay-branch
 
     $ git add .
     $ git commit
 > Do not change the commit title but feel free to add details about the merge
 > in the body if needed.
 
-4. Push main and delete the branch:
+5. Push main and delete the branch:
     $ git push
-    $ git push origin --delete <branch_name>
-    $ git branch -d <branch_name>
+    $ git push origin --delete my-branch
+    $ git branch -d my-branch
 
 ##  ISSUES
 
