@@ -14,14 +14,6 @@
 
 # //////////////////////// CVIDON
 
-- Fix var expansion parsing
-> Var names is ONLY made of ALPHANUMERIC and UNDERSCORE characters.
-> Test with: 'echo "$=TEST" $TEST='
-> Cf. export.c: ft_is_valid_export()
-> 'echo $123A' should display '23A'.
-
-##  Builtins
-
 - Add ft_exit
 
 ##  Exec

@@ -16,7 +16,7 @@ void	ft_parser(t_data *data)
 		return ;
 	if (!ft_parse_pipe(data))
 		return ;
-	ft_expand_var(data);
+	ft_expand_vars(data);
 	/* printf("----------- AFTER EXPAND VAR ---------\n"); */
 	/* ft_printlist_tok(data->toklist); */
 	ft_expand_tilde(data);

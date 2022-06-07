@@ -1,28 +1,55 @@
 #include "minishell.h"
 
-static char *ft_getenv_var(t_dlist *envlist, char *key)
-{
-	t_dlist	*temp;
-	char *envkey;
-	char *val;
-	char *str;
+/*
+ ** if $0something -> return to join('minishell' + 'something')
+ **
+ ** 		echo $0tray
+ ** 		     bashtray
+ **
+ ** if $+1 == digit -> substr(key, 1, strlend(key - 1));
+ **
+ ** 		echo $100
+ ** 		     00
+ **
+ ** if $+1 = !alpha_ -> return join('$', key);
+ **
+ ** 		echo $=42
+ ** 		     $=42
+ **
+ ** while alphanum_ until !alphanum_ -> join (getenv_var + after !alphanum_)
+ **
+ ** 		echo 1. "$t=TEST" 2. $USER=USER
+ ** 		     1. =TEST     2. cvidon=USER
+ **
+ ** if all alphanum_ -> return getenv_var
+ **
+ ** 		echo $USERR
+ */
 
-	temp = envlist;
-	while (temp)
+static char *ft_expand_var(t_data *data, char *key)
+{
+	char 		*val;
+	char 		*ptr;
+	size_t		i;
+
+	if (key[0] == '0')
+		return (ft_strjoin_free_s2 ("minishell", ft_substr (key, 1, ft_strlen(key - 1))));
+	if (ft_isdigit (key[0]))
+		return (ft_substr (key, 1, ft_strlen(key - 1)));
+	if (!(ft_isalpha (key[0]) || key[0] == '_'))
+		return (ft_strjoin ("$", key));
+	i = 0;
+	while (key[i])
 	{
-		envkey = ((t_env *)temp->content)->key;
-		if (!ft_strncmp(envkey, key, ft_strlen(envkey)))
+		if (!(ft_isalnum (key[i]) || key[i] == '_'))
 		{
-			if (ft_strlen(key) == ft_strlen(envkey))
-				return (ft_strdup(((t_env *)temp->content)->val));
-			else
-			{
-				val = ft_strdup(((t_env *)temp->content)->val);
-				str = ft_substr(key,(unsigned int)ft_strlen(envkey), ft_strlen(key)-ft_strlen(envkey));
-				return (ft_strjoin(val, str));
-			}
+			val = ft_substr (key, 0, i);
+			ptr = val;
+			val = ft_getenv (data->envlist, val);
+			free (ptr);
+			return (ft_strjoin_free_s1 (val, key + i));
 		}
-		temp = temp->next;
+		i++;
 	}
 	return (ft_strdup(""));
 }
@@ -197,7 +224,7 @@ static void	ft_multiple_dollar(t_data *data)
 }
 
 
-void	ft_expand_var(t_data *data)
+void	ft_expand_vars(t_data *data)
 {
 	t_dlist	*temp;
 	char	*str;
@@ -215,7 +242,7 @@ void	ft_expand_var(t_data *data)
 			temp = temp->next;
 			if (ft_strcmp(((t_tok *)temp->content)->tok, "$?"))
 			{
-				str = ft_getenv_var (data->envlist, ((t_tok *)temp->content)->tok);
+				str = ft_expand_var (data, ((t_tok *)temp->content)->tok);
 				free (((t_tok *)temp->content)->tok);
 				((t_tok *)temp->content)->tok = ft_strdup(str);
 				ft_free(str);
@@ -226,4 +253,3 @@ void	ft_expand_var(t_data *data)
 	}
 	ft_remove_dollar (data);
 }
-

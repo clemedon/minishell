@@ -356,13 +356,14 @@ void	ft_expand_quote(t_data *data);
  ** [ parser/expand_var.c ]
  */
 
+/* static char *ft_expand_var(t_data *data, char *key) */
 /* static void ft_remove_dollar(t_data *data) */
-/* static char *ft_digit_var(char *var) */
-/* static void ft_update_token(t_dlist **temp) */
-/* static void ft_dollar_dollar(t_dlist **lst) */
-/* static void ft_update_content(char *str, t_dlist **temp) */
+/* static void ft_heredoc_dollar(t_data *data) */
+/* static void ft_simple_quote(t_data *data) */
 /* static void ft_expand_dollar(t_data *data) */
-void	ft_expand_var(t_data *data);
+/* static void ft_var_exit_status(t_data *data) */
+/* static void ft_multiple_dollar(t_data *data) */
+void	ft_expand_vars(t_data *data);
 
 /*
  ** [ parser/parse_pipe.c ]

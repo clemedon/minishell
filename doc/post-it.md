@@ -237,6 +237,8 @@ https://blog.nelhage.com/2009/12/a-brief-introduction-to-termios/
     [X] echo "something"
     [X] echo "$USER"
     [X] echo $UU $USER
+* Parsing (variable expansion):
+    [X] echo 1. "$t=TEST" 2. $USER=USER 3. $USERR 4. $USER= 5. $=42 6. $100 7. $0tray
     [X] $U$USER
     [X] echo -nnnnnnnn
     [X] echo -nnn -nnnn -nnn
