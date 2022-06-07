@@ -37,12 +37,28 @@ char	*ft_command(t_data *data, char *command)
  ** Get the command and all its arguments.
  */
 
-char	**ft_arg_cmd(char *cmd)
+char	**ft_arg_cmd(t_dlist **cmd, t_dlist **toklist)
 {
-	char	**arg_cmd;
+	t_dlist *temp;
+	size_t		i;
 
-	arg_cmd = ft_split(cmd, ' ');
-	if (!arg_cmd)
+	temp = *toklist;
+	i = 0;
+	((t_cmd *)(*cmd)->content)->nb_arg = 0;
+	while (temp && ft_is_tokid(temp, WD))
+	{
+		((t_cmd *)(*cmd)->content)->nb_arg ++;
+		temp = temp->next;
+	}
+	((t_cmd *)(*cmd)->content)->cmd = (char **)malloc(sizeof(char *) * (((t_cmd *)(*cmd)->content)->nb_arg + 1));
+	if (!((t_cmd  *)(*cmd)->content)->cmd)
 		return (NULL);
-	return (arg_cmd);
+	while (*toklist && ft_is_tokid(*toklist, WD))
+	{
+		((t_cmd *)(*cmd)->content)->cmd[i] = ft_strdup(((t_tok *)(*toklist)->content)->tok);
+		*toklist = (*toklist)->next;
+		i ++;
+	}
+	((t_cmd *)(*cmd)->content)->cmd[i] = NULL;
+	return (((t_cmd *)(*cmd)->content)->cmd);
 }

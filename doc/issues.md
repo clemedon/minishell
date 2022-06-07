@@ -8,9 +8,9 @@
 
 ##  Parsing
 
-- Fix spaces parsing
-> 'echo " " $USER' shouldn't remove the "space".
-> "      " Shouldnt be reduced to ""
+- Fix quote expansion export
+> 'export salut="au revoir" should expand 'salut=au revoir' and not
+> just 'salut='
 
 # //////////////////////// CVIDON
 
