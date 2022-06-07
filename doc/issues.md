@@ -7,9 +7,6 @@
 
 # //////////////////////// CVIDON
 
-- Add var errmsg management:
-> `$anything` should not print `: permission denied`
-
 # //////////////////////// ???
 
 ##  Execution

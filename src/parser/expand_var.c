@@ -39,7 +39,7 @@ static char *ft_expand_var(t_data *data, char *key)
 	if (!(ft_isalpha (key[0]) || key[0] == '_'))
 		return (ft_strjoin ("$", key));
 	i = 0;
-	while (key[i])
+	while (1)
 	{
 		if (!(ft_isalnum (key[i]) || key[i] == '_'))
 		{
@@ -51,7 +51,6 @@ static char *ft_expand_var(t_data *data, char *key)
 		}
 		i++;
 	}
-	return (ft_strdup(""));
 }
 
 /*

@@ -1,6 +1,6 @@
 
-- Fix var expansion parsing
-> Var names is ONLY made of ALPHANUMERIC and UNDERSCORE characters.
+#           HELP
+
 
 #INDEX
 ------
@@ -9,9 +9,6 @@
 ###     RECOVERY
 ##  ISSUES
 ##  GIT
-> echo 1. "$t=TEST" 2. $USER=USER 3. $USERR 4. $USER= 5. $=42 6. $100 7. $0tray
-
-#           HELP
 
 ##  RECIPES
 
