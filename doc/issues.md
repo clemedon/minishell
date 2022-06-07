@@ -11,6 +11,7 @@
 - Fix quote expansion export
 > 'export salut="au revoir" should expand 'salut=au revoir' and not
 > just 'salut='
+> `export var1="|" var2="ls"` should work fine.
 
 # //////////////////////// CVIDON
 
@@ -48,7 +49,6 @@
 > Might be fixed with the handling of *'./<program>' feature*. Or the
 > environ check for path before the exec a command.
 
-
 - Add SHLVL feature
 
 - Fix execution errors:
@@ -59,18 +59,10 @@
 
 ##  Quotes parsing
 
-- Fix quote parsing:
-> `'" "'`       prints `"` instead `" "`
-> `"' '"`       prints `'` instead `' '`
-> `"a    b"`    prints `a` instead `a    b`
-
-- Fix expand quote timing
-> `export var1="|" var2="ls"` should work fine.
-> `cat Makefile` should print `cat Makefile: command not found`
-
 - Fix export builtin (linked to *quote timing*?)
-> export var="'cat Makefile'" OR export var='"cat Makefile"' shouldn't
-> print errors.
+> `export var="'cat Makefile'" OR export var='"cat Makefile"'`
+> `export var="<anything><space>"`
+> shouldn't print errors.
 
 ##  Final
 
