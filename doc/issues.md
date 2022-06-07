@@ -5,18 +5,6 @@
 
 # //////////////////////// ATHIRION
 
-##  Parsing
-
-- Fix quote expansion export
-> 'export salut="au revoir" should expand 'salut=au revoir' and not
-> just 'salut='
-> `export var1="|" var2="ls"` should work fine.
-
-- Fix export builtin (linked to *quote timing*?)
-> `export var="'cat Makefile'" OR export var='"cat Makefile"'`
-> `export var="<anything><space>"`
-> shouldn't print errors.
-
 # //////////////////////// CVIDON
 
 - Add var errmsg management:
@@ -25,9 +13,6 @@
 # //////////////////////// ???
 
 ##  Execution
-
-- Add quote errmsg management:
-> `""`      and `''` should output `""` / `'': command not found` instead nothing.
 
 - Add pipe errmsg management:
 > `|`       should print `bash: syntax error near unexpected token \`|'`
