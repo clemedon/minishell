@@ -10,9 +10,9 @@
 
 ##  Parsing
 
-- Fix spaces parsing
-> 'echo " " $USER' shouldn't remove the "space".
-> "      " Shouldnt be reduced to ""
+- Fix quote expansion export
+> 'export salut="au revoir" should expand 'salut=au revoir' and not
+> just 'salut='
 
 - Fix var expansion parsing
 > 'echo $123A' should display '23A'.
@@ -60,11 +60,6 @@
     bash: .: filename argument required
     .: usage: . filename [arguments]
 > `~`       should print `bash: /mnt/nfs/homes/cvidon: Is a directory`
-
-- Fix quote parsing:
-> `'" "'`      prints> `"` instead `" "`
-> `"' '"`      prints> `'` instead `' '`
-> `"a    b"` prints> `a` instead `a    b`
 
 - Fix empty var errmsg
 > '$notavar' should not print ': command not found'

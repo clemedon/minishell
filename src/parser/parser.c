@@ -31,10 +31,6 @@ void	ft_parser(t_data *data)
 	ft_parse_redir(data);
 	/* printf("----------- AFTER PARSE REDIR ---------\n"); */
 	/* ft_printlist_tok(data->toklist); */
-	ft_expand_word(data);
-	/* printf("----------- AFTER EXPAND WORD ---------\n"); */
-	/* printf("----------- ft_parser ---------\n"); */
-	/* ft_printlist_tok(data->toklist); */
 	ft_count_pipe(data);
 	ft_create_cmdlist(data);
 	/* printf("----------- cmd_list ----------\n"); */

@@ -100,6 +100,7 @@ typedef struct s_cmd
 	int		error;
 	int		cmdid;
 	int		cmdpos;
+	size_t	nb_arg;
 	char	**cmd;
 	char	*prg;
 
@@ -300,7 +301,7 @@ int		ft_is_tokid(t_dlist *toklist, int tokid);
  */
 
 char	*ft_command(t_data *data, char *command);
-char	**ft_arg_cmd(char *cmd);
+char	**ft_arg_cmd(t_dlist **cmd, t_dlist **toklist);
 
 /*
  ** [ utils/pipe.c ]

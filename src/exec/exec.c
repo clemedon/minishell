@@ -74,7 +74,7 @@ void	ft_exec_cmd(t_data *data, t_dlist *cmd, int *status, char **environ)
 		ft_perror(data, cmd, errno);
 	if (pid > 0)
 	{
-		/* signal(2 & 3, SIG_IGN); */
+		signal(2 & 3, SIG_IGN);
 		ft_parent(data, cmd, *status, pid);
 	}
 	if (pid == 0)
