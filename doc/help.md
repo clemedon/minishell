@@ -28,7 +28,7 @@ Quicklook on the changes that've been made before to push:
 > Use 'git commit --amend' last commit modif needed.
 
     $ git push
-> Or 'git push --set-upstream origin my-branch' if first push.
+> Or 'git push --set-upstream origin my-branch' if first push. ***TODO check rebase***
 
 4. Merge main with the branch:
 
