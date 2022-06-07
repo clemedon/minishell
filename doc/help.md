@@ -1,17 +1,21 @@
 
 - Fix var expansion parsing
 > Var names is ONLY made of ALPHANUMERIC and UNDERSCORE characters.
+
+#INDEX
+------
+##  RECIPES
+###     WORKFLOW
+###     RECOVERY
+##  ISSUES
+##  GIT
 > echo 1. "$t=TEST" 2. $USER=USER 3. $USERR 4. $USER= 5. $=42 6. $100 7. $0tray
 
 #           HELP
 
-#INDEX
-------
-##  WORKFLOW
-##  ISSUES
-##  GIT
+##  RECIPES
 
-##  WORKFLOW
+###     WORKFLOW
 
 0. Choose an issue, create a branch, **FIX** the issue…
 
@@ -37,12 +41,9 @@ Switch from the branch to 'main' and update it:
 
 Merge 'main' with the branch:
     $ git merge my-branch
-    $ git status
-
 Manually fix the conflicts then commit the result:
     $ git status
 > 'Unmerged paths' files
-
     <<<<<<< HEAD
     Here is 'main' version
     =======
@@ -58,6 +59,51 @@ Manually fix the conflicts then commit the result:
     $ git push
     $ git push origin --delete my-branch
     $ git branch -d my-branch
+
+###     RECOVERY
+
+1. Copy (to clipboard) the commit hash of the repo state you want recover:
+    $ git log
+
+2. Create a branch and checkout to the desired commit:
+    $ git branch my-recovery-branch
+    $ git switch my-recovery-branch
+    $ git checkout <commit_hash> .
+> **Dont forget the '.'** or we go for a detached head stat in which we can make
+> changes and commit but nothing will be saved and any commit will be lost as it
+> doesnt belong to any branch.
+
+3. Finally, we can add/commit changes:
+    git add .
+    git commit -m "Reverting to <commit_hash> because..."
+    git push
+
+4. Merge main with the branch:
+
+Switch from the branch to 'main' and update it:
+    $ git switch main
+    $ git pull
+
+Merge 'main' with the branch:
+    $ git merge my-recovery-branch
+Manually fix the conflicts then commit the result:
+    $ git status
+> 'Unmerged paths' files are the conflicted.
+    <<<<<<< HEAD
+    Here is 'main' version
+    =======
+    Here is 'my-recovery-branch' version
+    >>>>>>> my-branch
+
+    $ git add .
+    $ git commit
+> Do not change the commit title but feel free to add details about the merge in
+> the body if needed.
+
+5. Push main and delete the branch:
+    $ git push
+    $ git push origin --delete my-recovery-branch
+    $ git branch -d my-recovery-branch
 
 ##  ISSUES
 
