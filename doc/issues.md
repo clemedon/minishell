@@ -11,6 +11,9 @@
 
 ##  Execution
 
+- Protect all open and close
+> Create a function to handle file control error
+
 - Fix execution behavior:
 > `cat | cat | cat` then `<CR><C-C>` the prompt should go to newline.
 > `cat | ls` then `<CR><C-C>` the prompt should go to newline.
@@ -20,7 +23,6 @@
 - Add ft_exit
 
 - Add SHLVL feature
-
 
 - Add pipe errmsg management:
 > `|`       should print `bash: syntax error near unexpected token \`|'`
@@ -60,7 +62,7 @@
 > Shouldn't print: `: Exec format error`
 
 - Fix execution of minishell in minishell after chmod
-> chmod 000 minishell 
+> chmod 000 minishell
 > Shouldn't print : 'Command not found' but 'Permission denied'
 > after chmod 000, chmod 777 doesn't work anymore
 > Should run minishell instead of printing 'Command not found'

@@ -67,8 +67,6 @@ In case of conflicts:
 > Do not change the commit title but feel free to add details about the merge
 > in the body if needed.
 
-* Push main:
-    $ git push
 # ===============================
 
 # --------- IF Merge ------------
@@ -81,6 +79,9 @@ In case of conflicts:
 * Delete my-branch:
     $ git branch -d my-branch
 # ===============================
+
+* Push main:
+    $ git push
 
 ###     RECOVERY
 
