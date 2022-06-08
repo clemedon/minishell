@@ -14,11 +14,11 @@
 
 ###     WORKFLOW
 
-0. Choose an issue, create a branch, **FIX** the issue…
+* Choose an issue, create a branch, **FIX** the issue…
 
-1. Copy the issue into clipboard and remove it from `issues.md`.
+* Copy the issue into clipboard and remove it from `issues.md`.
 
-2. Add/commit/*check*/push all changes:
+* Add/commit/*check*/push all changes:
     $ git add .
     $ git commit
 > Commit message according to the issue title and body (paste from clipboard).
@@ -27,37 +27,60 @@ Quicklook on the changes that've been made before to push:
     $ git diff main..my-branch
 > Use 'git commit --amend' last commit modif needed.
 
-    $ git push
-> Or 'git push --set-upstream origin my-branch' if first push. ***TODO check rebase***
+# --------- IF Merge ------------
+    $ git push --set-upstream origin my-branch
+> Or `$ git push` if not first push.
 
-4. Merge main with the branch:
-
-Switch from the branch to 'main' and update it:
+* Move to 'main' and update it:
     $ git switch main
     $ git pull
-Merge 'main' with the branch:
+* Merge:
     $ git merge my-branch
+# ===============================
 
-5. In case of conflicts:
+# --------- IF Rebase -----------
+***WARNING*** ONLY if my-branch is LOCAL and haven't been pushed.
 
-Manually fix the conflicts then commit the result:
+* Target rebase destination branch:
+    git rebase main
+* Move to 'main' and update it:
+    $ git switch main
+    $ git pull
+* Merge:
+    git merge my-branch
+# ===============================
+
+# --------- IF Conflict ---------
+In case of conflicts:
+
+* Manually fix the conflicts then commit the result:
     $ git status
 > 'Unmerged paths' files
     <<<<<<< HEAD
     Here is 'main' version
     =======
     Here is 'my-branch' version
-    >>>>>>> ay-branch
+    >>>>>>> my-branch
 
     $ git add .
     $ git commit
 > Do not change the commit title but feel free to add details about the merge
 > in the body if needed.
 
-6. Push main and delete the branch:
+* Push main:
     $ git push
+# ===============================
+
+# --------- IF Merge ------------
+* Delete my-branch:
     $ git push origin --delete my-branch
     $ git branch -d my-branch
+# ===============================
+
+# --------- IF Rebase -----------
+* Delete my-branch:
+    $ git branch -d my-branch
+# ===============================
 
 ###     RECOVERY
 
@@ -214,10 +237,20 @@ Merge branch_name with the current branch:
 
 **Branching Rebasing**
 
-***ONLY rebase local commits that haven't been pushed.***
+***ONLY rebase local commits that haven't been pushed!***
 
-> Take all the changes that were committed on one branch and replay
-> them on a different branch.
+> Take all the changes that were committed on one
+> branch and replay them on a different branch.
+
+1. Rebase 'my-branch' with main (from my-branch):
+
+
+Target the rebase destination branch:
+    git rebase main
+
+Move to the rebase destination branch and merge:
+    git switch main
+    git merge my-branch
 
 Rebasing example, from 'experiment' to 'master':
 1. move to the branch to rebase
@@ -234,5 +267,5 @@ Rebasing example, from 'experiment' to 'master':
 > latest commit of the feature branch: *fast-forward*
 
 > There is no difference between the end product
-> commit of *a rebasing or a merging*, but rebasing
-> makes a cleaner history, a linear one.
+> commit of a rebasing or a merging, but rebasing
+> makes a *cleaner history*, a linear one.
