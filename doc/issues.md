@@ -16,6 +16,26 @@
 > `||`      should print `bash: syntax error near unexpected token \`||'`
 > `|||…`    should print `bash: syntax error near unexpected token \`||'`
 
+- Fix segfault if PATH doesnt exist
+> unset PATH; ls
+
+- Fix exec when cwd files named as programs are called
+> 'ls: command not found' if there is a 'ls' file in the CWD.
+> Might be fixed with the handling of *'./<program>' feature*. Or the
+> environ check for path before the exec a command.
+
+- Fix execution behavior:
+> `cat | cat | cat` then `<CR><C-C>` the prompt should go to newline.
+> `cat | ls` then `<CR><C-C>` the prompt should go to newline.
+
+- Add execution error code management
+- Add execution $? feature
+- Add execution '`./<program>`' feature
+
+- Add SHLVL feature
+
+- Add ft_exit
+
 - Add bonus errmsg management:
 > `&`       should print `bash: syntax error near unexpected token \`&'`
 > `.`       should print
@@ -24,22 +44,6 @@
 > `~`       should print `bash: /mnt/nfs/homes/cvidon: Is a directory`
 > `echo ciao > ~`           should print `bash: /mnt/nfs/homes/cvidon: Is a directory`
 > `echo ciao > $notavar`    should print: `bash: $notavar: ambiguous redirect`
-
-- Add execution error code management
-- Add execution $? feature
-- Add execution '`./<program>`' feature
-- Fix exec when cwd files named as programs are called
-> 'ls: command not found' if there is a 'ls' file in the CWD.
-> Might be fixed with the handling of *'./<program>' feature*. Or the
-> environ check for path before the exec a command.
-
-- Add SHLVL feature
-
-- Add ft_exit
-
-- Fix execution behavior:
-> `cat | cat | cat` then `<C-C>` shouldn't quit minishell.
-> `cat | ls` then `<C-C>` shouldn't duplicate the prompt + should print `ls`.
 
 ##  Final
 
