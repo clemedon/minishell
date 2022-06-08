@@ -11,8 +11,6 @@
 
 ##  Execution
 
-- Add SHLVL feature
-
 - Fix execution cwdfile named as prgs
 > When a file in CWD has the name of a program.
 > 'ls: command not found' if there is a 'ls' file in the CWD.
@@ -26,6 +24,13 @@
 - Add execution error code management
 - Add execution $? feature
 - Add ft_exit
+
+- Add SHLVL feature
+
+- Add pipe errmsg management:
+> `|`       should print `bash: syntax error near unexpected token \`|'`
+> `||`      should print `bash: syntax error near unexpected token \`||'`
+> `|||…`    should print `bash: syntax error near unexpected token \`||'`
 
 - Add pipe errmsg management:
 > `|`       should print `bash: syntax error near unexpected token \`|'`
