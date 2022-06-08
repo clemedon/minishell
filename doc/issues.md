@@ -11,12 +11,7 @@
 
 ##  Execution
 
-- Add pipe errmsg management:
-> `|`       should print `bash: syntax error near unexpected token \`|'`
-> `||`      should print `bash: syntax error near unexpected token \`||'`
-> `|||…`    should print `bash: syntax error near unexpected token \`||'`
-
-- Add execution '`./<program>`' feature
+- Add SHLVL feature
 
 - Fix execution cwdfile named as prgs
 > When a file in CWD has the name of a program.
@@ -30,10 +25,12 @@
 
 - Add execution error code management
 - Add execution $? feature
-
-- Add SHLVL feature
-
 - Add ft_exit
+
+- Add pipe errmsg management:
+> `|`       should print `bash: syntax error near unexpected token \`|'`
+> `||`      should print `bash: syntax error near unexpected token \`||'`
+> `|||…`    should print `bash: syntax error near unexpected token \`||'`
 
 - Add bonus errmsg management:
 > `&`       should print `bash: syntax error near unexpected token \`&'`
