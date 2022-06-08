@@ -300,8 +300,10 @@ int		ft_is_tokid(t_dlist *toklist, int tokid);
  ** [ parser/parse_command.c ]
  */
 
+char	*ft_expand_cwd (char *command);
 char	*ft_command(t_data *data, char *command);
 char	**ft_arg_cmd(t_dlist **cmd, t_dlist **toklist);
+void	ft_parse_command(t_data *data);
 
 /*
  ** [ utils/pipe.c ]

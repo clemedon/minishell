@@ -29,7 +29,7 @@ void	ft_child(t_data *data, t_dlist *cmd, char **environ)
 	if (((t_cmd *)cmd->content)->file_out)
 		dup2(((t_cmd *)cmd->content)->fd_out, STDOUT_FILENO);
 	else if (cmd->next)
-		dup2(((t_cmd *)cmd->content)->fd[1], STDOUT_FILENO);	
+		dup2(((t_cmd *)cmd->content)->fd[1], STDOUT_FILENO);
 	if (ft_is_builtin(cmd) && ft_fork_builtin(cmd))
 	{
 		ft_exec_builtin(data, cmd, ft_is_builtin(cmd));

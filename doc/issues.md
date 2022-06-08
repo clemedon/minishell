@@ -16,10 +16,10 @@
 > `||`      should print `bash: syntax error near unexpected token \`||'`
 > `|||…`    should print `bash: syntax error near unexpected token \`||'`
 
-- Fix segfault if PATH doesnt exist
-> unset PATH; ls
+- Add execution '`./<program>`' feature
 
-- Fix exec when cwd files named as programs are called
+- Fix execution cwdfile named as prgs
+> When a file in CWD has the name of a program.
 > 'ls: command not found' if there is a 'ls' file in the CWD.
 > Might be fixed with the handling of *'./<program>' feature*. Or the
 > environ check for path before the exec a command.
@@ -30,7 +30,6 @@
 
 - Add execution error code management
 - Add execution $? feature
-- Add execution '`./<program>`' feature
 
 - Add SHLVL feature
 
@@ -51,6 +50,7 @@
 > Create a 'ft_clear_exit("malloc error")' and a 'ft_strdup' wrapper.
 
 - Remove tokpos
+- Remove redlist
 
 - Comply to norm
 

@@ -22,87 +22,43 @@ void	ft_remove_cmd(t_dlist *cmdlist, t_dlist *cmd)
 
 void    ft_init_cmd(t_data *data, t_cmd **cmd)
 {
-        (*cmd)->error = 0;
-        (*cmd)->cmdid = data->cmdid ++;
-        (*cmd)->nb_arg = 0;
-        (*cmd)->cmd = NULL;
-        (*cmd)->prg = NULL;
-		(*cmd)->type_in = 0;
-		(*cmd)->type_out = 0;
-        (*cmd)->file_in = NULL;
-        (*cmd)->file_out = NULL;
-		(*cmd)->stop_word = NULL;
-        (*cmd)->is_here_doc = 0;
-        (*cmd)->fd_in = STDIN_FILENO;
-        (*cmd)->fd_out = STDOUT_FILENO;
-}
-
-void    ft_parse_command(t_data *data)
-{
-        t_dlist *temp;
-        t_dlist *cmd;
-
-        temp = data->toklist;
-        cmd = data->cmdlist;
-        while (temp)
-        {
-                while (temp && !ft_is_tokid(temp, PP))
-                {
-                        if (temp->next && ft_is_tokid(temp, LS))
-						{
-							((t_cmd *)cmd->content)->file_in = ft_strdup(((t_tok *)temp->next->content)->tok);
-							((t_cmd *)cmd->content)->type_in = ((t_tok *)temp->content)->tokid;
-							temp = temp->next->next;
-						}
-						else if (temp->next && ft_is_tokid(temp, DL))
-                        {
-                                ((t_cmd *)cmd->content)->file_in = ft_strdup("/tmp/temp_heredoc");
-								((t_cmd *)cmd->content)->stop_word = ft_strdup(((t_tok *)temp->next->content)->tok);
-								((t_cmd *)cmd->content)->type_in = ((t_tok *)temp->content)->tokid;
-                                ((t_cmd *)cmd->content)->is_here_doc = 1;
-								temp = temp->next->next;
-                        }
-                        else if (temp->next && (ft_is_tokid(temp, GT) || ft_is_tokid(temp, DG)))
-						{
-							((t_cmd *)cmd->content)->file_out = ft_strdup(((t_tok *)temp->next->content)->tok);
-							((t_cmd *)cmd->content)->type_out = ((t_tok *)temp->content)->tokid;
-							temp = temp->next->next;
-						}
-						else if (ft_is_tokid(temp, WD) && ((t_tok *)temp->content)->tok)
-                        {
-                                ((t_cmd *)cmd->content)->cmd = ft_arg_cmd(&cmd, &temp);
-                        		((t_cmd *)cmd->content)->prg = ft_command(data, ((t_cmd *)cmd->content)->cmd[0]);
-						}
-						if (temp && ft_is_tokid(temp, PP))
-							cmd = cmd->next;
-                }
-				if (temp)
-                	temp = temp->next;
-        }
+	(*cmd)->error = 0;
+	(*cmd)->cmdid = data->cmdid ++;
+	(*cmd)->nb_arg = 0;
+	(*cmd)->cmd = NULL;
+	(*cmd)->prg = NULL;
+	(*cmd)->type_in = 0;
+	(*cmd)->type_out = 0;
+	(*cmd)->file_in = NULL;
+	(*cmd)->file_out = NULL;
+	(*cmd)->stop_word = NULL;
+	(*cmd)->is_here_doc = 0;
+	(*cmd)->fd_in = STDIN_FILENO;
+	(*cmd)->fd_out = STDOUT_FILENO;
 }
 
 void    ft_create_cmdlist(t_data *data)
 {
-        int     i;
+	int     i;
 
-        i = 0;
-        while (i <= data->nb_pipes)
-        {
-                ft_add_cmd (data);
-                i ++;
-        }
-        ft_parse_command(data);
+	i = 0;
+	while (i <= data->nb_pipes)
+	{
+		ft_add_cmd (data);
+		i ++;
+	}
+	ft_parse_command (data);
 }
 
 void    ft_add_cmd(t_data *data)
 {
-        t_cmd   *cmd;
+	t_cmd   *cmd;
 
-        cmd = malloc(sizeof(t_cmd));
-        if (!cmd)
-                exit (EXIT_FAILURE);
-        ft_init_cmd(data, &cmd);
-        ft_dlstadd_back(&data->cmdlist, ft_dlstnew(cmd));
+	cmd = malloc(sizeof(t_cmd));
+	if (!cmd)
+		exit (EXIT_FAILURE);
+	ft_init_cmd(data, &cmd);
+	ft_dlstadd_back(&data->cmdlist, ft_dlstnew(cmd));
 }
 
 /*
@@ -118,8 +74,7 @@ void	ft_printlist_cmd(t_dlist *lst)
 	while (temp)
 	{
 		i = 0;
-		ft_printf(" [ error: '%i', id: '%i', ",
-				((t_cmd *)temp->content)->error, ((t_cmd *)temp->content)->cmdid);
+		ft_printf(" [ error: '%i', id: '%i', ", ((t_cmd *)temp->content)->error, ((t_cmd *)temp->content)->cmdid);
 		while (((t_cmd *)temp->content)->cmd && i < ((t_cmd *)temp->content)->nb_arg)
 		{
 			printf("cmd[%ld]: '%s', ", i, ((t_cmd *)temp->content)->cmd[i]);
