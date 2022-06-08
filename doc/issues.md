@@ -11,12 +11,6 @@
 
 ##  Execution
 
-- Fix execution cwdfile named as prgs
-> When a file in CWD has the name of a program.
-> 'ls: command not found' if there is a 'ls' file in the CWD.
-> Might be fixed with the handling of *'./<program>' feature*. Or the
-> environ check for path before the exec a command.
-
 - Fix execution behavior:
 > `cat | cat | cat` then `<CR><C-C>` the prompt should go to newline.
 > `cat | ls` then `<CR><C-C>` the prompt should go to newline.
@@ -26,6 +20,7 @@
 - Add ft_exit
 
 - Add SHLVL feature
+
 
 - Add pipe errmsg management:
 > `|`       should print `bash: syntax error near unexpected token \`|'`
@@ -57,6 +52,10 @@
 - Comply to norm
 
 ##  Wtf
+
+- Fix execution cwd executable file
+> from cwd: `touch ls; chmod +x ls; ls`
+> Shouldn't print: `: Exec format error`
 
 - Add 'env' ability to export variables to env.
 > `env z=salut`

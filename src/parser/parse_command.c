@@ -13,9 +13,8 @@ char	*ft_command(t_data *data, char *command)
 	if (!command)
 		return (NULL);
 
-	if (access(command, 0) == 0)
+	if (access(command, X_OK) == 0)
 		return (ft_strdup (command));
-
 	i = 0;
 	while (data->cmd_path && data->cmd_path[i])
 	{
