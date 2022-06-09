@@ -256,15 +256,17 @@ int ft_is_builtin(t_dlist *cmd);
 int ft_exec_builtin(t_data *data, t_dlist *cmd, int builtin_id);
 
 /*
- ** [ exec/open.c ]
+ ** [ exec/file.c ]
  */
 
-void	ft_open(t_dlist *cmd);
+void	ft_open(t_data *data, t_dlist *cmd);
+void    ft_close(t_data *data, t_dlist *cmd, int *fd);
 
 /*
- ** [ exec/exit.c ]
+ ** [ exec/error.c ]
  */
 
+void	ft_file_error(char *file, int error);
 void    ft_cmd_error(t_dlist *cmd, int error);
 void    ft_perror(t_data *data, t_dlist *cmd, int error);
 
@@ -272,7 +274,6 @@ void    ft_perror(t_data *data, t_dlist *cmd, int error);
  ** [ exec/close.c ]
  */
 
-void    ft_close(t_dlist *cmd, int *fd);
 void    ft_close_fd(t_data *data, t_dlist *cmd);
 void    ft_close_std(void);
 void    ft_close_all(t_data *data, t_dlist *cmd);

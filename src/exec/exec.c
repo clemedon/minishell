@@ -3,13 +3,13 @@
 int	ft_parent(t_data *data, t_dlist *cmd, int status, int pid)
 {
 	if (cmd->next)
-		close(((t_cmd *)cmd->content)->fd[1]);
+		ft_close(data, cmd, &((t_cmd *)cmd->content)->fd[1]);
 	else if (!(cmd == data->cmdlist))
-		close(((t_cmd *)cmd->prev->content)->fd[0]);
+		ft_close(data, cmd, &((t_cmd *)cmd->prev->content)->fd[0]);
 	if (((t_cmd *)cmd->content)->file_in)
-		close(((t_cmd *)cmd->content)->fd_in);
+		ft_close(data, cmd, &((t_cmd *)cmd->content)->fd_in);
 	if (((t_cmd *)cmd->content)->file_out)
-		close(((t_cmd *)cmd->content)->fd_out);
+		ft_close(data, cmd, &((t_cmd *)cmd->content)->fd_out);
 	if (!cmd->next)
 		if (waitpid(pid, &status, 0) == -1)
 			ft_perror(data, cmd, errno);
@@ -23,11 +23,19 @@ void	ft_child(t_data *data, t_dlist *cmd, char **environ)
 	if (ft_is_builtin(cmd) && !ft_fork_builtin(cmd))
 		exit(EXIT_FAILURE);
 	if (((t_cmd *)cmd->content)->file_in)
+	{
+		if (((t_cmd *)cmd->content)->fd_in == -1)
+			exit(EXIT_FAILURE);
 		dup2(((t_cmd *)cmd->content)->fd_in, STDIN_FILENO);
+	}
 	else if (!(cmd == data->cmdlist))
 		dup2(((t_cmd *)cmd->prev->content)->fd[0], STDIN_FILENO);
 	if (((t_cmd *)cmd->content)->file_out)
+	{	
+		if (((t_cmd *)cmd->content)->fd_out == -1)
+			exit(EXIT_FAILURE);
 		dup2(((t_cmd *)cmd->content)->fd_out, STDOUT_FILENO);
+	}
 	else if (cmd->next)
 		dup2(((t_cmd *)cmd->content)->fd[1], STDOUT_FILENO);
 	if (ft_is_builtin(cmd) && ft_fork_builtin(cmd))
@@ -48,7 +56,7 @@ void	ft_open_file(t_data *data)
 	cmd = data->cmdlist;
 	while (cmd)
 	{
-		ft_open(cmd);
+		ft_open(data, cmd);
 		cmd = cmd->next;
 	}
 }

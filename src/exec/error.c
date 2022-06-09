@@ -16,6 +16,15 @@ void	ft_cmd_error(t_dlist *cmd, int error)
 	exit(error);
 }
 
+void	ft_file_error(char *file, int error)
+{
+	ft_putstr_fd("minishell: ", 2);
+	if (file)
+		ft_putstr_fd(file, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putendl_fd(strerror(error), 2);
+}
+
 void	ft_perror(t_data *data, t_dlist *cmd, int error)
 {
 	if (error == 127 || error == 126)

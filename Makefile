@@ -36,7 +36,7 @@ SRCS		= main.c 				\
 			  utils/cmdlist.c		\
 			  exec/exec.c			\
 			  exec/exec_builtin.c	\
-			  exec/open.c			\
+			  exec/file.c			\
 			  exec/error.c			\
 			  builtin/env.c			\
 			  builtin/unset.c		\
