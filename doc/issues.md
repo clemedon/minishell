@@ -11,6 +11,9 @@
 
 ##  Execution
 
+- Protect all open and close
+> Create a function to handle file control error
+
 - Fix execution behavior:
 > `cat | cat | cat` then `<CR><C-C>` the prompt should go to newline.
 > `cat | ls` then `<CR><C-C>` the prompt should go to newline.
