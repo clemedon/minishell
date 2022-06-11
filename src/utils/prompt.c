@@ -40,8 +40,9 @@ static char	*ft_prompt_line(t_data *data)
 
 	prefix = ft_prompt_prefix ();
 	home = getenv ("HOME");
-	homelen = ft_strlen (home);
-	if (ft_strncmp (data->cwd, home, homelen) == 0)
+	if (home)
+		homelen = ft_strlen (home);
+	if (home && ft_strncmp (data->cwd, home, homelen) == 0)
 	{
 		prompt = ft_substr
 			(data->cwd, (unsigned int) homelen, ft_strlen (data->cwd));

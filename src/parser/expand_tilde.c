@@ -47,16 +47,24 @@ void	ft_expand_tilde(t_data *data)
 			if (ft_strlen(((t_tok *)temp->content)->tok) == 1)
 			{
 				home = ft_getenv(data->envlist, "HOME");
-				free(((t_tok *)temp->content)->tok);
-				((t_tok *)temp->content)->tok = ft_strdup(home);
-				ft_free(home);
+				if (home)
+				{
+					free(((t_tok *)temp->content)->tok);
+					((t_tok *)temp->content)->tok = ft_strdup(home);
+				}
+				ft_free (home);
 			}
 			else if (!ft_strncmp(((t_tok *)temp->content)->tok, "~/", 2))
 			{
 				home = ft_getenv(data->envlist, "HOME");
-				path = ft_substr(((t_tok *)temp->content)->tok, 1, ft_strlen(((t_tok *)temp->content)->tok) - 1);
-				free(((t_tok *)temp->content)->tok);
-				((t_tok *)temp->content)->tok = ft_concat_path(home, path);
+				if (home)
+				{
+					path = ft_substr(((t_tok *)temp->content)->tok, 1, ft_strlen(((t_tok *)temp->content)->tok) - 1);
+					free(((t_tok *)temp->content)->tok);
+					((t_tok *)temp->content)->tok = ft_concat_path(home, path);
+				}
+				else
+					ft_free (home);
 			}
 		}
 		temp = temp->next;
