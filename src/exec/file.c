@@ -63,9 +63,9 @@ void    ft_open(t_data *data, t_dlist *cmd)
                         ((t_cmd *)cmd->content)->fd_out = open(((t_cmd *)cmd->content)->file_out, O_CREAT | O_TRUNC | O_RDWR, 0644);
         }
         if (((t_cmd *)cmd->content)->fd_out == -1)
-        {
+        /* { */
              ft_file_error(((t_cmd *)cmd->content)->file_out, errno);
-             ft_close(data, cmd, &((t_cmd *)cmd->content)->fd_in);
-        }
+             /* ft_close(data, cmd, &((t_cmd *)cmd->content)->fd_in); */
+        /* } */
 }
 

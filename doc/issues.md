@@ -38,7 +38,6 @@
     bash: .: filename argument required
     .: usage: . filename [arguments]
 > `~`       should print `bash: /mnt/nfs/homes/cvidon: Is a directory`
-> `echo ciao > ~`           should print `bash: /mnt/nfs/homes/cvidon: Is a directory`
 > `echo ciao > $notavar`    should print: `bash: $notavar: ambiguous redirect`
 
 ##  Final
@@ -56,6 +55,15 @@
 - Fix execution cwd executable file
 > from cwd: `touch ls; chmod +x ls; ls`
 > Shouldn't print: `: Exec format error`
+
+- Fix execution of minishell in minishell after chmod
+> chmod 000 minishell 
+> Shouldn't print : 'Command not found' but 'Permission denied'
+> after chmod 000, chmod 777 doesn't work anymore
+> Should run minishell instead of printing 'Command not found'
+
+- Fix execution of cwd bin
+> ./ls runs /usr/bin/ls and not the copy tin the cwd
 
 - Add 'env' ability to export variables to env.
 > `env z=salut`
