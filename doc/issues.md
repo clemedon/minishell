@@ -15,10 +15,6 @@
 > `cat | cat | cat` then `<CR><C-C>` the prompt should go to newline.
 > `cat | ls` then `<CR><C-C>` the prompt should go to newline.
 
-- Fix execution space
-> Stdin remain open when commandline start with a <space>
-> Or is only one <space>
-
 - Add execution error code management
 - Add execution $? feature
 - Add ft_exit
