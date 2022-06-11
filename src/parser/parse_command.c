@@ -71,6 +71,8 @@ void    ft_parse_command(t_data *data)
 
 	temp = data->toklist;
 	cmd = data->cmdlist;
+	while (temp && ft_is_tokid (temp, WS))
+		temp = temp->next;
 	while (temp)
 	{
 		while (temp && !ft_is_tokid(temp, PP))
