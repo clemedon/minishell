@@ -3,10 +3,10 @@
 int	ft_fork_builtin(t_dlist *cmd)
 {
 	if (!ft_strcmp(((t_cmd *)cmd->content)->cmd[0], "echo")
-		|| !ft_strcmp(((t_cmd *)cmd->content)->cmd[0], "pwd")
-		|| !ft_strcmp(((t_cmd *)cmd->content)->cmd[0], "env")
-		|| (!ft_strcmp(((t_cmd *)cmd->content)->cmd[0], "export")
-		&& !((t_cmd *)cmd->content)->cmd[1]))
+			|| !ft_strcmp(((t_cmd *)cmd->content)->cmd[0], "pwd")
+			|| !ft_strcmp(((t_cmd *)cmd->content)->cmd[0], "env")
+			|| (!ft_strcmp(((t_cmd *)cmd->content)->cmd[0], "export")
+				&& !((t_cmd *)cmd->content)->cmd[1]))
 		return (1);
 	return (0);
 }
@@ -31,7 +31,7 @@ int	ft_is_builtin(t_dlist *cmd)
 		return (6);
 	return (0);
 }
- 
+
 int	ft_exec_builtin(t_data *data, t_dlist *cmd, int builtin_id)
 {
 	if (builtin_id == 1)

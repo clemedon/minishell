@@ -20,6 +20,7 @@ static void	ft_init_data(t_data *data)
 	data->cwd = getcwd (NULL, PATH_MAX);
 	data->oldcwd = getcwd (NULL, PATH_MAX);
 	data->cmd_path = NULL;
+	data->status = 0;
 }
 
 /*
@@ -45,5 +46,5 @@ int	main(int ac, char **av)
 	{
 		// handle argv errors & return exitstatus
 	}
-	return (0);
+	return (data.status);
 }

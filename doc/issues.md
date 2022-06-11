@@ -11,13 +11,19 @@
 
 ##  Execution
 
+- Add execution error code management
+- Add execution $? feature
+- Add ft_exit
+
 - Fix execution multipipe
 > `cat | cat | cat` then `<CR><C-C>` the prompt should go to newline.
 > `cat | ls` then `<CR><C-C>` the prompt should go to newline.
 
-- Add execution error code management
-- Add execution $? feature
-- Add ft_exit
+- Add error code 130 handling
+> C-C, check discord
+
+- Fix error code 13
+> `touch file; chmod 000 file; echo hello > file` should return 1.
 
 - Add SHLVL feature
 

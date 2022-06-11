@@ -170,6 +170,8 @@ typedef struct s_data
 	int		last_in;
 	int		last_out;
 
+	int		status;
+
 }			t_data;
 
 /*
@@ -266,7 +268,7 @@ void    ft_close(t_data *data, t_dlist *cmd, int *fd);
  ** [ exec/error.c ]
  */
 
-void	ft_file_error(char *file, int error);
+void	ft_file_error(t_data *data, char *file, int error);
 void    ft_cmd_error(t_dlist *cmd, int error);
 void    ft_perror(t_data *data, t_dlist *cmd, int error);
 

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	ft_parent(t_data *data, t_dlist *cmd, int status, int pid)
+int	ft_parent(t_data *data, t_dlist *cmd, int pid)
 {
 	if (cmd->next)
 		ft_close(data, cmd, &((t_cmd *)cmd->content)->fd[1]);
@@ -11,37 +11,37 @@ int	ft_parent(t_data *data, t_dlist *cmd, int status, int pid)
 	if (((t_cmd *)cmd->content)->file_out)
 		ft_close(data, cmd, &((t_cmd *)cmd->content)->fd_out);
 	if (!cmd->next)
-		if (waitpid(pid, &status, 0) == -1)
+		if (waitpid(pid, &data->status, 0) == -1)
 			ft_perror(data, cmd, errno);
-	if (WIFEXITED(status) == EXIT_FAILURE)
-		status = WEXITSTATUS(status);
-	return (status);
+	if (WIFEXITED(data->status) == EXIT_FAILURE)
+		data->status = WEXITSTATUS(data->status);
+	return (data->status);
 }
 
 void	ft_child(t_data *data, t_dlist *cmd, char **environ)
 {
 	if (ft_is_builtin(cmd) && !ft_fork_builtin(cmd))
-		exit(EXIT_FAILURE);
+		exit(data->status);
 	if (((t_cmd *)cmd->content)->file_in)
 	{
 		if (((t_cmd *)cmd->content)->fd_in == -1)
-			exit(EXIT_FAILURE);
+			exit(data->status);
 		dup2(((t_cmd *)cmd->content)->fd_in, STDIN_FILENO);
 	}
 	else if (!(cmd == data->cmdlist))
 		dup2(((t_cmd *)cmd->prev->content)->fd[0], STDIN_FILENO);
 	if (((t_cmd *)cmd->content)->file_out)
-	{	
+	{
 		if (((t_cmd *)cmd->content)->fd_out == -1)
-			exit(EXIT_FAILURE);
+			exit(data->status);
 		dup2(((t_cmd *)cmd->content)->fd_out, STDOUT_FILENO);
 	}
 	else if (cmd->next)
 		dup2(((t_cmd *)cmd->content)->fd[1], STDOUT_FILENO);
 	if (ft_is_builtin(cmd) && ft_fork_builtin(cmd))
 	{
-		ft_exec_builtin(data, cmd, ft_is_builtin(cmd));
-		exit(EXIT_FAILURE);
+		data->status = ft_exec_builtin(data, cmd, ft_is_builtin(cmd));
+		exit(data->status);
 	}
 	if (!ft_is_builtin(cmd) && !((t_cmd *)cmd->content)->prg)
 		ft_perror(data, cmd, 127);
@@ -73,7 +73,7 @@ void	ft_init_pipe(t_data *data)
 	}
 }
 
-void	ft_exec_cmd(t_data *data, t_dlist *cmd, int *status, char **environ)
+void	ft_exec_cmd(t_data *data, t_dlist *cmd, char **environ)
 {
 	int pid;
 
@@ -83,7 +83,7 @@ void	ft_exec_cmd(t_data *data, t_dlist *cmd, int *status, char **environ)
 	if (pid > 0)
 	{
 		signal(2 & 3, SIG_IGN);
-		ft_parent(data, cmd, *status, pid);
+		ft_parent(data, cmd, pid);
 	}
 	if (pid == 0)
 	{
@@ -96,10 +96,8 @@ int	ft_exec(t_data *data)
 {
 	t_dlist		*cmd;
 	extern char	**environ;
-	int			status;
 	int			builtin_id;
 
-	status = 0;
 	ft_open_file(data);
 	ft_init_pipe(data);
 	cmd = data->cmdlist;
@@ -107,13 +105,16 @@ int	ft_exec(t_data *data)
 	{
 		builtin_id = ft_is_builtin(cmd);
 		if (data->cmdid == 1 && builtin_id && !ft_fork_builtin(cmd))
-			ft_exec_builtin(data, cmd, builtin_id);
+		{
+			dprintf(2, "> %i\n", ft_exec_builtin(data, cmd, builtin_id));
+			data->status = ft_exec_builtin(data, cmd, builtin_id);
+		}
 		else
-			ft_exec_cmd(data, cmd, &status, environ);
+			ft_exec_cmd(data, cmd, environ);
 		cmd = cmd->next;
 	}
 	while (wait(NULL) != -1)
 		;
 	ft_init_signals ();
-	return (status);
+	return (data->status);
 }

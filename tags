@@ -10,7 +10,7 @@ ft_add_env	src/utils/envlist.c	/^void	ft_add_env(t_data *data, char *key, char *
 ft_add_exp	src/utils/explist.c	/^void	ft_add_exp(t_data *data, char *key, char *val)$/;"	f	typeref:typename:void
 ft_add_red	src/utils/redlist.c	/^void	ft_add_red(t_data *data, t_dlist *token)$/;"	f	typeref:typename:void
 ft_add_tok	src/utils/toklist.c	/^void	ft_add_tok(t_data *data, int tokid, int tokpos, char *token)$/;"	f	typeref:typename:void
-ft_arg_cmd	src/parser/parse_command.c	/^char	**ft_arg_cmd(char *cmd)$/;"	f	typeref:typename:char **
+ft_arg_cmd	src/parser/parse_command.c	/^char	**ft_arg_cmd(t_dlist **cmd, t_dlist **toklist)$/;"	f	typeref:typename:char **
 ft_cd	src/builtin/cd.c	/^int	ft_cd(t_data *data, char **cmd)$/;"	f	typeref:typename:int
 ft_cd_alone	src/builtin/cd.c	/^int	ft_cd_alone(t_data *data)$/;"	f	typeref:typename:int
 ft_cd_hyphen	src/builtin/cd.c	/^int	ft_cd_hyphen(t_data *data)$/;"	f	typeref:typename:int
@@ -27,6 +27,7 @@ ft_clearlist_env	src/utils/envlist.c	/^void	ft_clearlist_env(t_dlist **envlist, 
 ft_clearlist_exp	src/utils/explist.c	/^void	ft_clearlist_exp(t_dlist **explist, void (*del)(void *))$/;"	f	typeref:typename:void
 ft_clearlist_red	src/utils/redlist.c	/^void	ft_clearlist_red (t_dlist **lst, void (*del)(void *))$/;"	f	typeref:typename:void
 ft_clearlist_tok	src/utils/toklist.c	/^void	ft_clearlist_tok(t_dlist **toklist, void (*del)(void *))$/;"	f	typeref:typename:void
+ft_close	src/exec/file.c	/^void	ft_close(t_data *data, t_dlist *cmd, int *fd)$/;"	f	typeref:typename:void
 ft_cmd_error	src/exec/error.c	/^void	ft_cmd_error(t_dlist *cmd, int error)$/;"	f	typeref:typename:void
 ft_command	src/parser/parse_command.c	/^char	*ft_command(t_data *data, char *command)$/;"	f	typeref:typename:char *
 ft_concat_all_words	src/parser/expand_word.c	/^static char	*ft_concat_all_words(t_dlist *toklist)$/;"	f	typeref:typename:char *	file:
@@ -39,29 +40,32 @@ ft_data_export	src/builtin/export.c	/^static void	ft_data_export (t_data *data, 
 ft_data_unset	src/builtin/unset.c	/^static void	ft_data_unset (t_data *data, char *cmd)$/;"	f	typeref:typename:void	file:
 ft_dlst_elem_dup	src/utils/utils.c	/^void	ft_dlst_elem_dup(t_dlist **lst, t_dlist *dup)$/;"	f	typeref:typename:void
 ft_echo	src/builtin/echo.c	/^int	ft_echo(char **cmd)$/;"	f	typeref:typename:int
-ft_end_heredoc	src/exec/open.c	/^static void     ft_end_heredoc(t_dlist *cmd)$/;"	f	typeref:typename:void	file:
+ft_end_heredoc	src/exec/file.c	/^static void     ft_end_heredoc(t_dlist *cmd)$/;"	f	typeref:typename:void	file:
 ft_env	src/builtin/env.c	/^int	ft_env(t_dlist *envlist)$/;"	f	typeref:typename:int
 ft_envlist_export	src/builtin/export.c	/^static void	ft_envlist_export(t_data *data, char *cmd)$/;"	f	typeref:typename:void	file:
 ft_envlist_unset	src/builtin/unset.c	/^static void	ft_envlist_unset(t_data *data, char *key)$/;"	f	typeref:typename:void	file:
 ft_exec	src/exec/exec.c	/^int	ft_exec(t_data *data)$/;"	f	typeref:typename:int
-ft_exec_cmd	src/exec/exec.c	/^void	ft_exec_cmd(t_data *data, t_dlist *cmd, int *status, char **environ)$/;"	f	typeref:typename:void
+ft_exec_builtin	src/exec/exec_builtin.c	/^int	ft_exec_builtin(t_data *data, t_dlist *cmd, int builtin_id)$/;"	f	typeref:typename:int
+ft_exec_cmd	src/exec/exec.c	/^void	ft_exec_cmd(t_data *data, t_dlist *cmd, char **environ)$/;"	f	typeref:typename:void
 ft_expand_dollar	src/parser/expand_var.c	/^static void ft_expand_dollar(t_data *data)$/;"	f	typeref:typename:void	file:
 ft_expand_quote	src/parser/expand_quote.c	/^void	ft_expand_quote(t_data *data)$/;"	f	typeref:typename:void
 ft_expand_quote2	src/parser/expand_quote.c	/^static void	ft_expand_quote2(t_dlist **new, t_dlist **temp)$/;"	f	typeref:typename:void	file:
 ft_expand_tilde	src/parser/expand_tilde.c	/^void	ft_expand_tilde(t_data *data)$/;"	f	typeref:typename:void
-ft_expand_var	src/parser/expand_var.c	/^void	ft_expand_var(t_data *data)$/;"	f	typeref:typename:void
+ft_expand_var	src/parser/expand_var.c	/^static char *ft_expand_var(t_data *data, char *key)$/;"	f	typeref:typename:char *	file:
+ft_expand_vars	src/parser/expand_var.c	/^void	ft_expand_vars(t_data *data)$/;"	f	typeref:typename:void
 ft_expand_word	src/parser/expand_word.c	/^void	ft_expand_word(t_data *data)$/;"	f	typeref:typename:void
 ft_explist_export	src/builtin/export.c	/^static void	ft_explist_export(t_data *data, char *cmd)$/;"	f	typeref:typename:void	file:
 ft_explist_unset	src/builtin/unset.c	/^static void	ft_explist_unset(t_data *data, char *key)$/;"	f	typeref:typename:void	file:
 ft_export	src/builtin/export.c	/^int	ft_export(t_data *data, char **cmd)$/;"	f	typeref:typename:int
+ft_file_error	src/exec/error.c	/^void	ft_file_error(t_data *data, char *file, int error)$/;"	f	typeref:typename:void
+ft_fork_builtin	src/exec/exec_builtin.c	/^int	ft_fork_builtin(t_dlist *cmd)$/;"	f	typeref:typename:int
 ft_free	src/utils/utils.c	/^void	ft_free(void *ptr)$/;"	f	typeref:typename:void
 ft_free_tab	src/utils/utils.c	/^void	ft_free_tab(char **tab)$/;"	f	typeref:typename:void
 ft_getenv	src/utils/envlist.c	/^char	*ft_getenv(t_dlist *envlist, char *key)$/;"	f	typeref:typename:char *
-ft_getenv_var	src/parser/expand_var.c	/^static char *ft_getenv_var(t_dlist *envlist, char *key)$/;"	f	typeref:typename:char *	file:
 ft_getexp	src/utils/explist.c	/^char	*ft_getexp(t_dlist *explist, char *key)$/;"	f	typeref:typename:char *
 ft_handle_sigint	src/utils/signals.c	/^static void	ft_handle_sigint(void)$/;"	f	typeref:typename:void	file:
 ft_handle_signal	src/utils/signals.c	/^static void	ft_handle_signal(int signal, void (*handler)())$/;"	f	typeref:typename:void	file:
-ft_here_doc	src/exec/open.c	/^static void     ft_here_doc(t_dlist *cmd)$/;"	f	typeref:typename:void	file:
+ft_here_doc	src/exec/file.c	/^static void     ft_here_doc(t_data *data, t_dlist *cmd)$/;"	f	typeref:typename:void	file:
 ft_heredoc_dollar	src/parser/expand_var.c	/^static void	ft_heredoc_dollar(t_data *data)$/;"	f	typeref:typename:void	file:
 ft_ignore_signal	src/utils/signals.c	/^static void	ft_ignore_signal(int signal)$/;"	f	typeref:typename:void	file:
 ft_init_cmd	src/utils/cmdlist.c	/^void    ft_init_cmd(t_data *data, t_cmd **cmd)$/;"	f	typeref:typename:void
@@ -73,17 +77,18 @@ ft_init_minimal_exp	src/utils/explist.c	/^void	ft_init_minimal_exp(t_data *data)
 ft_init_pipe	src/exec/exec.c	/^void	ft_init_pipe(t_data *data)$/;"	f	typeref:typename:void
 ft_init_signals	src/utils/signals.c	/^void	ft_init_signals(void)$/;"	f	typeref:typename:void
 ft_init_tty	src/utils/tty.c	/^void	ft_init_tty(void)$/;"	f	typeref:typename:void
-ft_is_builtin	src/exec/exec.c	/^int	ft_is_builtin(t_data *data, t_dlist *cmd)$/;"	f	typeref:typename:int
+ft_is_builtin	src/exec/exec_builtin.c	/^int	ft_is_builtin(t_dlist *cmd)$/;"	f	typeref:typename:int
+ft_is_equal_sign	src/parser/expand_quote.c	/^int	ft_is_equal_sign(char *str)$/;"	f	typeref:typename:int
 ft_is_n_flag	src/builtin/echo.c	/^int	ft_is_n_flag(char *arg)$/;"	f	typeref:typename:int
 ft_is_tokid	src/parser/parser_utils.c	/^int	ft_is_tokid(t_dlist *toklist, int tokid)$/;"	f	typeref:typename:int
 ft_is_valid_export	src/builtin/export.c	/^static int	ft_is_valid_export(char *key)$/;"	f	typeref:typename:int	file:
 ft_is_valid_unset	src/builtin/unset.c	/^static int	ft_is_valid_unset(char *key)$/;"	f	typeref:typename:int	file:
 ft_lexer	src/lexer/lexer.c	/^void	ft_lexer(t_data *data)$/;"	f	typeref:typename:void
 ft_multiple_dollar	src/parser/expand_var.c	/^static void	ft_multiple_dollar(t_data *data)$/;"	f	typeref:typename:void	file:
-ft_open	src/exec/open.c	/^void    ft_open(t_dlist *cmd)$/;"	f	typeref:typename:void
+ft_open	src/exec/file.c	/^void    ft_open(t_data *data, t_dlist *cmd)$/;"	f	typeref:typename:void
 ft_open_file	src/exec/exec.c	/^void	ft_open_file(t_data *data)$/;"	f	typeref:typename:void
-ft_parent	src/exec/exec.c	/^int	ft_parent(t_data *data, t_dlist *cmd, int status, int pid)$/;"	f	typeref:typename:int
-ft_parse_command	src/utils/cmdlist.c	/^void    ft_parse_command(t_data *data)$/;"	f	typeref:typename:void
+ft_parent	src/exec/exec.c	/^int	ft_parent(t_data *data, t_dlist *cmd, int pid)$/;"	f	typeref:typename:int
+ft_parse_command	src/parser/parse_command.c	/^void    ft_parse_command(t_data *data)$/;"	f	typeref:typename:void
 ft_parse_pipe	src/parser/parse_pipe.c	/^int	ft_parse_pipe(t_data *data)$/;"	f	typeref:typename:int
 ft_parse_quote	src/parser/parse_quote.c	/^int	ft_parse_quote(t_dlist *toklist)$/;"	f	typeref:typename:int
 ft_parse_redir	src/parser/parse_redir.c	/^void	ft_parse_redir(t_data *data)$/;"	f	typeref:typename:void

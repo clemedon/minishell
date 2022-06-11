@@ -104,7 +104,8 @@ void	ft_prompt(t_data *data)
 			ft_lexer (data);
 			ft_parser (data);
 			ft_exec (data);
-			/* printf("EXIT STATUS >>> [%d] <<<\n", ft_exec (data)); */
+			/* if (data->status) */
+			/* 	dprintf (2, "[%i]\n", data->status); */
 			ft_clearlist_red (&data->redlist, ft_free);
 			ft_clearlist_cmd (&data->cmdlist, ft_free);
 			ft_clearlist_tok (&data->toklist, ft_free);
