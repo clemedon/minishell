@@ -45,6 +45,9 @@
 - Protect all the malloc
 > Create a 'ft_clear_exit("malloc error")' and a 'ft_strdup' wrapper.
 
+- Check every output STD
+> Check that they're displayed the right STD.OUT/ERROR
+
 - Remove tokpos
 - Remove redlist
 
