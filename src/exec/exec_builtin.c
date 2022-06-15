@@ -45,6 +45,15 @@ int	ft_exec_builtin(t_data *data, t_dlist *cmd, int builtin_id)
 	if (builtin_id == 5)
 		return (ft_unset(data, ((t_cmd *)cmd->content)->cmd));
 	if (builtin_id == 6)
+	{
+		if (((t_cmd *)cmd->content)->cmd[1] && ((t_cmd *)cmd->content)->cmd[1][0])
+		{
+			ft_putstr_fd("env: '", 2);
+			ft_putstr_fd(((t_cmd *)cmd->content)->cmd[1], 2);
+			ft_putstr_fd("' No such file or directory\n", 2);
+			return (127);
+		}
 		return (ft_env(data->envlist));
+	}
 	return (0);
 }
