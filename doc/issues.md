@@ -19,9 +19,6 @@
 > < file1 < file2 | b | c | d
 > a | b | c < file1 | d < file2
 
-- Fix status code when 'exit' minishell from within minishell
-> Shouldn't be `1`, shouldn't be always `1`.
-
 - Fix exec path
 > `minishell` shouldn't work like `./minishell`
 > `minishell` should return `command not > found`
