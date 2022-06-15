@@ -64,19 +64,19 @@ void	ft_parser(t_data *data)
 		data->status = 2;
 		return ;
 	}
-	printf(">>>>> AFTER CHECKS <<<<<\n");
-	ft_printlist_tok(data->toklist);
+	/* printf(">>>>> AFTER CHECKS <<<<<\n"); */
+	/* ft_printlist_tok(data->toklist); */
 	ft_expand_vars(data);
-	printf(">>>>> AFTER VAR <<<<<\n");
-	ft_printlist_tok(data->toklist);
+	/* printf(">>>>> AFTER VAR <<<<<\n"); */
+	/* ft_printlist_tok(data->toklist); */
 	ft_expand_tilde(data);
 	ft_expand_quote(data);
 	ft_parse_space(data);
-	printf(">>>>> BEFORE REDIR <<<<<\n");
-	ft_printlist_tok(data->toklist);
+	/* printf(">>>>> BEFORE REDIR <<<<<\n"); */
+	/* ft_printlist_tok(data->toklist); */
 	ft_parse_redir(data);
-	printf(">>>>> AFTER REDIR <<<<<\n");
-	ft_printlist_tok(data->toklist);
+	/* printf(">>>>> AFTER REDIR <<<<<\n"); */
+	/* ft_printlist_tok(data->toklist); */
 	ft_count_pipe(data);
 	if (!ft_parse_empty_cmd(data))
 		return ;
