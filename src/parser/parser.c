@@ -10,33 +10,68 @@
  **  ft_printlist_tok (data->toklist);
  */
 
+static	int ft_parse_special_tok(t_data *data)
+{
+	t_dlist *temp;
+
+	temp = data->toklist;
+	if (ft_dlstsize(temp) != 1)
+		return (1);
+	if (!ft_strcmp(((t_tok *)temp->content)->tok, "."))
+	{
+		ft_putstr_fd("minishell: .: filename argument required\n", 2);
+		data->status = 2;
+		return (0);
+	}
+	if (!ft_strcmp(((t_tok *)temp->content)->tok, "&"))
+	{
+		ft_putstr_fd("minishell: syntax error near token `&'\n", 2);
+		data->status = 2;
+		return (0);
+	}
+	if (!ft_strncmp(((t_tok *)temp->content)->tok, "&&", 2))
+	{
+		ft_putstr_fd("minishell: syntax error near token `&&'\n", 2);
+		data->status = 2;
+		return (0);
+	}
+	return (1);
+}
+	
+static	int	ft_parse_empty_cmd(t_data *data)
+{
+	t_dlist *temp;
+	
+	temp = data->toklist;
+	if (ft_dlstsize(temp) != 1)
+		return (1);
+	if (!ft_strcmp(((t_tok *)temp->content)->tok, ""))
+		return (0);
+	if (ft_is_tokid(temp, WS))
+		return (0);
+	return (1);
+}
+
 void	ft_parser(t_data *data)
 {
-	if (!ft_parse_quote(data->toklist))
+	if (!ft_parse_special_tok(data))
+	{
+		data->status = 2;
 		return ;
-	if (!ft_parse_pipe(data))
+	}
+	if (!ft_parse_pipe(data) || !ft_parse_quote(data, data->toklist))
+	{
+		data->status = 2;
 		return ;
+	}
 	ft_expand_vars(data);
-	/* printf("----------- AFTER EXPAND VAR ---------\n"); */
-	/* ft_printlist_tok(data->toklist); */
 	ft_expand_tilde(data);
-	/* printf("----------- AFTER EXPAND TILDE ---------\n"); */
-	/* ft_printlist_tok(data->toklist); */
 	ft_expand_quote(data);
-	/* printf("----------- AFTER PARSE QUOTE ---------\n"); */
-	/* ft_printlist_tok(data->toklist); */
 	ft_parse_space(data);
-	/* printf("----------- AFTER PARSE SPACE ---------\n"); */
-	/* ft_printlist_tok(data->toklist); */
 	ft_parse_redir(data);
-	/* printf("----------- AFTER PARSE REDIR ---------\n"); */
-	/* ft_printlist_tok(data->toklist); */
 	ft_count_pipe(data);
+	if (!ft_parse_empty_cmd(data))
+		return ;
 	ft_create_cmdlist(data);
-	/* printf("----------- cmd_list ----------\n"); */
-	/* ft_printlist_cmd(data->cmdlist); */
-	ft_create_redlist(data);
-	/* printf("----------- redir_list ---------\n"); */
-	/* ft_printlist_redir(data->redlist); */
 }
 

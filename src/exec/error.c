@@ -35,6 +35,8 @@ void	ft_perror(t_data *data, t_dlist *cmd, int error)
 	{
 		ft_cmd_error(cmd, error);
 	}
+	else if (error == 2)
+		ft_putstr_fd("minishell: syntax error\n", 2);
 	else if (errno)
 	{
 		ft_putstr_fd("minishell: ", 2);

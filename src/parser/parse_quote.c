@@ -95,12 +95,19 @@ static int	ft_check_quote_pairs(t_dlist *toklist)
  ** between a pair of quotes and check that the last token is valid.
  */
 
-int	ft_parse_quote(t_dlist *toklist)
+int	ft_parse_quote(t_data *data, t_dlist *toklist)
 {
+	(void)data;
 	if (!ft_check_quote_pairs (toklist))
+	{
+		ft_putstr_fd("minishell: syntax error: unexpected end of file\n", 2);
 		return (0);
+	}
 	ft_quoted_becomes_words (toklist);
 	if (!ft_check_last_tok (toklist))
+	{
+		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
 		return (0);
+	}
 	return (1);
 }

@@ -1,66 +1,94 @@
 #include "minishell.h"
 
-/*
- ** If a double pipe "||" is encountered, delete it + all
- ** the tokens that come after.
- */
-
-static void	ft_trim_toklist(t_dlist *toklist, t_dlist *token)
+static int	ft_multiple_pipe(t_dlist **token)
 {
-	t_dlist	*temp;
+	t_dlist *temp;
 
-	temp = token;
-	if (ft_is_tokid (temp->prev, WS))
-		ft_remove_tok (toklist, temp->prev);
+	temp = *token;
 	while (temp)
 	{
-		ft_remove_tok (toklist, temp);
-		temp = temp->next;
+		if (temp && temp->next && ft_is_tokid(temp, PP)
+			&& ft_is_tokid(temp->next, PP)) 
+				return (1);
+		else if (temp && temp->next && ft_is_tokid(temp, PP)
+			&& ft_is_tokid(temp->next, WS))
+		{
+			temp = temp->next;
+			while (temp && ft_is_tokid(temp, WS))
+				temp = temp->next;
+			if (temp)
+			{
+				if (ft_is_tokid(temp, PP))
+					return (1);
+			}
+		}
+		if (temp)
+			temp = temp->next;
 	}
+	return (0);
 }
+
+static int	ft_last_tok_is_pipe(t_dlist *token)
+{
+	t_dlist *temp;
+	t_dlist *last;
+
+	temp = token;
+	while (temp->next)
+		temp = temp->next;
+	last = temp;
+	temp = token;
+	while (temp && temp != last)
+		temp = temp->next;
+	if (ft_is_tokid(temp, PP))
+		return (1);
+	return (0);
+}
+
 
 /*
  ** Check pipes validity.
  */
 
-static int	ft_pre_checks(t_dlist **token)
+static int	ft_just_pipe(t_dlist *token)
 {
-	t_dlist	*temp;
+	t_dlist *temp;
+	int		i;
 
-	temp = *token;
-	if (ft_is_tokid (temp, PP))
-		return (0);
-	if (ft_is_tokid (temp, WS))
+	temp = token;
+	i = 0;
+	while (temp && ft_is_tokid(temp, WS))
+		temp = temp->next;
+	while (temp && ft_is_tokid(temp, PP))
 	{
-		while (temp && ft_is_tokid (temp, WS))
-			temp = (temp)->next;
-		if (ft_is_tokid (temp, PP))
-			return (0);
+		i ++;
+		temp = temp->next;
 	}
-	return (1);
+	return (i);
 }
 
 int	ft_parse_pipe(t_data *data)
 {
-	t_dlist	*temp;
+	int		error;
 
-	temp = data->toklist;
-	if (!ft_pre_checks (&data->toklist))
-		return (0);
-	while (temp)
+	error = ft_just_pipe(data->toklist);
+	if (error)
 	{
-		if (ft_is_tokid (temp, PP))
-		{
-			temp = temp->next;
-			if (ft_is_tokid (temp, PP))
-			{
-				if (ft_is_tokid (temp->next, PP))
-					return (0);
-				else
-					return (ft_trim_toklist (data->toklist, temp->prev), 1);
-			}
-		}
-		temp = temp->next;
+		if (error >= 2)
+			ft_putstr_fd("minishell: syntax error near unexpected token `||'\n", 2);
+		else 
+			ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);	
+		return (0);
+	}
+	if (ft_last_tok_is_pipe(data->toklist))
+	{
+		ft_putstr_fd("minishell: syntax error: unexpected end of file\n", 2);
+		return (0);
+	}
+	if (ft_multiple_pipe(&data->toklist))
+	{
+		ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);
+		return (0);
 	}
 	return (1);
 }

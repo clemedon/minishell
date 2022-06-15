@@ -93,6 +93,7 @@ void	ft_prompt(t_data *data)
 		data->cmd_path = ft_split_path (data);
 		data->cmdid = 0;
 		data->nb_pipes = 0;
+		data->status = 0;
 		ft_readline (data);
 		if (!ft_strncmp(data->cmdline, "q", 1))
 		{
@@ -103,9 +104,10 @@ void	ft_prompt(t_data *data)
 		{
 			ft_lexer (data);
 			ft_parser (data);
-			ft_exec (data);
-			/* if (data->status) */
-			/* 	dprintf (2, "[%i]\n", data->status); */
+			if (data->status != 2)
+				ft_exec (data);
+			dprintf (2, "[%i]\n", data->status);
+			/* printf("------------------------------------------------------------\n"); */
 			ft_clearlist_red (&data->redlist, ft_free);
 			ft_clearlist_cmd (&data->cmdlist, ft_free);
 			ft_clearlist_tok (&data->toklist, ft_free);

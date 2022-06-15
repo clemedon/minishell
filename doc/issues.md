@@ -11,7 +11,27 @@
 
 ##  Execution
 
-- Add execution error code management
+- Fix multiple pipe with multiple here_doc
+
+- Fix input redir with $notvar
+> '< $ciao cat' SEGFAULT
+
+- Fix here_doc when outfile missing
+
+- Fix env
+> 'env salut' should display 'env: 'salut': No such file or directory'
+> and  not the env
+> the error code should be 127
+
+- Fix leak
+> < file1 < file2 | b | c | d 
+> a | b | c < file1 | d < file2
+
+- Fix echo with multiple -nnnn
+> 'echo -nnnnnnn TEST' should't display "TEST\n"
+> LEAK
+> 'echo -n -n -n -n TEST' shouldn't display "TEST\n"
+
 - Add execution $? feature
 - Add ft_exit
 
@@ -27,25 +47,10 @@
 
 - Add SHLVL feature
 
-- Add pipe errmsg management:
-> `|`       should print `bash: syntax error near unexpected token \`|'`
-> `||`      should print `bash: syntax error near unexpected token \`||'`
-> `|||…`    should print `bash: syntax error near unexpected token \`||'`
-
-- Add pipe errmsg management:
-> `|`       should print `bash: syntax error near unexpected token \`|'`
-> `||`      should print `bash: syntax error near unexpected token \`||'`
-> `|||…`    should print `bash: syntax error near unexpected token \`||'`
-
-- Add bonus errmsg management:
-> `&`       should print `bash: syntax error near unexpected token \`&'`
-> `.`       should print
-    bash: .: filename argument required
-    .: usage: . filename [arguments]
-> `~`       should print `bash: /mnt/nfs/homes/cvidon: Is a directory`
-> `echo ciao > $notavar`    should print: `bash: $notavar: ambiguous redirect`
 
 ##  Final
+
+- Protect every dup2
 
 - Protect all the malloc
 > Create a 'ft_clear_exit("malloc error")' and a 'ft_strdup' wrapper.
@@ -69,6 +74,10 @@
 > Shouldn't print : 'Command not found' but 'Permission denied'
 > after chmod 000, chmod 777 doesn't work anymore
 > Should run minishell instead of printing 'Command not found'
+
+- Add bonus errmsg management:
+> `~`       should print `bash: /mnt/nfs/homes/cvidon: Is a directory`
+> `echo ciao > $notavar`    should print: `bash: $notavar: ambiguous redirect`
 
 - Fix execution of cwd bin
 > ./ls runs /usr/bin/ls and not the copy tin the cwd

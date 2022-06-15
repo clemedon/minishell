@@ -14,7 +14,10 @@ int	ft_parent(t_data *data, t_dlist *cmd, int pid)
 		if (waitpid(pid, &data->status, 0) == -1)
 			ft_perror(data, cmd, errno);
 	if (WIFEXITED(data->status) == EXIT_FAILURE)
+	{
 		data->status = WEXITSTATUS(data->status);
+		((t_cmd *)cmd->content)->error = data->status;
+	}
 	return (data->status);
 }
 
@@ -41,12 +44,19 @@ void	ft_child(t_data *data, t_dlist *cmd, char **environ)
 	if (ft_is_builtin(cmd) && ft_fork_builtin(cmd))
 	{
 		data->status = ft_exec_builtin(data, cmd, ft_is_builtin(cmd));
+		((t_cmd *)cmd->content)->error = data->status;
 		exit(data->status);
 	}
 	if (!ft_is_builtin(cmd) && !((t_cmd *)cmd->content)->prg)
+	{
+		((t_cmd *)cmd->content)->error = 127;
 		ft_perror(data, cmd, 127);
+	}
 	if (!ft_is_builtin(cmd) && execve(((t_cmd *)cmd->content)->prg, ((t_cmd *)cmd->content)->cmd, environ) == -1)
+	{
+		((t_cmd *)cmd->content)->error = 126;
 		ft_perror(data, cmd, 126);
+	}
 }
 
 void	ft_open_file(t_data *data)
@@ -98,16 +108,18 @@ int	ft_exec(t_data *data)
 	extern char	**environ;
 	int			builtin_id;
 
-	ft_open_file(data);
+	/* ft_open_file(data); */
 	ft_init_pipe(data);
 	cmd = data->cmdlist;
 	while (cmd)
 	{
+		ft_open(data, cmd);
 		builtin_id = ft_is_builtin(cmd);
 		if (data->cmdid == 1 && builtin_id && !ft_fork_builtin(cmd))
 		{
 			dprintf(2, "> %i\n", ft_exec_builtin(data, cmd, builtin_id));
 			data->status = ft_exec_builtin(data, cmd, builtin_id);
+			((t_cmd *)cmd->content)->error = data->status;
 		}
 		else
 			ft_exec_cmd(data, cmd, environ);

@@ -387,7 +387,7 @@ int		ft_parse_pipe(t_data *data);
 /* static void	ft_set_word_token(t_dlist **token) */
 /* static void	ft_quoted_becomes_words(t_dlist *toklist); */
 /* static int		ft_check_quote_pairs(t_dlist *toklist); */
-int		ft_parse_quote(t_dlist *toklist);
+int		ft_parse_quote(t_data *data, t_dlist *toklist);
 
 /*
  ** [ parser/parser.c ]
