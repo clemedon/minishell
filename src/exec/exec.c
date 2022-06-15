@@ -108,7 +108,6 @@ int	ft_exec(t_data *data)
 	extern char	**environ;
 	int			builtin_id;
 
-	/* ft_open_file(data); */
 	ft_init_pipe(data);
 	cmd = data->cmdlist;
 	while (cmd)
@@ -117,7 +116,7 @@ int	ft_exec(t_data *data)
 		builtin_id = ft_is_builtin(cmd);
 		if (data->cmdid == 1 && builtin_id && !ft_fork_builtin(cmd))
 		{
-			dprintf(2, "> %i\n", ft_exec_builtin(data, cmd, builtin_id));
+			/* dprintf(2, "> %i\n", ft_exec_builtin(data, cmd, builtin_id)); */
 			data->status = ft_exec_builtin(data, cmd, builtin_id);
 			((t_cmd *)cmd->content)->error = data->status;
 		}

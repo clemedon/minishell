@@ -35,7 +35,7 @@ int	ft_is_builtin(t_dlist *cmd)
 int	ft_exec_builtin(t_data *data, t_dlist *cmd, int builtin_id)
 {
 	if (builtin_id == 1)
-		return (ft_echo(((t_cmd *)cmd->content)->cmd));
+		return (ft_echo(data, ((t_cmd *)cmd->content)->cmd));
 	if (builtin_id == 2)
 		return (ft_cd(data, ((t_cmd *)cmd->content)->cmd));
 	if (builtin_id == 3)
