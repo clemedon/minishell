@@ -15,11 +15,6 @@
 
 - Fix here_doc when outfile missing
 
-- Fix env
-> 'env salut' should display 'env: 'salut': No such file or directory'
-> and  not the env
-> the error code should be 127
-
 - Fix leak
 > < file1 < file2 | b | c | d 
 > a | b | c < file1 | d < file2
