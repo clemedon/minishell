@@ -34,9 +34,6 @@
 - Add error code 130 handling
 > C-C, check discord
 
-- Fix error code 13
-> `touch file; chmod 000 file; echo hello > file` should return 1.
-
 - Add SHLVL feature
 
 
