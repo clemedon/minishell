@@ -196,6 +196,12 @@ void	ft_dlst_elem_dup(t_dlist **lst, t_dlist *dup);
 /* #----------------------------------------------------------------------# */
 
 /*
+ ** [ builtin/exit.c ]
+ */
+
+void    ft_exit(t_data *data, char **cmd);
+
+/*
  ** [ builtin/cd.c ]
  */
 

@@ -95,19 +95,13 @@ void	ft_prompt(t_data *data)
 		data->nb_pipes = 0;
 		data->status = 0;
 		ft_readline (data);
-		if (!ft_strncmp(data->cmdline, "q", 1))
-		{
-			ft_free (data->cmdline);
-			break ;
-		}
 		if (ft_strlen (data->cmdline))
 		{
 			ft_lexer (data);
 			ft_parser (data);
 			if (data->status != 2)
 				ft_exec (data);
-			dprintf (2, "[%i]\n", data->status);
-			/* printf("------------------------------------------------------------\n"); */
+			dprintf (2, "\r[\x1B[31m%i\x1B[37m]\n", data->status);
 			ft_clearlist_red (&data->redlist, ft_free);
 			ft_clearlist_cmd (&data->cmdlist, ft_free);
 			ft_clearlist_tok (&data->toklist, ft_free);

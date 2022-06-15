@@ -29,6 +29,8 @@ int	ft_is_builtin(t_dlist *cmd)
 		return (5);
 	if (!ft_strcmp(((t_cmd *)cmd->content)->cmd[0], "env"))
 		return (6);
+	if (!ft_strcmp(((t_cmd *)cmd->content)->cmd[0], "exit"))
+		return (7);
 	return (0);
 }
 
@@ -55,5 +57,7 @@ int	ft_exec_builtin(t_data *data, t_dlist *cmd, int builtin_id)
 		}
 		return (ft_env(data->envlist));
 	}
+	if (builtin_id == 7)
+		ft_exit (data, ((t_cmd *)cmd->content)->cmd);
 	return (0);
 }

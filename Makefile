@@ -44,7 +44,8 @@ SRCS		= main.c 				\
 			  builtin/pwd.c			\
 			  builtin/echo.c		\
 			  utils/utils.c			\
-			  builtin/cd.c
+			  builtin/cd.c			\
+			  builtin/exit.c
 
 OBJ_DIR 	= obj
 

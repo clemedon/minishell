@@ -16,11 +16,15 @@
 - Fix here_doc when outfile missing
 
 - Fix leak
-> < file1 < file2 | b | c | d 
+> < file1 < file2 | b | c | d
 > a | b | c < file1 | d < file2
 
-- Add execution $? feature
-- Add ft_exit
+- Fix status code when 'exit' minishell from within minishell
+> Shouldn't be `1`, shouldn't be always `1`.
+
+- Fix exec path
+> `minishell` shouldn't work like `./minishell`
+> `minishell` should return `command not > found`
 
 - Fix execution multipipe
 > `cat | cat | cat` then `<CR><C-C>` the prompt should go to newline.
