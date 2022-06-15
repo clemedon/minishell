@@ -13,9 +13,6 @@
 
 - Fix multiple pipe with multiple here_doc
 
-- Fix input redir with $notvar
-> '< $ciao cat' SEGFAULT
-
 - Fix here_doc when outfile missing
 
 - Fix env
@@ -26,11 +23,6 @@
 - Fix leak
 > < file1 < file2 | b | c | d 
 > a | b | c < file1 | d < file2
-
-- Fix echo with multiple -nnnn
-> 'echo -nnnnnnn TEST' should't display "TEST\n"
-> LEAK
-> 'echo -n -n -n -n TEST' shouldn't display "TEST\n"
 
 - Add execution $? feature
 - Add ft_exit
@@ -54,6 +46,8 @@
 
 - Protect all the malloc
 > Create a 'ft_clear_exit("malloc error")' and a 'ft_strdup' wrapper.
+
+- Close all fds that remains open
 
 - Check every output STD
 > Check that they're displayed the right STD.OUT/ERROR

@@ -72,7 +72,7 @@ int	ft_is_equal_sign(char *str)
 {
 	size_t len;
 
-	if (!str)
+	if (!str || !str[0])
 		return (0);
 	len = ft_strlen(str);
 	if (str[len -1] == '=')
@@ -92,7 +92,7 @@ static void	ft_expand_quote2(t_dlist **new, t_dlist **temp)
 		&& !ft_is_tokid (*temp, QT) && !ft_is_tokid (*temp, DQ))
 	{
 		if (!ft_is_equal_sign(((t_tok *)(*temp)->content)->tok))
-		ft_dlst_elem_dup (new, *temp);
+			ft_dlst_elem_dup (new, *temp);
 		*temp = (*temp)->next;
 	}
 	if ((ft_is_tokid(*temp, QT) || ft_is_tokid(*temp, DQ)) && ft_is_equal_sign(((t_tok *)(*temp)->prev->content)->tok))
