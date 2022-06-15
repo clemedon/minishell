@@ -111,7 +111,7 @@ void	ft_clear_exit(t_data *data)
 	ft_clearlist_red (&data->redlist, ft_free);
 	ft_clearlist_tok (&data->toklist, ft_free);
 	rl_clear_history ();
-	exit(EXIT_FAILURE);
+	exit(data->status);
 }
 
 /*

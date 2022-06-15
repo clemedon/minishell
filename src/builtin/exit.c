@@ -100,7 +100,6 @@ void    ft_exit(t_data *data, char **cmd)
 			write (2, ": numeric argument required\n", 28);
 		}
 	}
-	data->status = 77;
 	if (close (fd) == -1)
 		exit (EXIT_FAILURE);
 	ft_clear_exit (data);
