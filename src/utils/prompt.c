@@ -93,15 +93,12 @@ void	ft_prompt(t_data *data)
 		data->cmd_path = ft_split_path (data);
 		data->cmdid = 0;
 		data->nb_pipes = 0;
-		data->status = 0;
 		ft_readline (data);
 		if (ft_strlen (data->cmdline))
 		{
 			ft_lexer (data);
 			ft_parser (data);
-			if (data->status != 2)
-				ft_exec (data);
-			dprintf (2, "\r[\x1B[31m%i\x1B[37m]\n", data->status);
+			ft_exec (data);
 			ft_clearlist_red (&data->redlist, ft_free);
 			ft_clearlist_cmd (&data->cmdlist, ft_free);
 			ft_clearlist_tok (&data->toklist, ft_free);

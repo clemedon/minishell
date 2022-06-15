@@ -237,7 +237,7 @@ int		ft_unset(t_data *data, char **args);
  */
 
 int		ft_is_n_flag(char *arg);
-int		ft_echo(char **arg);
+int		ft_echo(t_data *data, char **arg);
 
 /*
  ** [ builtin/env.c ]

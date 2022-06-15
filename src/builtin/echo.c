@@ -20,11 +20,19 @@ int	ft_is_n_flag(char *arg)
 	return (FALSE);
 }
 
+static void	ft_display_status_code(t_data *data, char *str)
+{
+	ft_putnbr_fd(data->status, 2);
+	if (ft_strlen(str) > 2)
+		ft_putstr_fd(str + 2, 2);
+}
+
+
 /*
  ** Tiny 'echo' builtin that handle the '-n' flag.
  */
 
-int	ft_echo(char **cmd)
+int	ft_echo(t_data *data, char **cmd)
 {
 	int		i;
 	int		argcount;
@@ -39,12 +47,14 @@ int	ft_echo(char **cmd)
 		argcount++;
 	while (cmd[i])
 	{
-		write (1, cmd[i], strlen(cmd[i]));
+		if (!ft_strncmp(cmd[i], "$?", 2))
+			ft_display_status_code(data, cmd[i]);
+		else
+			write (1, cmd[i], strlen(cmd[i]));
 		if (i != argcount - 1)
 			write (1, " ", 1);
 		i++;
 	}
-
 	if (n_flag && !cmd[2])
 		;
 	else if (!n_flag)
