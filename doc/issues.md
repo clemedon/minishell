@@ -28,6 +28,10 @@
 
 - Add SHLVL feature
 
+- Fix $? + $? segfault
+
+- Fix exit error message
+> 'exit $? + $?' should display "too many arguments"
 
 ##  Final
 
