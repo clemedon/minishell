@@ -6,19 +6,13 @@
 # //////////////////////// ATHIRION
 
 - Fix $? + $? segfault
+> **check** 'exit $? + $?' should display "too many arguments"
 
 # //////////////////////// CVIDON
-
-- Fix exit error message
-> 'exit $? + $?' should display "too many arguments"
 
 - Fix exec newline at c-c
 > `cat | cat | cat` then `<CR><C-C>` the prompt should go to newline.
 > `cat | ls` then `<CR><C-C>` the prompt should go to newline.
-
-- Fix exit error message
-> 'exit $? + $?' should display "too many arguments"
-> **should be fixed with $? expansion timing ($? + $? segfault)**
 
 # //////////////////////// ???
 
