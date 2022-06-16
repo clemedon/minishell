@@ -5,9 +5,6 @@
 
 # //////////////////////// ATHIRION
 
-- Fix $? + $? segfault
-> **check** 'exit $? + $?' should display "too many arguments"
-
 # //////////////////////// CVIDON
 
 - Fix exec newline at c-c
