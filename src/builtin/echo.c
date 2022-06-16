@@ -20,12 +20,12 @@ int	ft_is_n_flag(char *arg)
 	return (FALSE);
 }
 
-static void	ft_display_status_code(t_data *data, char *str)
-{
-	ft_putnbr_fd(data->status, 2);
-	if (ft_strlen(str) > 2)
-		ft_putstr_fd(str + 2, 2);
-}
+/* static void	ft_display_status_code(t_data *data, char *str) */
+/* { */
+/* 	ft_putnbr_fd(data->status, 2); */
+/* 	if (ft_strlen(str) > 2) */
+/* 		ft_putstr_fd(str + 2, 2); */
+/* } */
 
 
 /*
@@ -37,7 +37,7 @@ int	ft_echo(t_data *data, char **cmd)
 	int		i;
 	int		argcount;
 	int		n_flag;
-
+	(void)data;
 	n_flag = 0;
 	i = 1;
 	while (cmd[i] && ft_is_n_flag(cmd[i]))
@@ -47,10 +47,7 @@ int	ft_echo(t_data *data, char **cmd)
 		argcount++;
 	while (cmd[i])
 	{
-		if (!ft_strncmp(cmd[i], "$?", 2))
-			ft_display_status_code(data, cmd[i]);
-		else
-			write (1, cmd[i], strlen(cmd[i]));
+		write (1, cmd[i], strlen(cmd[i]));
 		if (i != argcount - 1)
 			write (1, " ", 1);
 		i++;

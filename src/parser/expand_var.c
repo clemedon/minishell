@@ -179,12 +179,11 @@ static void	ft_var_exit_status(t_data *data)
 				&& ft_is_tokid(temp->next, WD)
 				&& !ft_strncmp(((t_tok *)temp->next->content)->tok, "?", 1))
 		{
-			str = ft_strjoin(((t_tok *)temp->content)->tok, ((t_tok *)temp->next->content)->tok);
-			free(((t_tok *)temp->next->content)->tok);
-			((t_tok *)temp->next->content)->tok = str;
-			((t_tok *)temp->next->content)->tokid = WD;
-			temp = temp->next;
-			ft_remove_tok(data->toklist, temp->prev);
+			str = ft_itoa(data->status);
+			free(((t_tok *)temp->content)->tok);
+			((t_tok *)temp->content)->tok = str;
+			((t_tok *)temp->content)->tokid = WD;
+			ft_remove_tok(data->toklist, temp->next);
 		}
 		if (temp)
 			temp = temp->next;
