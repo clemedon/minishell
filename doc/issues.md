@@ -19,10 +19,6 @@
 > < file1 < file2 | b | c | d
 > a | b | c < file1 | d < file2
 
-- Fix exec path
-> `minishell` shouldn't work like `./minishell`
-> `minishell` should return `command not > found`
-
 - Fix execution multipipe
 > `cat | cat | cat` then `<CR><C-C>` the prompt should go to newline.
 > `cat | ls` then `<CR><C-C>` the prompt should go to newline.
