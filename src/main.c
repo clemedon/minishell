@@ -39,7 +39,6 @@ int	main(int ac, char **av)
 		ft_init_data (&data);
 		ft_init_env (&data);
 		ft_init_exp (&data);
-
 		ft_prompt (&data);
 	}
 	else

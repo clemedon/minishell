@@ -5,7 +5,18 @@
 
 # //////////////////////// ATHIRION
 
+- Fix $? + $? segfault
+
 # //////////////////////// CVIDON
+
+- Fix exit error message
+> 'exit $? + $?' should display "too many arguments"
+
+- Add SHLVL feature
+
+- Fix execution multipipe
+> `cat | cat | cat` then `<CR><C-C>` the prompt should go to newline.
+> `cat | ls` then `<CR><C-C>` the prompt should go to newline.
 
 # //////////////////////// ???
 
@@ -19,19 +30,8 @@
 > < file1 < file2 | b | c | d
 > a | b | c < file1 | d < file2
 
-- Fix execution multipipe
-> `cat | cat | cat` then `<CR><C-C>` the prompt should go to newline.
-> `cat | ls` then `<CR><C-C>` the prompt should go to newline.
-
 - Add error code 130 handling
 > C-C, check discord
-
-- Add SHLVL feature
-
-- Fix $? + $? segfault
-
-- Fix exit error message
-> 'exit $? + $?' should display "too many arguments"
 
 ##  Final
 
