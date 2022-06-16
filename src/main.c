@@ -28,7 +28,7 @@ static void	ft_init_data(t_data *data)
  ** sign == '+' to increase, '-' to decrease.
  */
 
-static void	ft_shlvl_update (t_data *data, char sign)
+void	ft_shlvl_update (t_data *data)
 {
 	char	*str;
 	char	**unsetcmd;
@@ -37,10 +37,7 @@ static void	ft_shlvl_update (t_data *data, char sign)
 	unsetcmd = ft_split ("unset SHLVL", ' ');
 	ft_unset (data, unsetcmd);
 	ft_free_tab (unsetcmd);
-	if (sign == '-')
-		str = ft_strjoin_free_s2 ("export SHLVL=", ft_itoa (--data->shlvl));
-	if (sign == '+')
-		str = ft_strjoin_free_s2 ("export SHLVL=", ft_itoa (++data->shlvl));
+	str = ft_strjoin_free_s2 ("export SHLVL=", ft_itoa (++data->shlvl));
 	exportcmd = ft_split(str, ' ');
 	ft_free (str);
 	ft_export (data, exportcmd);
@@ -54,6 +51,7 @@ static void	ft_shlvl_update (t_data *data, char sign)
 int	main(int ac, char **av)
 {
 	t_data	data;
+	char	*temp;
 
 	(void) av;
 	if (ac == 1)
@@ -63,8 +61,18 @@ int	main(int ac, char **av)
 		ft_init_data (&data);
 		ft_init_env (&data);
 		ft_init_exp (&data);
-		ft_shlvl_update (&data, '+');
-		data.shlvl = ft_atoi(ft_getenv (data.envlist, "SHLVL"));
+
+
+		temp = ft_getenv (data.envlist, "SHLVL");
+		data.shlvl = ft_atoi(temp);
+		ft_free (temp);
+
+		ft_shlvl_update (&data);
+
+		temp = ft_getenv (data.envlist, "SHLVL");
+		data.shlvl = ft_atoi(temp);
+		ft_free (temp);
+
 		ft_prompt (&data);
 	}
 	else

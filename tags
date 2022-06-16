@@ -316,7 +316,7 @@ ft_remove_tok	src/utils/toklist.c	/^void	ft_remove_tok(t_dlist *toklist, t_dlist
 ft_set_token	src/lexer/lexer.c	/^static int	ft_set_token(char *tok)$/;"	f	typeref:typename:int	file:
 ft_set_word_token	src/parser/parse_quote.c	/^static void	ft_set_word_token(t_dlist **token)$/;"	f	typeref:typename:void	file:
 ft_shield	lib/libft/src/all/ft_strtrim.c	/^static int	ft_shield(char const *s1, char const *set)$/;"	f	typeref:typename:int	file:
-ft_shlvl_update	src/main.c	/^static void	ft_shlvl_update (t_data *data, char sign)$/;"	f	typeref:typename:void	file:
+ft_shlvl_update	src/main.c	/^void	ft_shlvl_update (t_data *data)$/;"	f	typeref:typename:void
 ft_simple_quote	src/parser/expand_var.c	/^static void	ft_simple_quote(t_data *data)$/;"	f	typeref:typename:void	file:
 ft_sort_exp	src/utils/explist.c	/^void	ft_sort_exp(t_dlist *explist)$/;"	f	typeref:typename:void
 ft_split	lib/libft/src/all/ft_split.c	/^char	**ft_split(char const *s, char c)$/;"	f	typeref:typename:char **
