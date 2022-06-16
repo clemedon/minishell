@@ -12,8 +12,7 @@ char	*ft_command(t_data *data, char *command)
 
 	if (!command)
 		return (NULL);
-
-	if (access(command, X_OK) == 0)
+	if (ft_strchr(command, '/') && access(command, X_OK) == 0)
 		return (ft_strdup (command));
 	i = 0;
 	while (data->cmd_path && data->cmd_path[i])
