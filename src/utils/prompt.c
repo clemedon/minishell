@@ -82,6 +82,7 @@ static void	ft_readline(t_data *data)
 	data->cmdline = cmdline;
 }
 
+
 /*
  ** Prompt.
  */
@@ -91,6 +92,7 @@ void	ft_prompt(t_data *data)
 	while (1)
 	{
 		data->cmd_path = ft_split_path (data);
+		data->envtab = ft_update_envtab (data);
 		data->cmdid = 0;
 		data->nb_pipes = 0;
 		ft_readline (data);
@@ -106,6 +108,7 @@ void	ft_prompt(t_data *data)
 		else
 			ft_free (data->cmdline);
 		ft_free_tab (data->cmd_path);
+		ft_free_tab (data->envtab);
 	}
 	ft_clear_exit (data);
 }

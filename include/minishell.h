@@ -154,6 +154,7 @@ typedef struct s_data
 	int		cmdcount;
 	char	*cmdline;
 	char	**environ;
+	char	**envtab;
 
 	t_dlist	*toklist;
 	t_dlist	*cmdlist;
@@ -243,6 +244,7 @@ int		ft_echo(t_data *data, char **arg);
  ** [ builtin/env.c ]
  */
 
+char	**ft_update_envtab (t_data *data);
 int		ft_env(t_dlist *envlist);
 
 /* #----------------------------------------------------------------------# */

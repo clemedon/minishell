@@ -105,6 +105,7 @@ void	ft_clear_exit(t_data *data)
 {
 	ft_free (data->cwd);
 	ft_free_tab (data->cmd_path);
+	ft_free_tab (data->envtab);
 	ft_clearlist_cmd (&data->cmdlist, ft_free);
 	ft_clearlist_env (&data->envlist, ft_free);
 	ft_clearlist_exp (&data->explist, ft_free);

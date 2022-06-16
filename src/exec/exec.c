@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	ft_parent(t_data *data, t_dlist *cmd, int pid)
+static int	ft_parent(t_data *data, t_dlist *cmd, int pid)
 {
 	if (cmd->next)
 		ft_close(data, cmd, &((t_cmd *)cmd->content)->fd[1]);
@@ -21,7 +21,7 @@ int	ft_parent(t_data *data, t_dlist *cmd, int pid)
 	return (data->status);
 }
 
-void	ft_child(t_data *data, t_dlist *cmd, char **environ)
+static void	ft_child(t_data *data, t_dlist *cmd)
 {
 	if (ft_is_builtin(cmd) && !ft_fork_builtin(cmd))
 		exit(data->status);
@@ -52,7 +52,7 @@ void	ft_child(t_data *data, t_dlist *cmd, char **environ)
 		((t_cmd *)cmd->content)->error = 127;
 		ft_perror(data, cmd, 127);
 	}
-	if (!ft_is_builtin(cmd) && execve(((t_cmd *)cmd->content)->prg, ((t_cmd *)cmd->content)->cmd, environ) == -1)
+	if (!ft_is_builtin(cmd) && execve(((t_cmd *)cmd->content)->prg, ((t_cmd *)cmd->content)->cmd, data->envtab) == -1)
 	{
 		((t_cmd *)cmd->content)->error = 126;
 		ft_perror(data, cmd, 126);
@@ -83,7 +83,7 @@ void	ft_init_pipe(t_data *data)
 	}
 }
 
-void	ft_exec_cmd(t_data *data, t_dlist *cmd, char **environ)
+void	ft_exec_cmd(t_data *data, t_dlist *cmd)
 {
 	int pid;
 
@@ -97,7 +97,7 @@ void	ft_exec_cmd(t_data *data, t_dlist *cmd, char **environ)
 	}
 	if (pid == 0)
 	{
-		ft_child(data, cmd, environ);
+		ft_child(data, cmd);
 	}
 }
 
@@ -105,7 +105,6 @@ void	ft_exec_cmd(t_data *data, t_dlist *cmd, char **environ)
 int	ft_exec(t_data *data)
 {
 	t_dlist		*cmd;
-	extern char	**environ;
 	int			builtin_id;
 
 	ft_init_pipe(data);
@@ -121,7 +120,7 @@ int	ft_exec(t_data *data)
 			((t_cmd *)cmd->content)->error = data->status;
 		}
 		else
-			ft_exec_cmd(data, cmd, environ);
+			ft_exec_cmd(data, cmd);
 		cmd = cmd->next;
 	}
 	while (wait(NULL) != -1)
