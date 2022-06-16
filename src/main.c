@@ -46,6 +46,7 @@ static void	ft_shlvl_update (t_data *data, char sign)
 	ft_export (data, exportcmd);
 	ft_free_tab (exportcmd);
 }
+
 /*
  ** Main.
  */
