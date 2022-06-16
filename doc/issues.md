@@ -9,9 +9,10 @@
 
 # //////////////////////// CVIDON
 
-- Add SHLVL feature
+- Fix exit error message
+> 'exit $? + $?' should display "too many arguments"
 
-- Fix execution multipipe
+- Fix exec newline at c-c
 > `cat | cat | cat` then `<CR><C-C>` the prompt should go to newline.
 > `cat | ls` then `<CR><C-C>` the prompt should go to newline.
 

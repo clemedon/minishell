@@ -125,7 +125,7 @@ void	ft_init_minimal_exp(t_data *data)
 {
 	ft_add_exp (data, ft_strdup("OLDPWD"), NULL);
 	ft_add_exp (data, ft_strdup("PWD"), getcwd (NULL, PATH_MAX));
-	ft_add_exp (data, ft_strdup("SHLVL"), ft_strdup("?"));
+	ft_add_exp (data, ft_strdup("SHLVL"), ft_strdup("1"));
 }
 
 /*

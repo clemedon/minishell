@@ -24,6 +24,30 @@ static void	ft_init_data(t_data *data)
 }
 
 /*
+ ** Update the SHLVL. TODO remove '-' and 'sign' param
+ ** sign == '+' to increase, '-' to decrease.
+ */
+
+static void	ft_shlvl_update (t_data *data, char sign)
+{
+	char	*str;
+	char	**unsetcmd;
+	char	**exportcmd;
+
+	unsetcmd = ft_split ("unset SHLVL", ' ');
+	ft_unset (data, unsetcmd);
+	ft_free_tab (unsetcmd);
+	if (sign == '-')
+		str = ft_strjoin_free_s2 ("export SHLVL=", ft_itoa (--data->shlvl));
+	if (sign == '+')
+		str = ft_strjoin_free_s2 ("export SHLVL=", ft_itoa (++data->shlvl));
+	exportcmd = ft_split(str, ' ');
+	ft_free (str);
+	ft_export (data, exportcmd);
+	ft_free_tab (exportcmd);
+}
+
+/*
  ** Main.
  */
 
@@ -39,6 +63,8 @@ int	main(int ac, char **av)
 		ft_init_data (&data);
 		ft_init_env (&data);
 		ft_init_exp (&data);
+		ft_shlvl_update (&data, '+');
+		data.shlvl = ft_atoi(ft_getenv (data.envlist, "SHLVL"));
 		ft_prompt (&data);
 	}
 	else
