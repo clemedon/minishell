@@ -9,12 +9,14 @@
 
 # //////////////////////// CVIDON
 
+- Pass envlist to execve
+
 - Fix exit error message
 > 'exit $? + $?' should display "too many arguments"
 
 - Add SHLVL feature
 
-- Fix execution multipipe
+- Fix exec newline at c-c
 > `cat | cat | cat` then `<CR><C-C>` the prompt should go to newline.
 > `cat | ls` then `<CR><C-C>` the prompt should go to newline.
 

@@ -170,6 +170,7 @@ typedef struct s_data
 	int		last_in;
 	int		last_out;
 
+	int		shlvl;
 	int		status;
 
 }			t_data;
