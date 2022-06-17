@@ -81,5 +81,9 @@ void	ft_parser(t_data *data)
 	if (!ft_parse_empty_cmd(data))
 		return ;
 	ft_create_cmdlist(data);
+	/* ft_printlist_cmd(data->cmdlist); */
+	ft_create_redlist(data);
+	/* printf("----------- redir_list ---------\n"); */
+	/* ft_printlist_redir(data->redlist); */
 }
 

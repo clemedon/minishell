@@ -7,13 +7,17 @@
 void	ft_create_redlist(t_data *data)
 {
 	t_dlist	*temp;
+	int		nb_cmd;
 
 	temp = data->toklist;
+	nb_cmd = 0;
 	while (temp)
 	{
+		if (ft_is_tokid(temp, PP))
+			nb_cmd ++;
 		if (ft_is_tokid(temp, GT) || ft_is_tokid(temp, LS)
 			|| ft_is_tokid(temp, DG) || ft_is_tokid(temp, DL))
-			ft_add_red (data, temp);
+			ft_add_red (data, temp, nb_cmd);
 		temp = temp->next;
 	}
 }
@@ -22,7 +26,7 @@ void	ft_create_redlist(t_data *data)
  ** Init a redir list or add command to it.
  */
 
-void	ft_add_red(t_data *data, t_dlist *token)
+void	ft_add_red(t_data *data, t_dlist *token, int nb_cmd)
 {
 	t_redir	*redir;
 
@@ -30,6 +34,7 @@ void	ft_add_red(t_data *data, t_dlist *token)
 	if (!redir)
 		exit(EXIT_FAILURE);
 	redir->type = ((t_tok *)token->content)->tokid;
+	redir->cmdid = nb_cmd;
 	if (token->next)
 		redir->file = ft_strdup(((t_tok *)token->next->content)->tok);
 	else
@@ -48,7 +53,8 @@ void	ft_printlist_redir(t_dlist *lst)
 	temp = lst;
 	while (temp)
 	{
-		ft_printf(" [ type: '%i', file '%s' ]\n",
+		ft_printf(" [ cmdid: '%i', type: '%i', file '%s' ]\n",
+			((t_redir *)temp->content)->cmdid,
 			((t_redir *)temp->content)->type,
 			((t_redir *)temp->content)->file);
 		temp = temp->next;

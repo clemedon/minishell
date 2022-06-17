@@ -138,6 +138,7 @@ typedef struct s_exp
 typedef struct s_redir
 {
 	int				type;
+	int				cmdid;
 	char			*file;
 	struct s_redir	*next;
 	struct s_redir	*prev;
@@ -341,8 +342,8 @@ void	ft_expand_word(t_data *data);
  */
 
 void	ft_create_redlist(t_data *data);
-void	ft_add_red(t_data *data, t_dlist *token);
-void	ft_printlist_red(t_dlist *lst);
+void	ft_add_red(t_data *data, t_dlist *token, int nb_cmd);
+void	ft_printlist_redir(t_dlist *lst);
 void	ft_clearlist_red(t_dlist **lst, void (*del)(void *));
 
 /*

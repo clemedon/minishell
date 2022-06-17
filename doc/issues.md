@@ -5,6 +5,16 @@
 
 # //////////////////////// ATHIRION
 
+- Fix redir in redir
+
+- Fix multiple pipe with multiple here_doc
+
+- Fix here_doc when outfile missing
+
+- Fix leak with multiple redir in redir
+> < file1 < file2 | b | c | d
+> a | b | c < file1 | d < file2
+
 # //////////////////////// CVIDON
 
 - Fix exec newline at c-c
@@ -15,13 +25,8 @@
 
 ##  Execution
 
-- Fix multiple pipe with multiple here_doc
 
-- Fix here_doc when outfile missing
 
-- Fix leak
-> < file1 < file2 | b | c | d
-> a | b | c < file1 | d < file2
 
 - Add error code 130 handling
 > C-C, check discord
