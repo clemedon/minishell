@@ -92,8 +92,8 @@ void	ft_exec_cmd(t_data *data, t_dlist *cmd)
 		ft_perror(data, cmd, errno);
 	if (pid > 0)
 	{
-		signal(2 & 3, SIG_IGN);
-		ft_parent(data, cmd, pid);
+		ft_init_signals_exec ();
+		ft_parent (data, cmd, pid);
 	}
 	if (pid == 0)
 	{

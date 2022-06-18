@@ -56,12 +56,11 @@ int	main(int ac, char **av)
 	(void) av;
 	if (ac == 1)
 	{
-		ft_init_tty ();
+		/* ft_init_tty (); */
 		ft_init_signals ();
 		ft_init_data (&data);
 		ft_init_env (&data);
 		ft_init_exp (&data);
-
 
 		temp = ft_getenv (data.envlist, "SHLVL");
 		data.shlvl = ft_atoi(temp);
