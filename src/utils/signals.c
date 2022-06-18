@@ -21,66 +21,61 @@
  */
 
 /*
- ** SIGINT handling.
+ ** SIGINT interactive mode handling.
  */
 
-static void	ft_handle_sigint(void)
+void	ft_sigint(int sig)
 {
-	ft_putendl_fd("", 1);
+	(void)sig;
+	ft_putstr_fd("\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
 }
 
 /*
- ** Modify the effect of the given 'signal' with the given 'handler'.
+ ** SIGINT non-interactive mode handling.
  */
 
-static void	ft_handle_signal(int signal, void (*handler)())
+void	ft_sigint_exec(int sig)
 {
-	struct sigaction	sact;
-	sigset_t			mask;
-
-	sigemptyset(&mask);
-	sigaddset(&mask, signal);
-	sact.sa_sigaction = handler;
-	sact.sa_mask = mask;
-	sact.sa_flags = SA_SIGINFO;
-	if (sigaction(signal, &sact, NULL) != 0)
-	{
-		perror(strerror(signal));
-		exit(EXIT_FAILURE);
-	}
+	(void)sig;
+	ft_putstr_fd("\n", 1);
 }
 
 /*
- ** Ignore the given 'signal'.
+ ** SIGQUIT non-interactive mode handling.
  */
 
-static void	ft_ignore_signal(int signal)
+void	ft_sigquit_exec(int sig)
 {
-	struct sigaction	sact;
-	sigset_t			mask;
-
-	sigemptyset(&mask);
-	sigaddset(&mask, signal);
-	sact.sa_handler = SIG_IGN;
-	sact.sa_mask = mask;
-	sact.sa_flags = 0;
-	if (sigaction(signal, &sact, NULL) != 0)
-	{
-		perror(strerror(signal));
-		exit(EXIT_FAILURE);
-	}
+	(void)sig;
+	ft_putstr_fd("Quit\n", 1);
 }
+
+/*
+ ** Init interactive mode signals handling
+ */
 
 void	ft_init_signals(void)
 {
-	ft_ignore_signal(SIGTTIN);
-	ft_ignore_signal(SIGTTOU);
-	ft_ignore_signal(SIGTSTP);
-	ft_ignore_signal(SIGQUIT);
-	ft_ignore_signal(SIGTERM);
-	ft_ignore_signal(SIGHUP);
-	ft_handle_signal(SIGINT, ft_handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, ft_sigint);
 }
+
+/*
+ ** Init non-interactive mode signals handling
+ */
+
+void	ft_init_signals_exec(void)
+{
+	signal(SIGINT, ft_sigint_exec);
+	signal(SIGQUIT, ft_sigquit_exec);
+}
+
+/* signal(SIGTTIN, SIG_IGN); */
+/* signal(SIGTTOU, SIG_IGN); */
+/* signal(SIGTSTP, SIG_IGN); */
+/* signal(SIGQUIT, SIG_IGN); */
+/* signal(SIGTERM, SIG_IGN); */
+/* signal(SIGHUP, SIG_IGN); */

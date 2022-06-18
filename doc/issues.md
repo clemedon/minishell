@@ -17,9 +17,10 @@
 
 # //////////////////////// CVIDON
 
-- Fix exec newline at c-c
-> `cat | cat | cat` then `<CR><C-C>` the prompt should go to newline.
-> `cat | ls` then `<CR><C-C>` the prompt should go to newline.
+- Fix exec signal ctrl-d and status
+
+- Fix heredoc ctrl-c
+> Shouldn't display: `minishell: warning: here-document delimited by end-of-line (wanted 'salut')`
 
 # //////////////////////// ???
 
@@ -29,6 +30,7 @@
 
 
 - Add error code 130 handling
+> `data->status = 128 + <numéro_du_signal>`
 > C-C, check discord
 
 ##  Final
