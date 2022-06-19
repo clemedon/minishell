@@ -479,16 +479,6 @@ void	ft_printlist_env(t_dlist *envlist);
 void	ft_clearlist_env(t_dlist **envlist, void (*del)(void *));
 
 /*
- ** [ utils/signals.c ]
- */
-
-/* static void	ft_handle_sigint(void); */
-/* static void	ft_handle_signal(int sig, void (*handler)(void)); */
-/* static void	ft_ignore_signal(int signal); */
-void	ft_init_signals(void);
-void	ft_init_signals_exec(void);
-
-/*
  ** [ utils/tty.c ]
  */
 

@@ -21,61 +21,39 @@
  */
 
 /*
- ** SIGINT interactive mode handling.
- */
-
-void	ft_sigint(int sig)
-{
-	(void)sig;
-	ft_putstr_fd("\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-
-/*
  ** SIGINT non-interactive mode handling.
+ ** TODO deprecated
  */
 
-void	ft_sigint_exec(int sig)
-{
-	(void)sig;
-	ft_putstr_fd("\n", 1);
-}
+/* void	ft_sigint_exec(int sig) */
+/* { */
+/* 	(void)sig; */
+/* 	ft_putstr_fd("\n", 1); */
+/* } */
 
 /*
  ** SIGQUIT non-interactive mode handling.
+ ** TODO deprecated
  */
 
-void	ft_sigquit_exec(int sig)
-{
-	(void)sig;
-	ft_putstr_fd("Quit\n", 1);
-}
-
-/*
- ** Init interactive mode signals handling
- */
-
-void	ft_init_signals(void)
-{
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, ft_sigint);
-}
+/* void	ft_sigquit_exec(int sig) */
+/* { */
+/* 	(void)sig; */
+/* 	ft_putstr_fd("Quit\n", 1); */
+/* } */
 
 /*
  ** Init non-interactive mode signals handling
+ **
+ ** All the signals are IGNORED by minishell so the called program itself can
+ ** handle it.
+ **
+ ** TODO deprecated
  */
 
-void	ft_init_signals_exec(void)
-{
-	signal(SIGINT, ft_sigint_exec);
-	signal(SIGQUIT, ft_sigquit_exec);
-}
+/* void	ft_init_signals_exec(void) */
+/* { */
+/* 	signal(SIGINT, ft_sigint_exec); */
+/* 	signal(SIGQUIT, ft_sigquit_exec); */
+/* } */
 
-/* signal(SIGTTIN, SIG_IGN); */
-/* signal(SIGTTOU, SIG_IGN); */
-/* signal(SIGTSTP, SIG_IGN); */
-/* signal(SIGQUIT, SIG_IGN); */
-/* signal(SIGTERM, SIG_IGN); */
-/* signal(SIGHUP, SIG_IGN); */

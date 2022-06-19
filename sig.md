@@ -19,3 +19,19 @@ Interactive mode:
         signal(SIGINT, sigint_handler);
         signal(SIGQUIT, SIG_IGN);
     }
+
+2. here_doc
+
+    /*
+    ** SIGINT here_doc handling.
+    */
+
+    void	ft_sigint_heredoc(int sig)
+    {
+        (void)sig;
+        ft_putstr_fd("\n", 1);
+        rl_on_new_line();
+        rl_replace_line("", 0);
+        rl_redisplay();
+    }
+

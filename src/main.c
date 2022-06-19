@@ -1,6 +1,32 @@
 #include "minishell.h"
 
 /*
+ ** Interactive mode signals handling
+ */
+
+void	ft_sigint(int sig)
+{
+	(void)sig;
+	ft_putstr_fd("\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
+void	ft_init_signals()
+{
+	signal(SIGHUP, SIG_IGN);
+	signal(SIGTERM, SIG_IGN);
+
+	signal(SIGTTIN, SIG_IGN);
+	signal(SIGTTOU, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+
+	signal(SIGINT, ft_sigint);
+}
+
+/*
  ** Init data.
  */
 

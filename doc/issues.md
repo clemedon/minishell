@@ -17,9 +17,9 @@
 
 # //////////////////////// CVIDON
 
-- Fix signal exec SIGQUIT (<C-BS>)
-> Should send an EOF to terminate the program?
-> A kill 9 ?
+- Fix SIGINT return value
+> `./minishell; <C-C>; echo $?` should return 128+2 not 0.
+> Is it possible without the use of a globale?
 
 - Fix signal heredoc SIGINT (<C-C>)
 > Should send an EOF to terminate the heredoc?

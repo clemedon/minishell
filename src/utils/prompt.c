@@ -82,31 +82,6 @@ static void	ft_readline(t_data *data)
 	data->cmdline = cmdline;
 }
 
-
-/*
- ** Update the SHLVL.
- ** sign == '+' to increase, '-' to decrease.
- */
-
-/* void	ft_shlvl_update (t_data *data, char sign) */
-/* { */
-/* 	char	*str; */
-/* 	char	**unsetcmd; */
-/* 	char	**exportcmd; */
-
-	/* unsetcmd = ft_split ("unset SHLVL", ' '); */
-	/* ft_unset (data, unsetcmd); */
-	/* ft_free_tab (unsetcmd); */
-	/* if (sign == '-') */
-	/* 	str = ft_strjoin_free_s2 ("export SHLVL=", ft_itoa (--data->shlvl)); */
-	/* if (sign == '+') */
-	/* 	str = ft_strjoin_free_s2 ("export SHLVL=", ft_itoa (++data->shlvl)); */
-	/* exportcmd = ft_split(str, ' '); */
-	/* ft_free (str); */
-	/* ft_export (data, exportcmd); */
-	/* ft_free_tab (exportcmd); */
-/* } */
-
 /*
  ** Prompt.
  */
@@ -124,28 +99,7 @@ void	ft_prompt(t_data *data)
 		{
 			ft_lexer (data);
 			ft_parser (data);
-
-			/* if (((t_cmd *)data->cmdlist->content)->prg && !ft_strncmp (((t_cmd *)data->cmdlist->content)->prg, "./minishell", 11)) */
-			/* { */
-			/* 	dprintf(2, "> %i\n", data->shlvl); */
-			/* 	ft_shlvl_update (data, '+'); */
-			/* 	dprintf(2, "> %i\n", data->shlvl); */
-			/* 	data->shlvl_status = 1; */
-			/* 	dprintf(2, "shlvl> %s\n", ft_getexp (data->explist, "SHLVL")); */
-			/* } */
-
 			ft_exec (data);
-
-			/* if (data->shlvl_status) */
-			/* { */
-			/* 	dprintf (2, "ciao\n"); */
-			/* 	dprintf(2, "> %i\n", data->shlvl); */
-			/* 	ft_shlvl_update (data, '-'); */
-			/* 	dprintf(2, "> %i\n", data->shlvl); */
-			/* 	data->shlvl_status = 0; */
-			/* 	dprintf(2, "shlvl> %s\n", ft_getexp (data->explist, "SHLVL")); */
-			/* } */
-
 			ft_clearlist_red (&data->redlist, ft_free);
 			ft_clearlist_cmd (&data->cmdlist, ft_free);
 			ft_clearlist_tok (&data->toklist, ft_free);

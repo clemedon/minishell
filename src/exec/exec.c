@@ -20,6 +20,11 @@ static int	ft_parent(t_data *data, t_dlist *cmd, int pid)
 	}
 	if (WIFSIGNALED(data->status) == EXIT_FAILURE)
 	{
+		if (WTERMSIG(data->status) == SIGQUIT)
+			ft_putstr_fd("Quit\n", 1);
+		if (WTERMSIG(data->status) == SIGINT)
+			ft_putstr_fd("\n", 1);
+
 		data->status = 128 + WTERMSIG(data->status);
 		errno = EINTR;
 		((t_cmd *)cmd->content)->error = data->status;
@@ -98,11 +103,14 @@ void	ft_exec_cmd(t_data *data, t_dlist *cmd)
 		ft_perror(data, cmd, errno);
 	if (pid > 0)
 	{
-		ft_init_signals_exec ();
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGINT, SIG_IGN);
+		ft_init_tty ();
 		ft_parent (data, cmd, pid);
 	}
 	if (pid == 0)
 	{
+		signal(SIGQUIT, SIG_DFL);
 		ft_child(data, cmd);
 	}
 }
