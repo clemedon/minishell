@@ -17,6 +17,10 @@
 
 # //////////////////////// CVIDON
 
+- Fix SIGQUIT and SIGINT handling
+> `cat<CR>salut<C-\>` shouldn't print `salut` in the prompt
+> `cat<CR>salut<C-C>` shouldn't print `salut` in the prompt
+
 - Fix SIGINT return value
 > `./minishell; <C-C>; echo $?` should return 128+2 not 0.
 > Is it possible without the use of a globale?
