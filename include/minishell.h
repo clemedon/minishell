@@ -489,6 +489,7 @@ void	ft_init_tty(void);
  */
 
 /* static void	ft_init_data(t_data *data) */
+void	ft_init_signals();
 int		main(int ac, char **av);
 
 #endif
