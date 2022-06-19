@@ -18,6 +18,12 @@ static int	ft_parent(t_data *data, t_dlist *cmd, int pid)
 		data->status = WEXITSTATUS(data->status);
 		((t_cmd *)cmd->content)->error = data->status;
 	}
+	if (WIFSIGNALED(data->status) == EXIT_FAILURE)
+	{
+		data->status = 128 + WTERMSIG(data->status);
+		errno = EINTR;
+		((t_cmd *)cmd->content)->error = data->status;
+	}
 	return (data->status);
 }
 

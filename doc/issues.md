@@ -17,10 +17,12 @@
 
 # //////////////////////// CVIDON
 
-- Fix exec signal ctrl-d and status
+- Fix signal exec SIGQUIT (<C-BS>)
+> Should send an EOF to terminate the program?
+> A kill 9 ?
 
-- Fix heredoc ctrl-c
-> Shouldn't display: `minishell: warning: here-document delimited by end-of-line (wanted 'salut')`
+- Fix signal heredoc <C-C>
+> Should send an EOF to terminate the heredoc?
 
 # //////////////////////// ???
 
@@ -28,10 +30,6 @@
 
 
 
-
-- Add error code 130 handling
-> `data->status = 128 + <numéro_du_signal>`
-> C-C, check discord
 
 ##  Final
 
