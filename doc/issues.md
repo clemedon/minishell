@@ -21,15 +21,12 @@
 > Should send an EOF to terminate the program?
 > A kill 9 ?
 
-- Fix signal heredoc <C-C>
+- Fix signal heredoc SIGINT (<C-C>)
 > Should send an EOF to terminate the heredoc?
 
 # //////////////////////// ???
 
 ##  Execution
-
-
-
 
 ##  Final
 
