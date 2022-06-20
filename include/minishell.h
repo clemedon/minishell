@@ -271,7 +271,7 @@ int ft_exec_builtin(t_data *data, t_dlist *cmd, int builtin_id);
  ** [ exec/file.c ]
  */
 
-void	ft_open(t_data *data, t_dlist *cmd);
+int		ft_open(t_data *data, t_dlist *cmd);
 void    ft_close(t_data *data, t_dlist *cmd, int *fd);
 
 /*

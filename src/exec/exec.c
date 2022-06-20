@@ -111,7 +111,12 @@ int	ft_exec(t_data *data)
 	cmd = data->cmdlist;
 	while (cmd)
 	{
-		ft_open(data, cmd);
+		if (!ft_open(data, cmd))
+		{
+			data->status = 1;
+			cmd = cmd->next;
+			continue ;
+		}
 		builtin_id = ft_is_builtin(cmd);
 		if (data->cmdid == 1 && builtin_id && !ft_fork_builtin(cmd))
 		{

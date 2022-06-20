@@ -29,7 +29,7 @@ void	ft_create_redlist(t_data *data)
 void	ft_add_red(t_data *data, t_dlist *token, int nb_cmd)
 {
 	t_redir	*redir;
-
+	
 	redir = malloc (sizeof(t_redir));
 	if (!redir)
 		exit(EXIT_FAILURE);
