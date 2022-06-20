@@ -35,7 +35,7 @@ Interactive mode:
         rl_redisplay();
     }
 
-3. globale for interactive status code
+3.  ssentine/mini-s-hell: globale for interactive status code
 
     static int  g_exit_code;
 
