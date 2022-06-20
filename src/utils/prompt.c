@@ -76,7 +76,6 @@ static void	ft_readline(t_data *data)
 	{
 		ft_putendl_fd ("exit", 1);
 		ft_clear_exit (data);
-		exit (EXIT_FAILURE);
 	}
 	add_history (cmdline);
 	data->cmdline = cmdline;

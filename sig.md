@@ -35,3 +35,32 @@ Interactive mode:
         rl_redisplay();
     }
 
+3. globale for interactive status code
+
+    static int  g_exit_code;
+
+    void    exit_code_set(int code)
+    {
+        g_exit_code = code;
+    }
+
+    void    minishell_signal_quit(int signum)
+    {
+        int status;
+
+        wait(&status);
+        exit_code_set(128 + status);
+        printf("Quit: %d\n", signum);
+        signum = 0;
+    }
+
+    void    minishell_signal_int(int signum)
+    {
+        int status;
+
+        wait(&status);
+        exit_code_set(128 + status);
+        ft_putchar('\n');
+        signum = 0;
+    }
+
