@@ -69,7 +69,8 @@ void	ft_printlist_cmd(t_dlist *lst)
 {
 	t_dlist	*temp;
 	size_t		i;
-
+	
+	printf("IN FT_PRINTLIST_CMD\n");
 	temp = lst;
 	while (temp)
 	{

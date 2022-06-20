@@ -70,20 +70,26 @@ void	ft_parser(t_data *data)
 	/* printf(">>>>> AFTER VAR <<<<<\n"); */
 	/* ft_printlist_tok(data->toklist); */
 	ft_expand_tilde(data);
+	/* printf(">>>>> AFTER TILDE <<<<<\n"); */
+	/* ft_printlist_tok(data->toklist); */
 	ft_expand_quote(data);
+	/* printf(">>>>> AFTER QUOTE <<<<<\n"); */
+	/* ft_printlist_tok(data->toklist); */
 	ft_parse_space(data);
 	/* printf(">>>>> BEFORE REDIR <<<<<\n"); */
 	/* ft_printlist_tok(data->toklist); */
 	ft_parse_redir(data);
-	/* printf(">>>>> AFTER REDIR <<<<<\n"); */
+	/* printf(">>>>> TOKLIST <<<<<\n"); */
 	/* ft_printlist_tok(data->toklist); */
 	ft_count_pipe(data);
 	if (!ft_parse_empty_cmd(data))
 		return ;
 	ft_create_cmdlist(data);
+	/* printf(">>>>> CMDLIST <<<<<\n"); */
 	/* ft_printlist_cmd(data->cmdlist); */
 	ft_create_redlist(data);
 	/* printf("----------- redir_list ---------\n"); */
+	/* printf(">>>>> REDLIST <<<<<\n"); */
 	/* ft_printlist_redir(data->redlist); */
 }
 

@@ -5,15 +5,9 @@
 
 # //////////////////////// ATHIRION
 
-- Fix redir in redir
-
-- Fix multiple pipe with multiple here_doc
-
-- Fix here_doc when outfile missing
-
-- Fix leak with multiple redir in redir
-> < file1 < file2 | b | c | d
-> a | b | c < file1 | d < file2
+- Fix << STOP cat << HELL cat >
+> should display 'cat: cat: No such file or directory'
+> error code should be 1 and not 0
 
 # //////////////////////// CVIDON
 
@@ -33,6 +27,11 @@
 > `$ cat<CR>salut<C-\>` shouldn't print `salut` in the prompt.
 > `$ cat<CR>salut<C-C>` shouldn't print `salut` in the prompt.
 > Or `$ yes<CR>salut<C-C>` shouldn't print `salut` in the prompt.
+
+- Fix minishell with args
+> './minishell salut' should display "minishell: salut: no such file
+> or directory' and not simply give the prompt back (error code should
+> be 127)
 
 # //////////////////////// ???
 

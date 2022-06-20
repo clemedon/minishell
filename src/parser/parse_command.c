@@ -78,12 +78,16 @@ void    ft_parse_command(t_data *data)
 		{
 			if (temp->next && ft_is_tokid(temp, LS))
 			{
+				if (((t_cmd *)cmd->content)->file_in)
+					free(((t_cmd *)cmd->content)->file_in);
 				((t_cmd *)cmd->content)->file_in = ft_strdup(((t_tok *)temp->next->content)->tok);
 				((t_cmd *)cmd->content)->type_in = ((t_tok *)temp->content)->tokid;
 				temp = temp->next->next;
 			}
 			else if (temp->next && ft_is_tokid(temp, DL))
 			{
+				if (((t_cmd *)cmd->content)->file_in)
+					free(((t_cmd *)cmd->content)->file_in);
 				((t_cmd *)cmd->content)->file_in = ft_strdup("/tmp/temp_heredoc");
 				((t_cmd *)cmd->content)->stop_word = ft_strdup(((t_tok *)temp->next->content)->tok);
 				((t_cmd *)cmd->content)->type_in = ((t_tok *)temp->content)->tokid;
@@ -92,6 +96,8 @@ void    ft_parse_command(t_data *data)
 			}
 			else if (temp->next && (ft_is_tokid(temp, GT) || ft_is_tokid(temp, DG)))
 			{
+				if (((t_cmd *)cmd->content)->file_out)
+					free(((t_cmd *)cmd->content)->file_out);
 				((t_cmd *)cmd->content)->file_out = ft_strdup(((t_tok *)temp->next->content)->tok);
 				((t_cmd *)cmd->content)->type_out = ((t_tok *)temp->content)->tokid;
 				temp = temp->next->next;

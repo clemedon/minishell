@@ -36,7 +36,9 @@ static void	ft_remove_empty_quotes(t_data *data)
 	t_dlist	*temp;
 	t_dlist	*ptrcpy[2];
 	t_dlist	*new;
+	int		word_token;
 
+	word_token = 0;
 	temp = data->toklist;
 	ptrcpy[0] = temp;
 	new = malloc (sizeof (t_dlist));
@@ -44,8 +46,10 @@ static void	ft_remove_empty_quotes(t_data *data)
 	new = NULL;
 	while (temp)
 	{
-		if ((ft_is_tokid (temp, QT) && ft_is_tokid (temp->next, QT))
-			|| (ft_is_tokid (temp, DQ) && ft_is_tokid (temp->next, DQ)))
+		if (ft_is_tokid(temp, WD))
+			word_token = 1;
+		if (!word_token && ((ft_is_tokid (temp, QT) && ft_is_tokid (temp->next, QT))
+			|| (ft_is_tokid (temp, DQ) && ft_is_tokid (temp->next, DQ))))
 		{	
 			free(((t_tok *)temp->next->content)->tok);
 			if (ft_is_tokid(temp, QT))
@@ -95,7 +99,7 @@ static void	ft_expand_quote2(t_dlist **new, t_dlist **temp)
 			ft_dlst_elem_dup (new, *temp);
 		*temp = (*temp)->next;
 	}
-	if ((ft_is_tokid(*temp, QT) || ft_is_tokid(*temp, DQ)) && ft_is_equal_sign(((t_tok *)(*temp)->prev->content)->tok))
+	if ((*temp)->prev && (*temp) && (ft_is_tokid(*temp, QT) || ft_is_tokid(*temp, DQ)) && ft_is_equal_sign(((t_tok *)(*temp)->prev->content)->tok))
 	{
 		if (ft_is_tokid((*temp)->prev, WD))
 		{
@@ -116,12 +120,13 @@ static void	ft_expand_quote2(t_dlist **new, t_dlist **temp)
 		free (str);
 		ft_dlst_elem_dup (new, *temp);
 		*temp = (*temp)->next;
-		while (!ft_is_tokid (*temp, QT) && !ft_is_tokid (*temp, DQ))
+		while (*temp && !ft_is_tokid (*temp, QT) && !ft_is_tokid (*temp, DQ))
 			*temp = (*temp)->next;
 	}
 	if (*temp && !ft_is_tokid (*temp, QT) && !ft_is_tokid (*temp, DQ))
 		ft_dlst_elem_dup (new, *temp);
-	*temp = (*temp)->next;
+	if (*temp)
+		*temp = (*temp)->next;
 }
 
 void	ft_expand_quote(t_data *data)
