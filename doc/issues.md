@@ -17,7 +17,7 @@
 
 # //////////////////////// CVIDON
 
-- Fix SIGQUIT and SIGINT handling
+- Fix SIGQUIT and SIGINT prompt
 > `cat<CR>salut<C-\>` shouldn't print `salut` in the prompt
 > `cat<CR>salut<C-C>` shouldn't print `salut` in the prompt
 
