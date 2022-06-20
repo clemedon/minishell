@@ -17,12 +17,17 @@
 
 # //////////////////////// CVIDON
 
-- Fix SIGINT return value
-> `./minishell; <C-C>; echo $?` should return 128+2 not 0.
-> Is it possible without the use of a globale?
+- Protect all the malloc
+> Create a 'ft_clear_exit("malloc error")' and a 'ft_strdup' wrapper.
+
+- Comply to norm
 
 - Fix signal heredoc SIGINT (<C-C>)
 > Should send an EOF to terminate the heredoc?
+
+- Fix SIGINT return value
+> `./minishell; <C-C>; echo $?` should return 128+2 not 0.
+> Is it possible without the use of a globale?
 
 - Fix SIGQUIT and SIGINT prompt
 > `$ cat<CR>salut<C-\>` shouldn't print `salut` in the prompt.
@@ -37,9 +42,6 @@
 
 - Protect every dup2
 
-- Protect all the malloc
-> Create a 'ft_clear_exit("malloc error")' and a 'ft_strdup' wrapper.
-
 - Close all fds that remains open
 
 - Check every output STD
@@ -47,8 +49,6 @@
 
 - Remove tokpos
 - Remove redlist
-
-- Comply to norm
 
 ##  Wtf
 
