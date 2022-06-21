@@ -1,11 +1,14 @@
 #include "minishell.h"
 
+int  g_sig_status = 0;
+
 /*
  ** Interactive mode signals handling
  */
 
 void	ft_sigint(int sig)
 {
+	g_sig_status = 128 + sig;
 	(void)sig;
 	ft_putstr_fd("\n", 1);
 	rl_on_new_line();

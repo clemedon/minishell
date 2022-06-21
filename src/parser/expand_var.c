@@ -171,6 +171,7 @@ static void	ft_var_exit_status(t_data *data)
 {
 	t_dlist *temp;
 	char	*str;
+	extern	int	g_sig_status;
 
 	temp = data->toklist;
 	while (temp)
@@ -179,7 +180,13 @@ static void	ft_var_exit_status(t_data *data)
 				&& ft_is_tokid(temp->next, WD)
 				&& !ft_strncmp(((t_tok *)temp->next->content)->tok, "?", 1))
 		{
-			str = ft_itoa(data->status);
+			if (g_sig_status)
+			{
+				str = ft_itoa(g_sig_status);
+				g_sig_status = 0;
+			}
+			else
+				str = ft_itoa(data->status);
 			free(((t_tok *)temp->content)->tok);
 			((t_tok *)temp->content)->tok = str;
 			((t_tok *)temp->content)->tokid = WD;
