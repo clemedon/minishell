@@ -9,6 +9,8 @@
 > should display 'cat: cat: No such file or directory'
 > error code should be 1 and not 0
 
+- Fix var expansion in here_doc
+
 # //////////////////////// CVIDON
 
 - Protect all the malloc
