@@ -131,7 +131,7 @@ void	ft_init_env(t_data *data)
 	unsigned int	j;
 
 	if (!data->environ)
-		exit(EXIT_FAILURE);
+		ft_exitmsg (data, "env"); // TODO ca quitte pas quand env -i
 	i = 0;
 	if (*data->environ == NULL)
 	{
@@ -145,6 +145,8 @@ void	ft_init_env(t_data *data)
 			j++;
 
 		key = ft_substr (data->environ[i], 0, j);
+		if (!key)
+			ft_exitmsg (data, "malloc");
 		if (ft_strncmp(key, "PWD", 3) == SUCCESS && !key[3])
 			val = getcwd (NULL, PATH_MAX);
 		else if (ft_strncmp(key, "SHELL", 3) == SUCCESS && !key[5])
@@ -194,7 +196,7 @@ void	ft_add_env(t_data *data, char *key, char *val)
 
 	env = malloc (sizeof(t_env));
 	if (!env)
-		ft_clear_exit (data);
+		ft_exitmsg (data, "malloc");
 	env->key = key;
 	env->val = val;
 	ft_dlstadd_back(&data->envlist, ft_dlstnew(env));

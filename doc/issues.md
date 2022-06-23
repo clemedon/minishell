@@ -21,6 +21,9 @@
 - Protect all the malloc
 > Create a `ft_clear_exit("malloc error")` and a `ft_strdup` wrapper.
 
+- Protect all the signal
+> if (signal(blabla) == SIG_ERR) print(errno);
+
 - Fix signal heredoc SIGINT (<C-C>)
 > Should send an EOF to terminate the heredoc?
 
@@ -41,6 +44,9 @@
 
 - Remove tokpos
 - Remove redlist
+
+- Backslash is a character
+> `rm \\  <-`
 
 ##  Wtf
 

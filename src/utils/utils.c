@@ -1,5 +1,28 @@
 #include "minishell.h"
 
+
+char	*ft_w_substr (char const *s, unsigned int start, size_t len, t_data *data)
+{
+	char	*str;
+
+	ft_substr (s, start, len);
+	if (!str)
+		ft_exitmsg (data, "malloc");
+	return (str);
+}
+
+char	*ft_w_strdup (const char *s1, t_data *data)
+{
+	char	*str;
+
+	str = ft_strdup (s1);
+	if (!str)
+		ft_exitmsg (data, "malloc");
+	return (str);
+}
+
+
+
 /*
  ** Security layer for 'ft_strjoin'.
  */
@@ -97,6 +120,16 @@ void	ft_free_tab(char **tab)
 	}
 }
 
+
+void	ft_exitmsg (t_data *data, char *str)
+{
+	data->status = EXIT_FAILURE;
+	write(2, "minishell: ", 12);
+	write(2, str, ft_strlen (str));
+	write(2, " error\n", 7);
+	ft_clear_exit (data);
+}
+
 /*
  ** Clear memory and exit.
  */
@@ -124,9 +157,8 @@ void	ft_dlst_elem_dup(t_data *data, t_dlist **lst, t_dlist *dup)
 	t_tok	*new_tok;
 
 	new_tok = malloc (sizeof(t_tok));
-		ft_clear_exit (data);
 	if (!new_tok)
-		ft_clear_exit (data);
+		ft_exitmsg (data, "malloc");
 	new_tok->tokid = ((t_tok *)dup->content)->tokid;
 	new_tok->tokpos = ((t_tok *)dup->content)->tokpos;
 	new_tok->tok = strdup (((t_tok *)dup->content)->tok);

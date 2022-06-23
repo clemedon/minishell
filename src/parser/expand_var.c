@@ -67,13 +67,13 @@ static void	ft_remove_dollar(t_data *data)
 	ptrcpy[0] = temp;
 	new = malloc(sizeof(t_dlist));
 	if (!new)
-		ft_clear_exit (data);
+		ft_exitmsg (data, "malloc");
 	ptrcpy[1] = new;
 	new = NULL;
 	while (temp)
 	{
 		if (!ft_is_tokid(temp, DO))
-			ft_dlst_elem_dup(&new, temp);
+			ft_dlst_elem_dup(data, &new, temp);
 		temp = temp->next;
 	}
 	data->toklist = new;
@@ -208,7 +208,7 @@ static void	ft_multiple_dollar(t_data *data)
 
 	new = malloc(sizeof(t_dlist *));
 	if (!new)
-		ft_clear_exit (data);
+		ft_exitmsg (data, "malloc");
 	newfree = new;
 	new = NULL;
 	temp = data->toklist;
@@ -222,7 +222,7 @@ static void	ft_multiple_dollar(t_data *data)
 		}
 		else
 		{
-			ft_dlst_elem_dup(&new, temp);
+			ft_dlst_elem_dup(data, &new, temp);
 			temp = temp->next;
 		}
 	}

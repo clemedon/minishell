@@ -101,6 +101,8 @@ void	ft_update_pwd(t_data *data, char *newpwd)
 		{
 			str = ft_strjoin ("export PWD=", newpwd);
 			exportcmd = ft_split(str, ' ');
+			if (!exportcmd)
+				ft_exitmsg (data, "malloc");
 			ft_free (str);
 		}
 		else
@@ -135,13 +137,19 @@ void	ft_update_oldpwd(t_data *data, char *oldpwd)
 		{
 			str = ft_strjoin ("export OLDPWD=", oldpwd);
 			exportcmd = ft_split(str, ' ');
+			if (!exportcmd)
+				ft_exitmsg (data, "malloc");
 			ft_free (str);
 		}
 		else
 		{
 			exportcmd = ft_split("export OLDPWD", ' ');
+			if (!exportcmd)
+				ft_exitmsg (data, "malloc");
 		}
 		unsetcmd = ft_split("unset OLDPWD", ' ');
+		if (!unsetcmd)
+				ft_exitmsg (data, "malloc");
 		ft_unset (data, unsetcmd);
 		ft_export (data, exportcmd);
 		ft_free_tab (unsetcmd);

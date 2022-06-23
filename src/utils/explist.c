@@ -145,7 +145,7 @@ void	ft_init_exp(t_data *data)
 	unsigned int	j;
 
 	if (!data->environ)
-		exit(EXIT_FAILURE);
+		ft_exitmsg (data, "malloc");
 	i = 0;
 	if (*data->environ == NULL)
 	{
@@ -187,7 +187,7 @@ void	ft_add_exp(t_data *data, char *key, char *val)
 
 	var = malloc (sizeof(t_exp));
 	if (!var)
-		ft_clear_exit (data);
+		ft_exitmsg (data, "malloc");
 	var->key = key;
 	var->val = val;
 	ft_dlstadd_back(&data->explist, ft_dlstnew(var));

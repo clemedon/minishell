@@ -16,6 +16,8 @@ static char	*ft_prompt_prefix(void)
 		while (prefix[i] != '.')
 			i++;
 		prefix = ft_substr(prefix, 0, i);
+		if (!prefix)
+			ft_exitmsg (data, "malloc");
 		prefix = ft_strjoin_free_s2 ("👽", prefix);
 		prefix = ft_strjoin_free_s2 (getenv ("USER"), prefix);
 		prefix = ft_strjoin_free_s1 (prefix, ":");
@@ -44,8 +46,7 @@ static char	*ft_prompt_line(t_data *data)
 		homelen = ft_strlen (home);
 	if (home && ft_strncmp (data->cwd, home, homelen) == 0)
 	{
-		prompt = ft_substr
-			(data->cwd, (unsigned int) homelen, ft_strlen (data->cwd));
+		prompt = ft_substr (data->cwd, (unsigned int) homelen, ft_strlen (data->cwd));
 		prompt = ft_strjoin_free_s2 ("~", prompt);
 		prompt = ft_strjoin_free_s1 (prompt, "$ ");
 		prompt = ft_strjoin_free_s2 (prefix, prompt);

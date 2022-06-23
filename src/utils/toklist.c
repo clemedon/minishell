@@ -49,7 +49,7 @@ void	ft_add_tok(t_data *data, int tokid, int tokpos, char *token)
 
 	tok = malloc (sizeof(t_tok));
 	if (!tok)
-		ft_clear_exit (data);
+		ft_exitmsg (data, "malloc");
 
 	tok->tokid = tokid;
 	tok->tokpos = tokpos;

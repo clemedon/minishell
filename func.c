@@ -1,0 +1,7 @@
+ft_split ->done
+ft_w_substr
+ft_w_strdup
+ft_strjoin
+ft_strjoin_free
+ft_strjoin_free_s1
+ft_strjoin_free_s2

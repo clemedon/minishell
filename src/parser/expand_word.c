@@ -46,7 +46,7 @@ void	ft_expand_word(t_data *data)
 
 	new = malloc(sizeof(t_dlist));
 	if (!new)
-		ft_clear_exit (data);
+		ft_exitmsg (data, "malloc");
 	newfree = new;
 	new = NULL;
 	temp = data->toklist;
@@ -59,7 +59,7 @@ void	ft_expand_word(t_data *data)
 			str = ft_concat_all_words(temp);
 			free(((t_tok *)temp->content)->tok);
 			((t_tok *)temp->content)->tok = str;
-			ft_dlst_elem_dup(&new, temp);
+			ft_dlst_elem_dup(data, &new, temp);
 			temp = temp->next;
 			while (temp->next && ft_is_tokid(temp, WD))
 				temp = temp->next;
@@ -68,12 +68,12 @@ void	ft_expand_word(t_data *data)
 		}
 		if (temp && !temp->next && !ft_is_tokid(temp, WD))
 		{
-			ft_dlst_elem_dup(&new, temp);
+			ft_dlst_elem_dup(data, &new, temp);
 			break ;
 		}
 		else if (temp)
 		{
-			ft_dlst_elem_dup(&new, temp);
+			ft_dlst_elem_dup(data, &new, temp);
 			temp = temp->next;
 		}
 	}
