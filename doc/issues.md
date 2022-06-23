@@ -13,15 +13,10 @@
 
 # //////////////////////// CVIDON
 
-- Fix minishell with args
-> './minishell salut' should display "minishell: salut: no such file
-> or directory' and not simply give the prompt back (error code should
-> be 127)
-
 - Protect all the malloc
 > Create a `ft_clear_exit("malloc error")` and a `ft_strdup` wrapper.
 
-- Fix signal heredoc SIGINT (<C-C>)
+- Fix heredoc SIGINT (<C-C>)
 > Should send an EOF to terminate the heredoc?
 
 - Comply to norm
@@ -40,7 +35,6 @@
 > Check that they're displayed the right STD.OUT/ERROR
 
 - Remove tokpos
-- Remove redlist
 
 ##  Wtf
 
