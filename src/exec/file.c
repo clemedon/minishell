@@ -54,24 +54,26 @@ char	*ft_update_here_doc(t_data *data, char *str)
 	char	*var;
 	char	*temp_var;
 	int		len;
+	int		len_var;
 	int		i;
 	int		j;
 
 	i = 0;
+	len_var = 0;
 	while (str[i])
 	{
 		if (str[i] == '$')
 		{
 			i ++;
-			len += ft_len_var(data, str + i);
+			len_var += ft_len_var(data, str + i);
 			while (str[i] && str[i] != '$' && str[i] !=  '\'' && str[i] != '\"' && str[i] != ' ' && str[i] != '\n')
 				i ++;
 		}
-		if (str[i] != '$')
+		len_var ++;
 		i ++;
-		len ++;
+		len_var ++;
 	}
-	temp = (char *)malloc(sizeof(char) * ((size_t)len + 1));
+	temp = (char *)malloc(sizeof(char) * ((size_t)len_var + 1));
 	if (!temp)
 		return (NULL);
 	i = 0;
@@ -86,7 +88,7 @@ char	*ft_update_here_doc(t_data *data, char *str)
 				while (str[len] && str[len] != '$' && str[len] != '\'' && str[len] != '\"' && str[len] != ' ' && str[len] != '\n')
 					len ++;
 				temp_var = ft_substr(str, 0, (size_t)len);
-				var = ft_getenv(data->envlist, var);
+				var = ft_getenv(data->envlist, temp_var);
 				j = 0;
 				while (var && var[j])
 					temp[i++] = var[j++];
@@ -95,12 +97,18 @@ char	*ft_update_here_doc(t_data *data, char *str)
 				str += len;
 			}
 			else if (str[len] && (str[len] == ' ' || str[len] == '\n'))
-				temp[i++] = str[len - 1];
+			{
+				temp[i] = str[len - 1];
+				if (i < len_var)
+					i ++;
+			}
 		}
-		if (*str != '$')
+		if (str && temp[i] && *str && *str != '$')
 		{
-			temp[i++] = *str;
+			temp[i] = *str;
 			str ++;
+			if (i < len_var)
+				i ++;
 		}
 	}
 	temp[i] = '\0';
