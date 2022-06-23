@@ -12,8 +12,6 @@
 > should display 'cat: cat: No such file or directory'
 > error code should be 1 and not 0
 
-- Fix var expansion in here_doc
-
 - Fix var expansion in parsing
 > 'echo $USER$USERU$USER' should display 'athirionathirion'
 > and not 'athirion  athirion'
