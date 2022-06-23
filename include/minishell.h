@@ -192,7 +192,7 @@ void	ft_free(void *ptr);
 void	ft_free_tab(char **tab);
 void	*ft_backfree(char **tab, int i);
 void	ft_clear_exit(t_data *data);
-void	ft_dlst_elem_dup(t_dlist **lst, t_dlist *dup);
+void	ft_dlst_elem_dup(t_data *data, t_dlist **lst, t_dlist *dup);
 
 /* #----------------------------------------------------------------------# */
 /* #                  BUILTINS                                            # */
@@ -315,7 +315,7 @@ int		ft_is_tokid(t_dlist *toklist, int tokid);
 
 char	*ft_expand_cwd (char *command);
 char	*ft_command(t_data *data, char *command);
-char	**ft_arg_cmd(t_dlist **cmd, t_dlist **toklist);
+char	**ft_arg_cmd(t_data *data, t_dlist **cmd, t_dlist **toklist);
 void	ft_parse_command(t_data *data);
 
 /*

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-char *ft_concat_path(char *home, char *path)
+char *ft_concat_path(t_data *data, char *home, char *path)
 {
 	char	*str;
 	size_t		i;
@@ -8,7 +8,7 @@ char *ft_concat_path(char *home, char *path)
 	i = 0;
 	str = malloc(sizeof(char) * (ft_strlen(home) + ft_strlen(path) + 1));
 	if (!str)
-		return (NULL);
+		ft_clear_exit (data);
 	while (home[i])
 	{
 		str[i] = home[i];
@@ -61,7 +61,7 @@ void	ft_expand_tilde(t_data *data)
 				{
 					path = ft_substr(((t_tok *)temp->content)->tok, 1, ft_strlen(((t_tok *)temp->content)->tok) - 1);
 					free(((t_tok *)temp->content)->tok);
-					((t_tok *)temp->content)->tok = ft_concat_path(home, path);
+					((t_tok *)temp->content)->tok = ft_concat_path(data, home, path);
 				}
 				else
 					ft_free (home);

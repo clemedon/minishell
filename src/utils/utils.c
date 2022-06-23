@@ -119,13 +119,14 @@ void	ft_clear_exit(t_data *data)
  ** Add a duplicate of 'dup' to 'lst' list.
  */
 
-void	ft_dlst_elem_dup(t_dlist **lst, t_dlist *dup)
+void	ft_dlst_elem_dup(t_data *data, t_dlist **lst, t_dlist *dup)
 {
 	t_tok	*new_tok;
 
 	new_tok = malloc (sizeof(t_tok));
+		ft_clear_exit (data);
 	if (!new_tok)
-		exit(EXIT_FAILURE);
+		ft_clear_exit (data);
 	new_tok->tokid = ((t_tok *)dup->content)->tokid;
 	new_tok->tokpos = ((t_tok *)dup->content)->tokpos;
 	new_tok->tok = strdup (((t_tok *)dup->content)->tok);

@@ -45,6 +45,8 @@ void	ft_expand_word(t_data *data)
 	char	*str;
 
 	new = malloc(sizeof(t_dlist));
+	if (!new)
+		ft_clear_exit (data);
 	newfree = new;
 	new = NULL;
 	temp = data->toklist;

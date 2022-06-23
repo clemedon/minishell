@@ -42,6 +42,8 @@ static void	ft_remove_empty_quotes(t_data *data)
 	temp = data->toklist;
 	ptrcpy[0] = temp;
 	new = malloc (sizeof (t_dlist));
+	if (!new)
+		ft_clear_exit (data);
 	ptrcpy[1] = new;
 	new = NULL;
 	while (temp)
@@ -50,7 +52,7 @@ static void	ft_remove_empty_quotes(t_data *data)
 			word_token = 1;
 		if (!word_token && ((ft_is_tokid (temp, QT) && ft_is_tokid (temp->next, QT))
 			|| (ft_is_tokid (temp, DQ) && ft_is_tokid (temp->next, DQ))))
-		{	
+		{
 			free(((t_tok *)temp->next->content)->tok);
 			if (ft_is_tokid(temp, QT))
 				((t_tok *)temp->next->content)->tok = ft_strdup("''");
@@ -137,6 +139,8 @@ void	ft_expand_quote(t_data *data)
 
 	ft_remove_empty_quotes (data);
 	new = malloc (sizeof (t_dlist));
+	if (!new)
+		ft_clear_exit (data);
 	ptrcpy[1] = new;
 	new = NULL;
 	temp = data->toklist;

@@ -37,7 +37,7 @@ char	*ft_command(t_data *data, char *command)
  ** Get the command and all its arguments.
  */
 
-char	**ft_arg_cmd(t_dlist **cmd, t_dlist **toklist)
+char	**ft_arg_cmd(t_data *data, t_dlist **cmd, t_dlist **toklist)
 {
 	t_dlist *temp;
 	size_t		i;
@@ -52,7 +52,7 @@ char	**ft_arg_cmd(t_dlist **cmd, t_dlist **toklist)
 	}
 	((t_cmd *)(*cmd)->content)->cmd = (char **)malloc(sizeof(char *) * (((t_cmd *)(*cmd)->content)->nb_arg + 1));
 	if (!((t_cmd  *)(*cmd)->content)->cmd)
-		return (NULL);
+		ft_clear_exit (data);
 	while (*toklist && ft_is_tokid(*toklist, WD))
 	{
 		((t_cmd *)(*cmd)->content)->cmd[i] = ft_strdup(((t_tok *)(*toklist)->content)->tok);
@@ -104,7 +104,7 @@ void    ft_parse_command(t_data *data)
 			}
 			else if (ft_is_tokid(temp, WD) && ((t_tok *)temp->content)->tok)
 			{
-				((t_cmd *)cmd->content)->cmd = ft_arg_cmd(&cmd, &temp);
+				((t_cmd *)cmd->content)->cmd = ft_arg_cmd(data, &cmd, &temp);
 				((t_cmd *)cmd->content)->prg = ft_command(data, ((t_cmd *)cmd->content)->cmd[0]);
 			}
 			if (temp && ft_is_tokid(temp, PP))

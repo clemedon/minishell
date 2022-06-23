@@ -194,7 +194,7 @@ void	ft_add_env(t_data *data, char *key, char *val)
 
 	env = malloc (sizeof(t_env));
 	if (!env)
-		exit (EXIT_FAILURE);
+		ft_clear_exit (data);
 	env->key = key;
 	env->val = val;
 	ft_dlstadd_back(&data->envlist, ft_dlstnew(env));

@@ -66,6 +66,8 @@ static void	ft_remove_dollar(t_data *data)
 	temp = data->toklist;
 	ptrcpy[0] = temp;
 	new = malloc(sizeof(t_dlist));
+	if (!new)
+		ft_clear_exit (data);
 	ptrcpy[1] = new;
 	new = NULL;
 	while (temp)
@@ -205,6 +207,8 @@ static void	ft_multiple_dollar(t_data *data)
 	t_dlist	*newfree;
 
 	new = malloc(sizeof(t_dlist *));
+	if (!new)
+		ft_clear_exit (data);
 	newfree = new;
 	new = NULL;
 	temp = data->toklist;
