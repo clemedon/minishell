@@ -1,5 +1,120 @@
 #include "minishell.h"
 
+int	ft_has_a_var(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$')
+			return (1);
+		i ++;
+	}
+	return (0);
+}
+
+char	*ft_get_var(t_data *data, char *str)
+{
+	size_t		i;
+	char		*var;
+
+	i = 0;
+	while (str[i] && str[i] != '$' && str[i] !=  '\'' && str[i] != '\"' && str[i] != ' ' && str[i] != '\n')
+		i ++;
+	var = ft_substr(str, 0, i);
+	var = ft_getenv(data->envlist, var);
+	return (var);
+}
+
+int	ft_len_var(t_data *data, char *str)
+{
+	size_t		len;
+	char		*var;
+	char		*temp_var;
+
+	len = 0;
+	while (str[len] && str[len] != '$' && str[len] !=  '\'' && str[len] != '\"' && str[len] != ' ' && str[len] != '\n')
+		len ++;
+	temp_var = ft_substr(str, 0, len);
+	var = ft_getenv(data->envlist, temp_var);
+	len = 0;
+	if (var)
+	{
+		len = ft_strlen(var);
+		free(var);
+	}
+	free(temp_var);
+	return ((int)len);
+}
+
+char	*ft_update_here_doc(t_data *data, char *str)
+{
+	char	*temp;
+	char	*var;
+	char	*temp_var;
+	int		len;
+	int		len_var;
+	int		i;
+	int		j;
+
+	i = 0;
+	len_var = 0;
+	while (str[i])
+	{
+		if (str[i] == '$')
+		{
+			i ++;
+			len_var += ft_len_var(data, str + i);
+			while (str[i] && str[i] != '$' && str[i] !=  '\'' && str[i] != '\"' && str[i] != ' ' && str[i] != '\n')
+				i ++;
+		}
+		len_var ++;
+		i ++;
+		len_var ++;
+	}
+	temp = (char *)malloc(sizeof(char) * ((size_t)len_var + 1));
+	if (!temp)
+		return (NULL);
+	i = 0;
+	while (*str)
+	{
+		len = 0;
+		if (*str == '$')
+		{ 
+			str ++;
+			if (str[len] && str[len] != '$' && str[len] != '\'' && str[len] != '\"' && str[len] != ' ' && str[len] != '\n')
+			{
+				while (str[len] && str[len] != '$' && str[len] != '\'' && str[len] != '\"' && str[len] != ' ' && str[len] != '\n')
+					len ++;
+				temp_var = ft_substr(str, 0, (size_t)len);
+				var = ft_getenv(data->envlist, temp_var);
+				j = 0;
+				while (var && var[j])
+					temp[i++] = var[j++];
+				free(temp_var);
+				free(var);
+				str += len;
+			}
+			else if (str[len] && (str[len] == ' ' || str[len] == '\n'))
+			{
+				temp[i] = str[len - 1];
+				if (i < len_var)
+					i ++;
+			}
+		}
+		if (str && temp[i] && *str && *str != '$')
+		{
+			temp[i] = *str;
+			str ++;
+			if (i < len_var)
+				i ++;
+		}
+	}
+	temp[i] = '\0';
+	return(temp);
+}
+
 void	ft_close(t_data *data, t_dlist *cmd, int *fd)
 {
 	if (*fd != -1)
@@ -18,8 +133,10 @@ static void     ft_end_heredoc(t_dlist *cmd)
 static void     ft_here_doc(t_data *data, t_dlist *cmd, t_dlist *redir, char *file)
 {
 		char	*temp;
+		char	*expand;
 		int		fd_file;
         
+		expand = NULL;
 		fd_file = open(file, O_CREAT | O_TRUNC | O_RDWR, 0644);
         if (fd_file == -1)
              ft_perror(data, cmd, errno);
@@ -35,8 +152,14 @@ static void     ft_here_doc(t_data *data, t_dlist *cmd, t_dlist *redir, char *fi
 				if (ft_strlen(((t_redir *)redir->content)->file) == (ft_strlen(temp) - 1)
 					&& !(ft_strncmp(temp, ((t_redir *)redir->content)->file, ft_strlen(temp) - 1)))
 					 break;
-				// EXPAND VAR DE TEMP
-                write(fd_file, temp, ft_strlen(temp));
+				if (ft_has_a_var(temp) && ft_strlen(temp) > 2)
+				{
+					expand = ft_update_here_doc(data, temp);
+					write(fd_file, expand, ft_strlen(expand));
+					ft_free(expand);
+				}
+				else
+                	write(fd_file, temp, ft_strlen(temp));
 				ft_free(temp);
         }
         ft_free(temp);

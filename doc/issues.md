@@ -5,11 +5,18 @@
 
 # //////////////////////// ATHIRION
 
+- Fix <<< here_doc
+> here_doc shouldn't be run with <<< but only with <<
+
 - Fix << STOP cat << HELL cat >
 > should display 'cat: cat: No such file or directory'
 > error code should be 1 and not 0
 
 - Fix var expansion in here_doc
+
+- Fix var expansion in parsing
+> 'echo $USER$USERU$USER' should display 'athirionathirion'
+> and not 'athirion  athirion'
 
 # //////////////////////// CVIDON
 
