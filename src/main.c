@@ -105,7 +105,10 @@ int	main(int ac, char **av)
 	}
 	else
 	{
-		// handle argv errors & return exitstatus
+		write (2, "minishell: ", 11);
+		write (2, av[1], ft_strlen(av[1]));
+		write (2, ": No such file or directory\n", 28);
+		data.status = 127;
 	}
 	return (data.status);
 }
