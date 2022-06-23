@@ -52,6 +52,31 @@ static	int	ft_parse_empty_cmd(t_data *data)
 	return (1);
 }
 
+static int ft_check_redir(t_data *data)
+{
+	t_dlist *temp;
+
+	temp = data->toklist;
+	while (temp)
+	{
+		if ((ft_is_tokid(temp, DL) || ft_is_tokid(temp, LS) 
+			|| ft_is_tokid(temp, DG) || ft_is_tokid(temp, GT))
+			&& temp->next && (ft_is_tokid(temp->next, DL) || ft_is_tokid(temp->next, LS) 
+			|| ft_is_tokid(temp->next, DG) || ft_is_tokid(temp->next, GT)))
+			{
+				while (temp && (ft_is_tokid(temp, DL) || ft_is_tokid(temp, LS) 
+					|| ft_is_tokid(temp, DG) || ft_is_tokid(temp, GT)))
+					temp = temp->next;
+				ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
+				ft_putstr_fd(((t_tok *)temp->prev->content)->tok, 2);
+				ft_putstr_fd("'\n", 2);
+				return (0);
+			}
+		temp = temp->next;
+	}
+	return (1);
+}
+
 void	ft_parser(t_data *data)
 {
 	if (!ft_parse_special_tok(data))
@@ -60,6 +85,11 @@ void	ft_parser(t_data *data)
 		return ;
 	}
 	if (!ft_parse_pipe(data) || !ft_parse_quote(data, data->toklist))
+	{
+		data->status = 2;
+		return ;
+	}
+	if (!ft_check_redir(data))
 	{
 		data->status = 2;
 		return ;
