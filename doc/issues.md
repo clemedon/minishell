@@ -27,6 +27,7 @@
 
 - Fix parsing echo""
 > `echo""` and `echo''` shouldn't print anything.
+> `echo""` and `echo''` shouldn't *break* minishell.
 
 - Fix parsing expand_quote
 > `'echo'` and `"echo"` SEGFAULT
