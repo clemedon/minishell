@@ -4,7 +4,7 @@
  ** Concatenate all the contigus WORDS token.
  */
 
-static char	*ft_concat_all_words(t_dlist *toklist)
+static char	*ft_concat_all_words(t_data *data, t_dlist *toklist)
 {
 	t_dlist	*temp;
 	char	*str;
@@ -44,9 +44,7 @@ void	ft_expand_word(t_data *data)
 	t_dlist	*newfree;
 	char	*str;
 
-	new = malloc(sizeof(t_dlist));
-	if (!new)
-		ft_exitmsg (data, "malloc");
+	new = ft_w_malloc(data, sizeof(t_dlist));
 	newfree = new;
 	new = NULL;
 	temp = data->toklist;
@@ -56,7 +54,7 @@ void	ft_expand_word(t_data *data)
 		if (ft_is_tokid(temp, WD)
 			&& ft_is_tokid(temp->next, WD))
 		{
-			str = ft_concat_all_words(temp);
+			str = ft_concat_all_words(data, temp);
 			free(((t_tok *)temp->content)->tok);
 			((t_tok *)temp->content)->tok = str;
 			ft_dlst_elem_dup(data, &new, temp);

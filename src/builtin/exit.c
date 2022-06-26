@@ -102,5 +102,5 @@ void    ft_exit(t_data *data, char **cmd)
 	}
 	if (close (fd) == -1)
 		ft_exitmsg (data, "close");
-	ft_clear_exit (data);
+	ft_exitmsg (data, "");
 }

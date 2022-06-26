@@ -30,9 +30,7 @@ void	ft_add_red(t_data *data, t_dlist *token, int nb_cmd)
 {
 	t_redir	*redir;
 
-	redir = malloc (sizeof(t_redir));
-	if (!redir)
-		ft_exitmsg (data, "malloc");
+	redir = ft_w_malloc (data, sizeof(t_redir));
 	redir->type = ((t_tok *)token->content)->tokid;
 	redir->cmdid = nb_cmd;
 	if (token->next)

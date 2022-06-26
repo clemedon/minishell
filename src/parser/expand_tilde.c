@@ -1,14 +1,12 @@
 #include "minishell.h"
 
-char *ft_concat_path(char *home, char *path)
+char *ft_concat_path(t_data *data, char *home, char *path)
 {
 	char	*str;
 	size_t		i;
 
 	i = 0;
-	str = malloc(sizeof(char) * (ft_strlen(home) + ft_strlen(path) + 1));
-	if (!str)
-		return (NULL);
+	str = ft_w_malloc(data, sizeof(char) * (ft_strlen(home) + ft_strlen(path) + 1));
 	while (home[i])
 	{
 		str[i] = home[i];
@@ -46,17 +44,17 @@ void	ft_expand_tilde(t_data *data)
 		{
 			if (ft_strlen(((t_tok *)temp->content)->tok) == 1)
 			{
-				home = ft_getenv(data->envlist, "HOME");
+				home = ft_getenv(data, data->envlist, "HOME");
 				free(((t_tok *)temp->content)->tok);
 				((t_tok *)temp->content)->tok = ft_w_strdup(data, home);
 				ft_free(home);
 			}
 			else if (!ft_strncmp(((t_tok *)temp->content)->tok, "~/", 2))
 			{
-				home = ft_getenv(data->envlist, "HOME");
-				path = ft_substr(((t_tok *)temp->content)->tok, 1, ft_strlen(((t_tok *)temp->content)->tok) - 1);
+				home = ft_getenv(data, data->envlist, "HOME");
+				path = ft_w_substr(data, ((t_tok *)temp->content)->tok, 1, ft_strlen(((t_tok *)temp->content)->tok) - 1);
 				free(((t_tok *)temp->content)->tok);
-				((t_tok *)temp->content)->tok = ft_concat_path(home, path);
+				((t_tok *)temp->content)->tok = ft_concat_path(data, home, path);
 			}
 		}
 		temp = temp->next;

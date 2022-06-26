@@ -45,5 +45,5 @@ void	ft_perror(t_data *data, t_dlist *cmd, int error)
 	}
 	else
 		ft_putendl_fd("error: Something went wrong", 2);
-	ft_clear_exit(data);
+	ft_exitmsg(data, "");
 }

@@ -29,7 +29,7 @@ int	ft_check_exp_entry (t_dlist *explist, char *key)
  ** Return the 'value' attached to the given 'key' within minishel exp.
  */
 
-char	*ft_getexp(t_dlist *explist, char *key)
+char	*ft_getexp(t_data *data, t_dlist *explist, char *key)
 {
 	t_dlist	*temp;
 	char	*expkey;
@@ -54,7 +54,7 @@ char	*ft_getexp(t_dlist *explist, char *key)
  ** Sort EXPLIST in alphabetical order.
  */
 
-void	ft_sort_exp(t_dlist *explist)
+void	ft_sort_exp(t_data *data, t_dlist *explist)
 {
 	t_dlist	*temp;
 	char	*swap;
@@ -124,7 +124,7 @@ t_dlist	*ft_remove_exp(t_dlist *explist, t_dlist *entry)
 void	ft_init_minimal_exp(t_data *data)
 {
 	ft_add_exp (data, ft_w_strdup(data, "OLDPWD"), NULL);
-	ft_add_exp (data, ft_w_strdup(data, "PWD"), getcwd (NULL, PATH_MAX));
+	ft_add_exp (data, ft_w_strdup(data, "PWD"), ft_w_getcwd(data));
 	ft_add_exp (data, ft_w_strdup(data, "SHLVL"), ft_w_strdup(data, "1"));
 }
 
@@ -157,15 +157,15 @@ void	ft_init_exp(t_data *data)
 		j = 0;
 		while (data->environ[i][j] != '=')
 			j++;
-		key = ft_substr (data->environ[i], 0, j);
+		key = ft_w_substr (data, data->environ[i], 0, j);
 		if (ft_strncmp(key, "_", 2) != SUCCESS)
 		{
 			if (ft_strncmp (key, "PWD", 3) == SUCCESS)
-				val = getcwd (NULL, PATH_MAX);
+				val = ft_w_getcwd(data);
 			else if (ft_strncmp(key, "SHELL", 3) == SUCCESS && !key[5])
 				val = ft_w_strdup(data, "minishell");
 			else
-				val = ft_substr (data->environ[i], j + 1, ft_strlen (data->environ[i]) - j);
+				val = ft_w_substr (data, data->environ[i], j + 1, ft_strlen (data->environ[i]) - j);
 			ft_add_exp (data, ft_w_strdup(data, key), ft_w_strdup(data, val));
 			ft_free(val);
 			ft_free(key);
@@ -174,7 +174,7 @@ void	ft_init_exp(t_data *data)
 			ft_free (key);
 		i++;
 	}
-	ft_sort_exp(data->explist);
+	ft_sort_exp(data, data->explist);
 }
 
 /*
@@ -185,9 +185,7 @@ void	ft_add_exp(t_data *data, char *key, char *val)
 {
 	t_exp	*var;
 
-	var = malloc (sizeof(t_exp));
-	if (!var)
-		ft_exitmsg (data, "malloc");
+	var = ft_w_malloc (data, sizeof(t_exp));
 	var->key = key;
 	var->val = val;
 	ft_dlstadd_back(&data->explist, ft_dlstnew(var));
@@ -197,13 +195,13 @@ void	ft_add_exp(t_data *data, char *key, char *val)
  ** Print the variable attached to the given 'key' within minishel exp.
  */
 
-void	ft_printlist_elem_exp(t_dlist *explist, char *key)
+void	ft_printlist_elem_exp(t_data *data, t_dlist *explist, char *key)
 {
 	char	*val;
 
 	if (ft_check_exp_entry (explist, key))
 	{
-		val = ft_getexp (explist, key);
+		val = ft_getexp (data, explist, key);
 		ft_putstr_fd("declare -x ", 1);
 		if (!val)
 		{
@@ -230,11 +228,11 @@ void	ft_printlist_elem_exp(t_dlist *explist, char *key)
  ** Print export list
  */
 
-void	ft_printlist_exp(t_dlist *explist)
+void	ft_printlist_exp(t_data *data, t_dlist *explist)
 {
 	t_dlist	*temp;
 
-	ft_sort_exp (explist);
+	ft_sort_exp (data, explist);
 	temp = explist;
 	while (temp)
 	{

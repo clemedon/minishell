@@ -37,11 +37,11 @@ static	int ft_parse_special_tok(t_data *data)
 	}
 	return (1);
 }
-	
+
 static	int	ft_parse_empty_cmd(t_data *data)
 {
 	t_dlist *temp;
-	
+
 	temp = data->toklist;
 	if (ft_dlstsize(temp) != 1)
 		return (1);

@@ -29,7 +29,7 @@ int	ft_check_env_entry (t_dlist *envlist, char *key)
  ** Return the 'value' attached to the given 'key' within minishel env.
  */
 
-char	*ft_getenv(t_dlist *envlist, char *key)
+char	*ft_getenv(t_data *data, t_dlist *envlist, char *key)
 {
 	t_dlist	*temp;
 	char	*envkey;
@@ -110,9 +110,9 @@ void	ft_update_env(t_data *data)
 
 void	ft_init_minimal_env(t_data *data)
 {
-	ft_add_env (data, ft_w_strdup(data, "PWD"), getcwd (NULL, PATH_MAX));
+	ft_add_env (data, ft_w_strdup(data, "PWD"), ft_w_getcwd(data));
 	ft_add_env (data, ft_w_strdup(data, "SHLVL"), ft_w_strdup(data, "1"));
-	ft_add_env (data, ft_w_strdup(data, "_"), getcwd (NULL, PATH_MAX));
+	ft_add_env (data, ft_w_strdup(data, "_"), ft_w_getcwd(data));
 }
 
 /*
@@ -144,15 +144,13 @@ void	ft_init_env(t_data *data)
 		while (data->environ[i][j] != '=')
 			j++;
 
-		key = ft_substr (data->environ[i], 0, j);
-		if (!key)
-			ft_exitmsg (data, "malloc");
+		key = ft_w_substr (data, data->environ[i], 0, j);
 		if (ft_strncmp(key, "PWD", 3) == SUCCESS && !key[3])
-			val = getcwd (NULL, PATH_MAX);
+			val = ft_w_getcwd(data);
 		else if (ft_strncmp(key, "SHELL", 3) == SUCCESS && !key[5])
 			val = ft_w_strdup(data, "minishell");
 		else
-			val = ft_substr (data->environ[i], j + 1, ft_strlen (data->environ[i]) - j);
+			val = ft_w_substr (data, data->environ[i], j + 1, ft_strlen (data->environ[i]) - j);
 		ft_add_env (data, key, val);
 		i++;
 	}
@@ -194,9 +192,7 @@ void	ft_add_env(t_data *data, char *key, char *val)
 {
 	t_env	*env;
 
-	env = malloc (sizeof(t_env));
-	if (!env)
-		ft_exitmsg (data, "malloc");
+	env = ft_w_malloc (data, sizeof(t_env));
 	env->key = key;
 	env->val = val;
 	ft_dlstadd_back(&data->envlist, ft_dlstnew(env));
@@ -206,11 +202,11 @@ void	ft_add_env(t_data *data, char *key, char *val)
  ** Print the variable attached to the given 'key' within minishel env.
  */
 
-void	ft_printlist_elem_env(t_dlist *envlist, char *key)
+void	ft_printlist_elem_env(t_data *data, t_dlist *envlist, char *key)
 {
 	char	*val;
 
-	val = ft_getenv (envlist, key);
+	val = ft_getenv (data, envlist, key);
 	if (val && *val)
 	{
 		ft_printf("%s=%s\n", key, val);

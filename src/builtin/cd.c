@@ -149,7 +149,7 @@ void	ft_update_oldpwd(t_data *data, char *oldpwd)
 		}
 		unsetcmd = ft_split("unset OLDPWD", ' ');
 		if (!unsetcmd)
-				ft_exitmsg (data, "malloc");
+			ft_exitmsg (data, "malloc");
 		ft_unset (data, unsetcmd);
 		ft_export (data, exportcmd);
 		ft_free_tab (unsetcmd);
@@ -196,7 +196,7 @@ int	ft_cd_path(t_data *data, char *cmd)
 	ft_update_oldpwd (data, data->cwd);
 	// UPDATE
 	/* printf("before cwd\n"); */
-	cwd = getcwd (NULL, PATH_MAX);
+	cwd = ft_w_getcwd(data);
 	/* printf("after cwd\n"); */
 	ft_update_pwd (data, cwd);
 	/* printf("after update pwd\n"); */
@@ -238,7 +238,7 @@ int	ft_cd_alone(t_data *data)
 {
 	char	*homedir;
 
-	homedir = ft_getexp (data->explist, "HOME");
+	homedir = ft_getexp (data, data->explist, "HOME");
 	// CHECKS
 	if (!ft_check_exp_entry (data->explist, "HOME") || !*homedir)
 	{

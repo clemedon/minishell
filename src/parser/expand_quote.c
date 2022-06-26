@@ -4,7 +4,7 @@
  ** Concatenate the given QUOTED WORDS.
  */
 
-static char	*ft_concat_quoted_words(t_dlist *toklist)
+static char	*ft_concat_quoted_words(t_data *data, t_dlist *toklist)
 {
 	t_dlist	*temp;
 	char	*str;
@@ -41,9 +41,7 @@ static void	ft_remove_empty_quotes(t_data *data)
 	word_token = 0;
 	temp = data->toklist;
 	ptrcpy[0] = temp;
-	new = malloc (sizeof (t_dlist));
-	if (!new)
-		ft_exitmsg (data, "malloc");
+	new = ft_w_malloc (data, sizeof (t_dlist));
 	ptrcpy[1] = new;
 	new = NULL;
 	while (temp)
@@ -116,7 +114,7 @@ static void	ft_expand_quote2(t_data *data, t_dlist **new, t_dlist **temp)
 	if ((*temp)->next && (ft_is_tokid (*temp, QT) || ft_is_tokid (*temp, DQ)))
 	{
 		*temp = (*temp)->next;
-		str = ft_concat_quoted_words (*temp);
+		str = ft_concat_quoted_words (data, *temp);
 		free (((t_tok *)(*temp)->content)->tok);
 		((t_tok *)(*temp)->content)->tok = ft_w_strdup(data, str);
 		free (str);
@@ -138,9 +136,7 @@ void	ft_expand_quote(t_data *data)
 	t_dlist	*new;
 
 	ft_remove_empty_quotes (data);
-	new = malloc (sizeof (t_dlist));
-	if (!new)
-		ft_exitmsg (data, "malloc");
+	new = ft_w_malloc (data, sizeof (t_dlist));
 	ptrcpy[1] = new;
 	new = NULL;
 	temp = data->toklist;

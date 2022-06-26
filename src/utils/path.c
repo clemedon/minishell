@@ -9,7 +9,7 @@ char	**ft_split_path(t_data *data)
 	char	*path;
 	char	**splittedpath;
 
-	path = ft_getenv (data->envlist, "PATH");
+	path = ft_getenv(data, data->envlist, "PATH");
 	if (!path)
 		return (NULL);
 	splittedpath = ft_split(path, ':');

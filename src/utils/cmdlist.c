@@ -54,9 +54,7 @@ void    ft_add_cmd(t_data *data)
 {
 	t_cmd   *cmd;
 
-	cmd = malloc(sizeof(t_cmd));
-	if (!cmd)
-		ft_exitmsg (data, "malloc");
+	cmd = ft_w_malloc(data, sizeof(t_cmd));
 	ft_init_cmd(data, &cmd);
 	ft_dlstadd_back(&data->cmdlist, ft_dlstnew(cmd));
 }

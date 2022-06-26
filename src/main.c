@@ -39,6 +39,11 @@ static void	ft_init_data(t_data *data)
 
 	data->cmdid = 0;
 	data->cmdcount = 0;
+	data->cwd = NULL;
+	data->oldcwd = NULL;
+	data->cmd_path = NULL;
+	data->envtab = NULL;
+
 	data->cmdline = NULL;
 	data->environ = environ;
 	data->toklist = NULL;
@@ -46,10 +51,15 @@ static void	ft_init_data(t_data *data)
 	data->envlist = NULL;
 	data->explist = NULL;
 	data->redlist = NULL;
-	data->cwd = getcwd (NULL, PATH_MAX);
-	data->oldcwd = getcwd (NULL, PATH_MAX);
+
 	data->cmd_path = NULL;
 	data->status = 0;
+
+	data->debug = 0; // TODO delete
+
+	data->cwd = ft_w_getcwd(data);
+	data->oldcwd = ft_w_getcwd(data);
+
 }
 
 /*
@@ -93,16 +103,17 @@ int	main(int ac, char **av)
 		/* ft_init_tty (); */
 		ft_init_signals ();
 		ft_init_data (&data);
+
 		ft_init_env (&data);
 		ft_init_exp (&data);
 
-		temp = ft_getenv (data.envlist, "SHLVL");
+		temp = ft_getenv (&data, data.envlist, "SHLVL");
 		data.shlvl = ft_atoi(temp);
 		ft_free (temp);
 
 		ft_shlvl_update (&data);
 
-		temp = ft_getenv (data.envlist, "SHLVL");
+		temp = ft_getenv (&data, data.envlist, "SHLVL");
 		data.shlvl = ft_atoi(temp);
 		ft_free (temp);
 

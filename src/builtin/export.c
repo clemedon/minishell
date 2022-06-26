@@ -23,7 +23,7 @@ static void	ft_data_export (t_data *data, char *cmd)
 	if (ft_strchr (cmd, '='))
 	{
 		val = ft_w_strdup(data, ft_strchr (cmd, '=') + 1);
-		key = ft_substr (cmd, 0, ft_strlen (cmd) - ft_strlen (val) - 1
+		key = ft_w_substr(data, cmd, 0, ft_strlen (cmd) - ft_strlen (val) - 1
 				- (cmd[ft_strlen (cmd) - ft_strlen(val) - 2] == '+'));
 	}
 	else
@@ -75,7 +75,7 @@ static void	ft_explist_export(t_data *data, char *cmd)
 	if (ft_strchr (cmd, '='))
 	{
 		val = ft_w_strdup(data, ft_strchr (cmd, '=') + 1);
-		key = ft_substr (cmd, 0, ft_strlen (cmd) - ft_strlen (val) - 1
+		key = ft_w_substr(data, cmd, 0, ft_strlen (cmd) - ft_strlen (val) - 1
 				- (cmd[ft_strlen (cmd) - ft_strlen(val) - 2] == '+'));
 	}
 	else
@@ -130,7 +130,7 @@ static void	ft_envlist_export(t_data *data, char *cmd)
 
 	temp = data->envlist;
 	val = ft_w_strdup(data, ft_strchr (cmd, '=') + 1);
-	key = ft_substr (cmd, 0, ft_strlen (cmd) - ft_strlen (val) - 1
+	key = ft_w_substr(data, cmd, 0, ft_strlen (cmd) - ft_strlen (val) - 1
 			- (cmd[ft_strlen (cmd) - ft_strlen(val) - 2] == '+'));
 	if (ft_check_env_entry (data->envlist, key))
 	{
@@ -212,7 +212,7 @@ int	ft_export(t_data *data, char **cmd)
 	/* ft_update_exp (data); */
 	ret = SUCCESS;
 	if (!cmd[1])
-		ft_printlist_exp(data->explist);
+		ft_printlist_exp(data, data->explist);
 	i = 1;
 	while (cmd[i])
 	{

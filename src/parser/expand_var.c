@@ -33,9 +33,9 @@ static char *ft_expand_var(t_data *data, char *key)
 	size_t		i;
 
 	if (key[0] == '0')
-		return (ft_strjoin_free_s2 ("minishell", ft_substr (key, 1, ft_strlen(key - 1))));
+		return (ft_strjoin_free_s2 ("minishell", ft_w_substr(data, key, 1, ft_strlen(key - 1))));
 	if (ft_isdigit (key[0]))
-		return (ft_substr (key, 1, ft_strlen(key - 1)));
+		return (ft_w_substr(data, key, 1, ft_strlen(key - 1)));
 	if (!(ft_isalpha (key[0]) || key[0] == '_'))
 		return (ft_strjoin ("$", key));
 	i = 0;
@@ -43,9 +43,9 @@ static char *ft_expand_var(t_data *data, char *key)
 	{
 		if (!(ft_isalnum (key[i]) || key[i] == '_'))
 		{
-			val = ft_substr (key, 0, i);
+			val = ft_w_substr(data, key, 0, i);
 			ptr = val;
-			val = ft_getenv (data->envlist, val);
+			val = ft_getenv(data, data->envlist, val);
 			free (ptr);
 			return (ft_strjoin_free_s1 (val, key + i));
 		}
@@ -65,9 +65,7 @@ static void	ft_remove_dollar(t_data *data)
 
 	temp = data->toklist;
 	ptrcpy[0] = temp;
-	new = malloc(sizeof(t_dlist));
-	if (!new)
-		ft_exitmsg (data, "malloc");
+	new = ft_w_malloc(data, sizeof(t_dlist));
 	ptrcpy[1] = new;
 	new = NULL;
 	while (temp)
@@ -206,9 +204,7 @@ static void	ft_multiple_dollar(t_data *data)
 	t_dlist *new;
 	t_dlist	*newfree;
 
-	new = malloc(sizeof(t_dlist *));
-	if (!new)
-		ft_exitmsg (data, "malloc");
+	new = ft_w_malloc(data, sizeof(t_dlist *));
 	newfree = new;
 	new = NULL;
 	temp = data->toklist;

@@ -50,9 +50,9 @@ char	**ft_arg_cmd(t_data *data, t_dlist **cmd, t_dlist **toklist)
 		((t_cmd *)(*cmd)->content)->nb_arg ++;
 		temp = temp->next;
 	}
-	((t_cmd *)(*cmd)->content)->cmd = (char **)malloc(sizeof(char *) * (((t_cmd *)(*cmd)->content)->nb_arg + 1));
-	if (!((t_cmd  *)(*cmd)->content)->cmd)
-		ft_exitmsg (data, "malloc");
+
+	((t_cmd *)(*cmd)->content)->cmd = ft_w_malloc
+		(data, sizeof(char *) * (((t_cmd *)(*cmd)->content)->nb_arg + 1));
 	while (*toklist && ft_is_tokid(*toklist, WD))
 	{
 		((t_cmd *)(*cmd)->content)->cmd[i] = ft_w_strdup(data, ((t_tok *)(*toklist)->content)->tok);

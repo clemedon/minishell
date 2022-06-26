@@ -47,9 +47,7 @@ void	ft_add_tok(t_data *data, int tokid, int tokpos, char *token)
 {
 	t_tok	*tok;
 
-	tok = malloc (sizeof(t_tok));
-	if (!tok)
-		ft_exitmsg (data, "malloc");
+	tok = ft_w_malloc (data, sizeof(t_tok));
 
 	tok->tokid = tokid;
 	tok->tokpos = tokpos;
