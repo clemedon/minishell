@@ -25,6 +25,17 @@
 
 # //////////////////////// ???
 
+- Fix parsing echo""
+> `echo""` and `echo''` shouldn't print anything.
+
+- Fix parsing expand_quote
+> `'echo'` and `"echo"` SEGFAULT
+
+- Fix errmsg
+> `$f$` error message should print `minishell:` $: command not found
+> `/`, `//`, `///` etc. Should print `Is a directory` not `Permission denied`
+
+
 ##  Execution
 
 ##  Final
