@@ -48,7 +48,7 @@ void	ft_expand_tilde(t_data *data)
 			{
 				home = ft_getenv(data->envlist, "HOME");
 				free(((t_tok *)temp->content)->tok);
-				((t_tok *)temp->content)->tok = ft_strdup(home);
+				((t_tok *)temp->content)->tok = ft_w_strdup(data, home);
 				ft_free(home);
 			}
 			else if (!ft_strncmp(((t_tok *)temp->content)->tok, "~/", 2))

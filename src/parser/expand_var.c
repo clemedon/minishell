@@ -253,7 +253,7 @@ void	ft_expand_vars(t_data *data)
 			{
 				str = ft_expand_var (data, ((t_tok *)temp->content)->tok);
 				free (((t_tok *)temp->content)->tok);
-				((t_tok *)temp->content)->tok = ft_strdup(str);
+				((t_tok *)temp->content)->tok = ft_w_strdup(data, str);
 				ft_free(str);
 			}
 		}

@@ -1,7 +1,7 @@
 #include "minishell.h"
 
 
-char	*ft_w_substr (char const *s, unsigned int start, size_t len, t_data *data)
+char	*ft_w_substr (t_data *data, char const *s, unsigned int start, size_t len)
 {
 	char	*str;
 
@@ -11,7 +11,7 @@ char	*ft_w_substr (char const *s, unsigned int start, size_t len, t_data *data)
 	return (str);
 }
 
-char	*ft_w_strdup (const char *s1, t_data *data)
+char	*ft_w_strdup (t_data *data, const char *s1)
 {
 	char	*str;
 
@@ -161,6 +161,6 @@ void	ft_dlst_elem_dup(t_data *data, t_dlist **lst, t_dlist *dup)
 		ft_exitmsg (data, "malloc");
 	new_tok->tokid = ((t_tok *)dup->content)->tokid;
 	new_tok->tokpos = ((t_tok *)dup->content)->tokpos;
-	new_tok->tok = strdup (((t_tok *)dup->content)->tok);
+	new_tok->tok = w_strdup(data, ((t_tok *)dup->content)->tok);
 	ft_dlstadd_back(lst, ft_dlstnew(new_tok));
 }

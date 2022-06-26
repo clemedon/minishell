@@ -10,14 +10,14 @@ static char	*ft_concat_quoted_words(t_dlist *toklist)
 	char	*str;
 
 	if (!toklist || !toklist->next)
-		return (ft_strdup (""));
+		return (ft_w_strdup(data, ""));
 	temp = toklist;
 	if (!ft_is_tokid (temp->next, QT) && !ft_is_tokid (temp->next, DQ))
 		str = ft_strjoin
 			(((t_tok *)temp->content)->tok,
 				((t_tok *)temp->next->content)->tok);
 	else
-		return (ft_strdup (((t_tok *)temp->content)->tok));
+		return (ft_w_strdup(data, ((t_tok *)temp->content)->tok));
 	temp = temp->next->next;
 	while (temp && !ft_is_tokid (temp, QT) && !ft_is_tokid (temp, DQ))
 	{
@@ -55,9 +55,9 @@ static void	ft_remove_empty_quotes(t_data *data)
 		{
 			free(((t_tok *)temp->next->content)->tok);
 			if (ft_is_tokid(temp, QT))
-				((t_tok *)temp->next->content)->tok = ft_strdup("''");
+				((t_tok *)temp->next->content)->tok = ft_w_strdup(data, "''");
 			else
-				((t_tok *)temp->next->content)->tok = ft_strdup("\"\"");
+				((t_tok *)temp->next->content)->tok = ft_w_strdup(data, "\"\"");
 			((t_tok *)temp->next->content)->tokid = WD;
 			temp = temp->next;
 		}
@@ -108,7 +108,7 @@ static void	ft_expand_quote2(t_data *data, t_dlist **new, t_dlist **temp)
 			str = ft_strjoin(((t_tok *)(*temp)->prev->content)->tok, ((t_tok *)(*temp)->next->content)->tok);
 			*temp = (*temp)->next;
 			free(((t_tok *)(*temp)->content)->tok);
-			((t_tok *)(*temp)->content)->tok = ft_strdup(str);
+			((t_tok *)(*temp)->content)->tok = ft_w_strdup(data, str);
 			free(str);
 			*temp = (*temp)->prev;
 		}
@@ -118,7 +118,7 @@ static void	ft_expand_quote2(t_data *data, t_dlist **new, t_dlist **temp)
 		*temp = (*temp)->next;
 		str = ft_concat_quoted_words (*temp);
 		free (((t_tok *)(*temp)->content)->tok);
-		((t_tok *)(*temp)->content)->tok = ft_strdup (str);
+		((t_tok *)(*temp)->content)->tok = ft_w_strdup(data, str);
 		free (str);
 		ft_dlst_elem_dup (data, new, *temp);
 		*temp = (*temp)->next;

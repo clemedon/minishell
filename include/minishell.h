@@ -185,8 +185,8 @@ typedef struct s_data
  ** [ utils/utils.c ]
  */
 
-char	*ft_w_substr (char const *s, unsigned int start, size_t len, t_data *data);
-char	*ft_w_strdup (const char *s1, t_data *data)
+char	*ft_w_substr (t_data *data, char const *s, unsigned int start, size_t len);
+char	*ft_w_strdup (t_data *data, const char *s1)
 
 char	*ft_strjoin_free_s2(char *s1, char *s2);
 char	*ft_strjoin_free_s1(char *s1, char *s2);

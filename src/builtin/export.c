@@ -22,14 +22,14 @@ static void	ft_data_export (t_data *data, char *cmd)
 
 	if (ft_strchr (cmd, '='))
 	{
-		val = ft_strdup (ft_strchr (cmd, '=') + 1);
+		val = ft_w_strdup(data, ft_strchr (cmd, '=') + 1);
 		key = ft_substr (cmd, 0, ft_strlen (cmd) - ft_strlen (val) - 1
 				- (cmd[ft_strlen (cmd) - ft_strlen(val) - 2] == '+'));
 	}
 	else
 	{
 		val = NULL;
-		key = ft_strdup (cmd);
+		key = ft_w_strdup(data, cmd);
 	}
 	if (ft_strlen(key) == 3 && ft_strcmp (key, "PWD") == SUCCESS)
 	{
@@ -38,7 +38,7 @@ static void	ft_data_export (t_data *data, char *cmd)
 		else
 		{
 			ft_free (data->cwd);
-			data->cwd = ft_strdup (val);
+			data->cwd = ft_w_strdup(data, val);
 		}
 	}
 	if (ft_strlen(key) == 6 && ft_strcmp (key, "OLDPWD") == SUCCESS)
@@ -48,7 +48,7 @@ static void	ft_data_export (t_data *data, char *cmd)
 		else
 		{
 			ft_free (data->oldcwd);
-			data->oldcwd = ft_strdup (val);
+			data->oldcwd = ft_w_strdup(data, val);
 		}
 	}
 	ft_free (val);
@@ -74,14 +74,14 @@ static void	ft_explist_export(t_data *data, char *cmd)
 	temp = data->explist;
 	if (ft_strchr (cmd, '='))
 	{
-		val = ft_strdup (ft_strchr (cmd, '=') + 1);
+		val = ft_w_strdup(data, ft_strchr (cmd, '=') + 1);
 		key = ft_substr (cmd, 0, ft_strlen (cmd) - ft_strlen (val) - 1
 				- (cmd[ft_strlen (cmd) - ft_strlen(val) - 2] == '+'));
 	}
 	else
 	{
 		val = NULL;
-		key = ft_strdup (cmd);
+		key = ft_w_strdup(data, cmd);
 	}
 	if (ft_check_exp_entry (data->explist, key))
 	{
@@ -92,17 +92,17 @@ static void	ft_explist_export(t_data *data, char *cmd)
 				if (val && cmd[ft_strlen (cmd) - ft_strlen (val) - 2] == '+')
 				{
 					val = ft_strjoin_free (((t_exp *) temp->content)->val, val);
-					((t_exp *) temp->content)->val = ft_strdup (val);
+					((t_exp *) temp->content)->val = ft_w_strdup(data, val);
 				}
 				else if (val && ((t_exp *) temp->content)->val)
 				{
 					ft_free (((t_exp *) temp->content)->val);
-					((t_exp *) temp->content)->val = ft_strdup (val);
+					((t_exp *) temp->content)->val = ft_w_strdup(data, val);
 				}
 				else if (val && !*val && !((t_exp *) temp->content)->val)
 				{
 					ft_free (((t_exp *) temp->content)->val);
-					((t_exp *) temp->content)->val = ft_strdup (val);
+					((t_exp *) temp->content)->val = ft_w_strdup(data, val);
 				}
 			}
 			temp = temp->next;
@@ -110,7 +110,7 @@ static void	ft_explist_export(t_data *data, char *cmd)
 	}
 	else
 	{
-		ft_add_exp (data, ft_strdup (key), ft_strdup (val));
+		ft_add_exp (data, ft_w_strdup(data, key), ft_w_strdup(data, val));
 	}
 	ft_free (val);
 	ft_free (key);
@@ -129,7 +129,7 @@ static void	ft_envlist_export(t_data *data, char *cmd)
 	t_dlist	*temp;
 
 	temp = data->envlist;
-	val = ft_strdup(ft_strchr (cmd, '=') + 1);
+	val = ft_w_strdup(data, ft_strchr (cmd, '=') + 1);
 	key = ft_substr (cmd, 0, ft_strlen (cmd) - ft_strlen (val) - 1
 			- (cmd[ft_strlen (cmd) - ft_strlen(val) - 2] == '+'));
 	if (ft_check_env_entry (data->envlist, key))
@@ -141,19 +141,19 @@ static void	ft_envlist_export(t_data *data, char *cmd)
 				if (val && cmd[ft_strlen (cmd) - ft_strlen (val) - 2] == '+')
 				{
 					val = ft_strjoin_free (((t_env *) temp->content)->val, val);
-					((t_env *) temp->content)->val = ft_strdup (val);
+					((t_env *) temp->content)->val = ft_w_strdup(data, val);
 				}
 				else if (val && ((t_env *) temp->content)->val)
 				{
 					ft_free (((t_env *) temp->content)->val);
-					((t_env *) temp->content)->val = ft_strdup(val);
+					((t_env *) temp->content)->val = ft_w_strdup(data, val);
 				}
 			}
 			temp = temp->next;
 		}
 	}
 	else
-		ft_add_env (data, ft_strdup (key), ft_strdup (val));
+		ft_add_env (data, ft_w_strdup(data, key), ft_w_strdup(data, val));
 	ft_free (val);
 	ft_free (key);
 }

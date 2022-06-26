@@ -44,7 +44,7 @@ char	*ft_getexp(t_dlist *explist, char *key)
 		expkeylen = ft_strlen (expkey);
 
 		if (keylen == expkeylen && !ft_strncmp (expkey, key, expkeylen))
-			return (ft_strdup(((t_exp *)temp->content)->val));
+			return (ft_w_strdup(data, ((t_exp *)temp->content)->val));
 		temp = temp->next;
 	}
 	return (NULL);
@@ -68,17 +68,17 @@ void	ft_sort_exp(t_dlist *explist)
 		{
 			if (ft_strcmp (((t_exp *) new->content)->key, ((t_exp *) new->next->content)->key) > 0)
 			{
-				swap = ft_strdup(((t_exp *) new->content)->key);
+				swap = ft_w_strdup(data, ((t_exp *) new->content)->key);
 				ft_free (((t_exp *) new->content)->key);
-				((t_exp *) new->content)->key = ft_strdup(((t_exp *) new->next->content)->key);
+				((t_exp *) new->content)->key = ft_w_strdup(data, ((t_exp *) new->next->content)->key);
 				ft_free (((t_exp *) new->next->content)->key);
-				((t_exp *) new->next->content)->key = ft_strdup(swap);
+				((t_exp *) new->next->content)->key = ft_w_strdup(data, swap);
 				ft_free (swap);
-				swap = ft_strdup(((t_exp *) new->content)->val);
+				swap = ft_w_strdup(data, ((t_exp *) new->content)->val);
 				ft_free (((t_exp *) new->content)->val);
-				((t_exp *) new->content)->val = ft_strdup(((t_exp *) new->next->content)->val);
+				((t_exp *) new->content)->val = ft_w_strdup(data, ((t_exp *) new->next->content)->val);
 				ft_free (((t_exp *) new->next->content)->val);
-				((t_exp *) new->next->content)->val = ft_strdup(swap);
+				((t_exp *) new->next->content)->val = ft_w_strdup(data, swap);
 				ft_free (swap);
 
 			}
@@ -123,9 +123,9 @@ t_dlist	*ft_remove_exp(t_dlist *explist, t_dlist *entry)
 
 void	ft_init_minimal_exp(t_data *data)
 {
-	ft_add_exp (data, ft_strdup("OLDPWD"), NULL);
-	ft_add_exp (data, ft_strdup("PWD"), getcwd (NULL, PATH_MAX));
-	ft_add_exp (data, ft_strdup("SHLVL"), ft_strdup("1"));
+	ft_add_exp (data, ft_w_strdup(data, "OLDPWD"), NULL);
+	ft_add_exp (data, ft_w_strdup(data, "PWD"), getcwd (NULL, PATH_MAX));
+	ft_add_exp (data, ft_w_strdup(data, "SHLVL"), ft_w_strdup(data, "1"));
 }
 
 /*
@@ -163,10 +163,10 @@ void	ft_init_exp(t_data *data)
 			if (ft_strncmp (key, "PWD", 3) == SUCCESS)
 				val = getcwd (NULL, PATH_MAX);
 			else if (ft_strncmp(key, "SHELL", 3) == SUCCESS && !key[5])
-				val = ft_strdup ("minishell");
+				val = ft_w_strdup(data, "minishell");
 			else
 				val = ft_substr (data->environ[i], j + 1, ft_strlen (data->environ[i]) - j);
-			ft_add_exp (data, ft_strdup(key), ft_strdup(val));
+			ft_add_exp (data, ft_w_strdup(data, key), ft_w_strdup(data, val));
 			ft_free(val);
 			ft_free(key);
 		}

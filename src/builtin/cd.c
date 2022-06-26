@@ -116,7 +116,7 @@ void	ft_update_pwd(t_data *data, char *newpwd)
 		ft_free_tab (exportcmd);
 	}
 	ft_free (data->cwd);
-	data->cwd = ft_strdup(newpwd);
+	data->cwd = ft_w_strdup(data, newpwd);
 	/* printf("NEW PWD -> [%s]\n", data->cwd); */
 }
 
@@ -156,7 +156,7 @@ void	ft_update_oldpwd(t_data *data, char *oldpwd)
 		ft_free_tab (exportcmd);
 	}
 	ft_free (data->oldcwd);
-	data->oldcwd = ft_strdup(oldpwd);
+	data->oldcwd = ft_w_strdup(data, oldpwd);
 }
 
 /*
@@ -222,7 +222,7 @@ int	ft_cd_hyphen(t_data *data)
 	if (!ft_chdir (data->oldcwd))
 		return (FAILURE);
 	// UPDATE
-	swap = ft_strdup(data->oldcwd);
+	swap = ft_w_strdup(data, data->oldcwd);
 	ft_update_oldpwd (data, data->cwd);
 	ft_update_pwd (data, swap);
 	ft_free (swap);

@@ -24,7 +24,7 @@ static char	*ft_prompt_prefix(void)
 	}
 	else
 	{
-		prefix = ft_strdup ("minishell:");
+		prefix = ft_w_strdup(data, "minishell:");
 	}
 	return (prefix);
 }
@@ -53,7 +53,7 @@ static char	*ft_prompt_line(t_data *data)
 	}
 	else
 	{
-		prompt = ft_strdup (data->cwd);
+		prompt = ft_w_strdup(data, data->cwd);
 		prompt = ft_strjoin_free_s1 (prompt, "$ ");
 		prompt = ft_strjoin_free_s2 (prefix, prompt);
 	}

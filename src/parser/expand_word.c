@@ -10,12 +10,12 @@ static char	*ft_concat_all_words(t_dlist *toklist)
 	char	*str;
 
 	if (!toklist || !toklist->next)
-		return (ft_strdup(""));
+		return (ft_w_strdup(data, ""));
 	temp = toklist;
 	if (ft_is_tokid(temp, WD) && ft_is_tokid(temp->next, WD))
 		str = ft_strjoin(((t_tok *)temp->content)->tok, " ");
 	else
-		return (ft_strdup(((t_tok *)temp->content)->tok));
+		return (ft_w_strdup(data, ((t_tok *)temp->content)->tok));
 	temp = temp->next;
 	while (ft_is_tokid(temp, WD) && ft_is_tokid(temp->next, WD))
 	{
