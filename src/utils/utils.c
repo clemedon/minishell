@@ -157,6 +157,7 @@ void	ft_exitmsg (t_data *data, char *str)
 		write(2, " error\n", 7);
 	}
 
+
 	ft_free (data->cwd);
 	ft_free (data->oldcwd);
 	ft_free_tab (data->cmd_path);

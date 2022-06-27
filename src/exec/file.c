@@ -23,7 +23,7 @@ char	*ft_get_var(t_data *data, char *str)
 	while (str[i] && str[i] != '$' && str[i] !=  '\'' && str[i] != '\"' && str[i] != ' ' && str[i] != '\n')
 		i ++;
 	var = ft_substr(str, 0, i);
-	var = ft_getenv(data->envlist, var);
+	var = ft_getenv(data, data->envlist, var);
 	return (var);
 }
 
@@ -37,7 +37,7 @@ int	ft_len_var(t_data *data, char *str)
 	while (str[len] && str[len] != '$' && str[len] !=  '\'' && str[len] != '\"' && str[len] != ' ' && str[len] != '\n')
 		len ++;
 	temp_var = ft_substr(str, 0, len);
-	var = ft_getenv(data->envlist, temp_var);
+	var = ft_getenv(data, data->envlist, temp_var);
 	len = 0;
 	if (var)
 	{
@@ -88,7 +88,7 @@ char	*ft_update_here_doc(t_data *data, char *str)
 				while (str[len] && str[len] != '$' && str[len] != '\'' && str[len] != '\"' && str[len] != ' ' && str[len] != '\n')
 					len ++;
 				temp_var = ft_substr(str, 0, (size_t)len);
-				var = ft_getenv(data->envlist, temp_var);
+				var = ft_getenv(data, data->envlist, temp_var);
 				j = 0;
 				while (var && var[j])
 					temp[i++] = var[j++];
