@@ -4,20 +4,20 @@
  ** Concatenate the given QUOTED WORDS.
  */
 
-static char	*ft_concat_quoted_words(t_dlist *toklist)
+static char	*ft_concat_quoted_words(t_data *data, t_dlist *toklist)
 {
 	t_dlist	*temp;
 	char	*str;
 
 	if (!toklist || !toklist->next)
-		return (ft_strdup (""));
+		return (ft_w_strdup(data, ""));
 	temp = toklist;
 	if (!ft_is_tokid (temp->next, QT) && !ft_is_tokid (temp->next, DQ))
 		str = ft_strjoin
 			(((t_tok *)temp->content)->tok,
 				((t_tok *)temp->next->content)->tok);
 	else
-		return (ft_strdup (((t_tok *)temp->content)->tok));
+		return (ft_w_strdup(data, ((t_tok *)temp->content)->tok));
 	temp = temp->next->next;
 	while (temp && !ft_is_tokid (temp, QT) && !ft_is_tokid (temp, DQ))
 	{
@@ -41,7 +41,7 @@ static void	ft_remove_empty_quotes(t_data *data)
 	word_token = 0;
 	temp = data->toklist;
 	ptrcpy[0] = temp;
-	new = malloc (sizeof (t_dlist));
+	new = ft_w_malloc (data, sizeof (t_dlist));
 	ptrcpy[1] = new;
 	new = NULL;
 	while (temp)
@@ -50,18 +50,18 @@ static void	ft_remove_empty_quotes(t_data *data)
 			word_token = 1;
 		if (!word_token && ((ft_is_tokid (temp, QT) && ft_is_tokid (temp->next, QT))
 			|| (ft_is_tokid (temp, DQ) && ft_is_tokid (temp->next, DQ))))
-		{	
+		{
 			free(((t_tok *)temp->next->content)->tok);
 			if (ft_is_tokid(temp, QT))
-				((t_tok *)temp->next->content)->tok = ft_strdup("''");
+				((t_tok *)temp->next->content)->tok = ft_w_strdup(data, "''");
 			else
-				((t_tok *)temp->next->content)->tok = ft_strdup("\"\"");
+				((t_tok *)temp->next->content)->tok = ft_w_strdup(data, "\"\"");
 			((t_tok *)temp->next->content)->tokid = WD;
 			temp = temp->next;
 		}
 		else
 		{
-			ft_dlst_elem_dup (&new, temp);
+			ft_dlst_elem_dup (data, &new, temp);
 			temp = temp->next;
 		}
 	}
@@ -88,7 +88,7 @@ int	ft_is_equal_sign(char *str)
  ** Expand QUOTED WORDS to a single WORD.
  */
 
-static void	ft_expand_quote2(t_dlist **new, t_dlist **temp)
+static void	ft_expand_quote2(t_data *data, t_dlist **new, t_dlist **temp)
 {
 	char	*str;
 
@@ -96,7 +96,7 @@ static void	ft_expand_quote2(t_dlist **new, t_dlist **temp)
 		&& !ft_is_tokid (*temp, QT) && !ft_is_tokid (*temp, DQ))
 	{
 		if (!ft_is_equal_sign(((t_tok *)(*temp)->content)->tok))
-			ft_dlst_elem_dup (new, *temp);
+			ft_dlst_elem_dup (data, new, *temp);
 		*temp = (*temp)->next;
 	}
 	if ((*temp)->prev && (*temp) && (ft_is_tokid(*temp, QT) || ft_is_tokid(*temp, DQ)) && ft_is_equal_sign(((t_tok *)(*temp)->prev->content)->tok))
@@ -106,7 +106,7 @@ static void	ft_expand_quote2(t_dlist **new, t_dlist **temp)
 			str = ft_strjoin(((t_tok *)(*temp)->prev->content)->tok, ((t_tok *)(*temp)->next->content)->tok);
 			*temp = (*temp)->next;
 			free(((t_tok *)(*temp)->content)->tok);
-			((t_tok *)(*temp)->content)->tok = ft_strdup(str);
+			((t_tok *)(*temp)->content)->tok = ft_w_strdup(data, str);
 			free(str);
 			*temp = (*temp)->prev;
 		}
@@ -114,17 +114,17 @@ static void	ft_expand_quote2(t_dlist **new, t_dlist **temp)
 	if ((*temp)->next && (ft_is_tokid (*temp, QT) || ft_is_tokid (*temp, DQ)))
 	{
 		*temp = (*temp)->next;
-		str = ft_concat_quoted_words (*temp);
+		str = ft_concat_quoted_words (data, *temp);
 		free (((t_tok *)(*temp)->content)->tok);
-		((t_tok *)(*temp)->content)->tok = ft_strdup (str);
+		((t_tok *)(*temp)->content)->tok = ft_w_strdup(data, str);
 		free (str);
-		ft_dlst_elem_dup (new, *temp);
+		ft_dlst_elem_dup (data, new, *temp);
 		*temp = (*temp)->next;
 		while (*temp && !ft_is_tokid (*temp, QT) && !ft_is_tokid (*temp, DQ))
 			*temp = (*temp)->next;
 	}
 	if (*temp && !ft_is_tokid (*temp, QT) && !ft_is_tokid (*temp, DQ))
-		ft_dlst_elem_dup (new, *temp);
+		ft_dlst_elem_dup (data, new, *temp);
 	if (*temp)
 		*temp = (*temp)->next;
 }
@@ -136,14 +136,14 @@ void	ft_expand_quote(t_data *data)
 	t_dlist	*new;
 
 	ft_remove_empty_quotes (data);
-	new = malloc (sizeof (t_dlist));
+	new = ft_w_malloc (data, sizeof (t_dlist));
 	ptrcpy[1] = new;
 	new = NULL;
 	temp = data->toklist;
 	ptrcpy[0] = temp;
 	while (temp)
 	{
-		ft_expand_quote2(&new, &temp);
+		ft_expand_quote2(data, &new, &temp);
 	}
 	data->toklist = new;
 	if (data->toklist)

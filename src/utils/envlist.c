@@ -29,7 +29,7 @@ int	ft_check_env_entry (t_dlist *envlist, char *key)
  ** Return the 'value' attached to the given 'key' within minishel env.
  */
 
-char	*ft_getenv(t_dlist *envlist, char *key)
+char	*ft_getenv(t_data *data, t_dlist *envlist, char *key)
 {
 	t_dlist	*temp;
 	char	*envkey;
@@ -44,7 +44,7 @@ char	*ft_getenv(t_dlist *envlist, char *key)
 		envkeylen = ft_strlen (envkey);
 
 		if (keylen == envkeylen && !ft_strncmp (envkey, key, envkeylen))
-			return (ft_strdup(((t_env *)temp->content)->val));
+			return (ft_w_strdup(data, ((t_env *)temp->content)->val));
 		temp = temp->next;
 	}
 	return (NULL);
@@ -73,9 +73,9 @@ void	ft_update_env(t_data *data)
 			// TODO replace exp->contentkey with key = exp->contentkey -> key
 			if (ft_strcmp (((t_env *) env->content)->key, ((t_exp *) exp->content)->key) == 0)
 			{
-				temp = ft_strdup (((t_exp *) exp->content)->val);
+				temp = ft_w_strdup(data, ((t_exp *) exp->content)->val);
 				ft_free ((((t_exp *) exp->content)->val));
-				((t_exp *) exp->content)->val = ft_strdup (temp);
+				((t_exp *) exp->content)->val = ft_w_strdup(data, temp);
 				ft_free (temp);
 				break ;
 			}
@@ -110,9 +110,9 @@ void	ft_update_env(t_data *data)
 
 void	ft_init_minimal_env(t_data *data)
 {
-	ft_add_env (data, ft_strdup("PWD"), getcwd (NULL, PATH_MAX));
-	ft_add_env (data, ft_strdup("SHLVL"), ft_strdup("1"));
-	ft_add_env (data, ft_strdup("_"), getcwd (NULL, PATH_MAX));
+	ft_add_env (data, ft_w_strdup(data, "PWD"), ft_w_getcwd(data));
+	ft_add_env (data, ft_w_strdup(data, "SHLVL"), ft_w_strdup(data, "1"));
+	ft_add_env (data, ft_w_strdup(data, "_"), ft_w_getcwd(data));
 }
 
 /*
@@ -131,7 +131,7 @@ void	ft_init_env(t_data *data)
 	unsigned int	j;
 
 	if (!data->environ)
-		exit(EXIT_FAILURE);
+		ft_exitmsg (data, "env"); // TODO ca quitte pas quand env -i
 	i = 0;
 	if (*data->environ == NULL)
 	{
@@ -144,13 +144,13 @@ void	ft_init_env(t_data *data)
 		while (data->environ[i][j] != '=')
 			j++;
 
-		key = ft_substr (data->environ[i], 0, j);
+		key = ft_w_substr (data, data->environ[i], 0, j);
 		if (ft_strncmp(key, "PWD", 3) == SUCCESS && !key[3])
-			val = getcwd (NULL, PATH_MAX);
+			val = ft_w_getcwd(data);
 		else if (ft_strncmp(key, "SHELL", 3) == SUCCESS && !key[5])
-			val = ft_strdup ("minishell");
+			val = ft_w_strdup(data, "minishell");
 		else
-			val = ft_substr (data->environ[i], j + 1, ft_strlen (data->environ[i]) - j);
+			val = ft_w_substr (data, data->environ[i], j + 1, ft_strlen (data->environ[i]) - j);
 		ft_add_env (data, key, val);
 		i++;
 	}
@@ -192,9 +192,7 @@ void	ft_add_env(t_data *data, char *key, char *val)
 {
 	t_env	*env;
 
-	env = malloc (sizeof(t_env));
-	if (!env)
-		exit (EXIT_FAILURE);
+	env = ft_w_malloc (data, sizeof(t_env));
 	env->key = key;
 	env->val = val;
 	ft_dlstadd_back(&data->envlist, ft_dlstnew(env));
@@ -204,11 +202,11 @@ void	ft_add_env(t_data *data, char *key, char *val)
  ** Print the variable attached to the given 'key' within minishel env.
  */
 
-void	ft_printlist_elem_env(t_dlist *envlist, char *key)
+void	ft_printlist_elem_env(t_data *data, t_dlist *envlist, char *key)
 {
 	char	*val;
 
-	val = ft_getenv (envlist, key);
+	val = ft_getenv (data, envlist, key);
 	if (val && *val)
 	{
 		ft_printf("%s=%s\n", key, val);

@@ -29,14 +29,12 @@ void	ft_create_redlist(t_data *data)
 void	ft_add_red(t_data *data, t_dlist *token, int nb_cmd)
 {
 	t_redir	*redir;
-	
-	redir = malloc (sizeof(t_redir));
-	if (!redir)
-		exit(EXIT_FAILURE);
+
+	redir = ft_w_malloc (data, sizeof(t_redir));
 	redir->type = ((t_tok *)token->content)->tokid;
 	redir->cmdid = nb_cmd;
 	if (token->next)
-		redir->file = ft_strdup(((t_tok *)token->next->content)->tok);
+		redir->file = ft_w_strdup(data, ((t_tok *)token->next->content)->tok);
 	else
 		redir->file = NULL;
 	ft_dlstadd_back(&data->redlist, ft_dlstnew(redir));

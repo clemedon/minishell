@@ -175,6 +175,8 @@ typedef struct s_data
 	int		shlvl;
 	int		status;
 
+	int		debug;
+
 }			t_data;
 
 /*
@@ -185,14 +187,19 @@ typedef struct s_data
  ** [ utils/utils.c ]
  */
 
+char	*ft_w_getcwd (t_data *data);
+void	*ft_w_malloc (t_data *data, size_t size);
+char	*ft_w_substr(t_data *data, char const *s, unsigned int start, size_t len);
+char	*ft_w_strdup(t_data *data, const char *s1);
+
 char	*ft_strjoin_free_s2(char *s1, char *s2);
 char	*ft_strjoin_free_s1(char *s1, char *s2);
 char	*ft_strjoin_free(char *s1, char *s2);
 void	ft_free(void *ptr);
 void	ft_free_tab(char **tab);
 void	*ft_backfree(char **tab, int i);
-void	ft_clear_exit(t_data *data);
-void	ft_dlst_elem_dup(t_dlist **lst, t_dlist *dup);
+void	ft_exitmsg (t_data *data, char *str);
+void	ft_dlst_elem_dup(t_data *data, t_dlist **lst, t_dlist *dup);
 
 /* #----------------------------------------------------------------------# */
 /* #                  BUILTINS                                            # */
@@ -315,7 +322,7 @@ int		ft_is_tokid(t_dlist *toklist, int tokid);
 
 char	*ft_expand_cwd (char *command);
 char	*ft_command(t_data *data, char *command);
-char	**ft_arg_cmd(t_dlist **cmd, t_dlist **toklist);
+char	**ft_arg_cmd(t_data *data, t_dlist **cmd, t_dlist **toklist);
 void	ft_parse_command(t_data *data);
 
 /*
@@ -334,7 +341,7 @@ void	ft_expand_tilde(t_data *data);
  ** [ parser/expand_word.c ]
  */
 
-/* static char *ft_concat_all_words(t_dlist *toklist) */
+/* static char *ft_concat_all_words(t_data *data, t_dlist *toklist) */
 void	ft_expand_word(t_data *data);
 
 /*
@@ -363,7 +370,7 @@ void	ft_parse_space(t_data *data);
  ** [ parser/expand_quote.c ]
  */
 
-/* static char	*ft_concat_quoted_words(t_dlist *toklist); */
+/* static char	*ft_concat_quoted_words(t_data *data, t_dlist *toklist); */
 /* static void	ft_remove_empty_quotes(t_data *data); */
 /* static void	ft_expand_quote2(t_dlist **new, t_dlist **temp) */
 void	ft_expand_quote(t_data *data);
@@ -442,7 +449,7 @@ char	**ft_split_path(t_data *data);
  ** [ utils/prompt.c ]
  */
 
-/* static char *ft_prompt_prefix(void) */
+/* static char *ft_prompt_prefix(t_data *data) */
 /* static char *ft_prompt_line(t_data *data) */
 /* static void ft_readline(t_data *data) */
 void	ft_prompt(t_data *data);
@@ -452,15 +459,15 @@ void	ft_prompt(t_data *data);
  */
 
 int		ft_check_exp_entry(t_dlist *explist, char *key);
-char	*ft_getexp(t_dlist *explist, char *key);
-void	ft_sort_exp(t_dlist *explist);
+char	*ft_getexp(t_data *data, t_dlist *explist, char *key);
+void	ft_sort_exp(t_data *data, t_dlist *explist);
 void	ft_update_exp(t_data *data);
 void	ft_init_minimal_exp(t_data *data);
 void	ft_init_exp(t_data *data);
 t_dlist	*ft_remove_exp(t_dlist *explist, t_dlist *entry);
 void	ft_add_exp(t_data *data, char *key, char *val);
-void	ft_printlist_elem_exp(t_dlist *explist, char *key);
-void	ft_printlist_exp(t_dlist *explist);
+void	ft_printlist_elem_exp(t_data *data, t_dlist *explist, char *key);
+void	ft_printlist_exp(t_data *data, t_dlist *explist);
 void	ft_clearlist_exp(t_dlist **explist, void (*del)(void *));
 
 /*
@@ -468,13 +475,13 @@ void	ft_clearlist_exp(t_dlist **explist, void (*del)(void *));
  */
 
 int		ft_check_env_entry(t_dlist *envlist, char *key);
-char	*ft_getenv(t_dlist *envlist, char *key);
+char	*ft_getenv(t_data *data, t_dlist *envlist, char *key);
 void	ft_update_env_pwd(t_data *data);
 void	ft_init_minimal_env(t_data *data);
 void	ft_init_env(t_data *data);
 t_dlist	*ft_remove_env(t_dlist *envlist, t_dlist *entry);
 void	ft_add_env(t_data *data, char *key, char *val);
-void	ft_printlist_elem_env(t_dlist *envlist, char *key);
+void	ft_printlist_elem_env(t_data *data, t_dlist *envlist, char *key);
 void	ft_printlist_env(t_dlist *envlist);
 void	ft_clearlist_env(t_dlist **envlist, void (*del)(void *));
 

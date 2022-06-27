@@ -4,7 +4,7 @@
  ** 42 prompt look.
  */
 
-static char	*ft_prompt_prefix(void)
+static char	*ft_prompt_prefix(t_data *data)
 {
 	char	*prefix;
 	size_t	i;
@@ -15,14 +15,14 @@ static char	*ft_prompt_prefix(void)
 		i = 0;
 		while (prefix[i] != '.')
 			i++;
-		prefix = ft_substr(prefix, 0, i);
+		prefix = ft_w_substr(data, prefix, 0, i);
 		prefix = ft_strjoin_free_s2 ("👽", prefix);
-		prefix = ft_strjoin_free_s2 (getenv ("USER"), prefix);
+		prefix = ft_strjoin_free_s2 (getenv("USER"), prefix);
 		prefix = ft_strjoin_free_s1 (prefix, ":");
 	}
 	else
 	{
-		prefix = ft_strdup ("minishell:");
+		prefix = ft_w_strdup(data, "minishell:");
 	}
 	return (prefix);
 }
@@ -38,21 +38,20 @@ static char	*ft_prompt_line(t_data *data)
 	size_t	homelen;
 	char	*prefix;
 
-	prefix = ft_prompt_prefix ();
-	home = getenv ("HOME");
+	prefix = ft_prompt_prefix (data);
+	home = getenv("HOME");
 	if (home)
 		homelen = ft_strlen (home);
 	if (home && ft_strncmp (data->cwd, home, homelen) == 0)
 	{
-		prompt = ft_substr
-			(data->cwd, (unsigned int) homelen, ft_strlen (data->cwd));
+		prompt = ft_w_substr (data, data->cwd, (unsigned int) homelen, ft_strlen (data->cwd));
 		prompt = ft_strjoin_free_s2 ("~", prompt);
 		prompt = ft_strjoin_free_s1 (prompt, "$ ");
 		prompt = ft_strjoin_free_s2 (prefix, prompt);
 	}
 	else
 	{
-		prompt = ft_strdup (data->cwd);
+		prompt = ft_w_strdup(data, data->cwd);
 		prompt = ft_strjoin_free_s1 (prompt, "$ ");
 		prompt = ft_strjoin_free_s2 (prefix, prompt);
 	}
@@ -75,7 +74,7 @@ static void	ft_readline(t_data *data)
 	if (!cmdline)
 	{
 		ft_putendl_fd ("exit", 1);
-		ft_clear_exit (data);
+		ft_exitmsg (data, "");
 	}
 	add_history (cmdline);
 	data->cmdline = cmdline;
@@ -108,5 +107,5 @@ void	ft_prompt(t_data *data)
 		ft_free_tab (data->cmd_path);
 		ft_free_tab (data->envtab);
 	}
-	ft_clear_exit (data);
+	ft_exitmsg (data, "");
 }

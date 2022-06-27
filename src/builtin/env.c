@@ -11,9 +11,7 @@ char **ft_update_envtab (t_data *data)
 	int		i;
 
 	temp = data->envlist;
-	envtab = malloc (sizeof (char *) * (long unsigned int)(ft_dlstsize(data->envlist) + 1));
-	if (!envtab)
-		ft_clear_exit (data);
+	envtab = ft_w_malloc (data, sizeof (char *) * (long unsigned int)(ft_dlstsize(data->envlist) + 1));
 	i = 0;
 	while (temp)
 	{

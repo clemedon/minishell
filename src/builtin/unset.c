@@ -9,12 +9,12 @@ static void	ft_data_unset (t_data *data, char *cmd)
 	if (ft_strlen(cmd) == 3 && ft_strcmp (cmd, "PWD") == SUCCESS)
 	{
 		ft_free (data->cwd);
-		data->cwd = ft_strdup("");
+		data->cwd = ft_w_strdup(data, "");
 	}
 	if (ft_strlen(cmd) == 6 && ft_strcmp (cmd, "OLDPWD") == SUCCESS)
 	{
 		ft_free (data->oldcwd);
-		data->oldcwd = ft_strdup("");
+		data->oldcwd = ft_w_strdup(data, "");
 	}
 }
 

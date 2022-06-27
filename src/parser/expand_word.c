@@ -4,18 +4,18 @@
  ** Concatenate all the contigus WORDS token.
  */
 
-static char	*ft_concat_all_words(t_dlist *toklist)
+static char	*ft_concat_all_words(t_data *data, t_dlist *toklist)
 {
 	t_dlist	*temp;
 	char	*str;
 
 	if (!toklist || !toklist->next)
-		return (ft_strdup(""));
+		return (ft_w_strdup(data, ""));
 	temp = toklist;
 	if (ft_is_tokid(temp, WD) && ft_is_tokid(temp->next, WD))
 		str = ft_strjoin(((t_tok *)temp->content)->tok, " ");
 	else
-		return (ft_strdup(((t_tok *)temp->content)->tok));
+		return (ft_w_strdup(data, ((t_tok *)temp->content)->tok));
 	temp = temp->next;
 	while (ft_is_tokid(temp, WD) && ft_is_tokid(temp->next, WD))
 	{
@@ -44,7 +44,7 @@ void	ft_expand_word(t_data *data)
 	t_dlist	*newfree;
 	char	*str;
 
-	new = malloc(sizeof(t_dlist));
+	new = ft_w_malloc(data, sizeof(t_dlist));
 	newfree = new;
 	new = NULL;
 	temp = data->toklist;
@@ -54,10 +54,10 @@ void	ft_expand_word(t_data *data)
 		if (ft_is_tokid(temp, WD)
 			&& ft_is_tokid(temp->next, WD))
 		{
-			str = ft_concat_all_words(temp);
+			str = ft_concat_all_words(data, temp);
 			free(((t_tok *)temp->content)->tok);
 			((t_tok *)temp->content)->tok = str;
-			ft_dlst_elem_dup(&new, temp);
+			ft_dlst_elem_dup(data, &new, temp);
 			temp = temp->next;
 			while (temp->next && ft_is_tokid(temp, WD))
 				temp = temp->next;
@@ -66,12 +66,12 @@ void	ft_expand_word(t_data *data)
 		}
 		if (temp && !temp->next && !ft_is_tokid(temp, WD))
 		{
-			ft_dlst_elem_dup(&new, temp);
+			ft_dlst_elem_dup(data, &new, temp);
 			break ;
 		}
 		else if (temp)
 		{
-			ft_dlst_elem_dup(&new, temp);
+			ft_dlst_elem_dup(data, &new, temp);
 			temp = temp->next;
 		}
 	}

@@ -68,7 +68,7 @@ void    ft_exit(t_data *data, char **cmd)
 
 	fd = open ("/dev/stdin", O_WRONLY, 0777);
 	if (fd == -1)
-		exit (EXIT_FAILURE);
+		ft_exitmsg (data, "open");
 	ft_putendl_fd ("exit", fd);
 	if (cmd[1])
 	{
@@ -101,6 +101,6 @@ void    ft_exit(t_data *data, char **cmd)
 		}
 	}
 	if (close (fd) == -1)
-		exit (EXIT_FAILURE);
-	ft_clear_exit (data);
+		ft_exitmsg (data, "close");
+	ft_exitmsg (data, "");
 }

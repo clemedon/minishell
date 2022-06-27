@@ -1,5 +1,51 @@
 #include "minishell.h"
 
+void	*ft_w_malloc (t_data *data, size_t size)
+{
+	void	*mem;
+
+	(void)data;
+	mem = NULL;
+	mem = malloc (size);
+	if (!mem || data->debug)
+		ft_exitmsg (data, "malloc");
+	return (mem);
+}
+
+char	*ft_w_getcwd (t_data *data)
+{
+	char	*cwd;
+
+	(void)data;
+	cwd = NULL;
+	cwd = getcwd (NULL, PATH_MAX);
+	if (!cwd || data->debug)
+		ft_exitmsg (data, "getcwd malloc");
+	return (cwd);
+}
+
+char	*ft_w_substr (t_data *data, char const *s, unsigned int start, size_t len)
+{
+	char	*str;
+
+	(void)data;
+	str = ft_substr (s, start, len);
+	if (!str || data->debug)
+		ft_exitmsg (data, "substr malloc");
+	return (str);
+}
+
+char	*ft_w_strdup (t_data *data, const char *s1)
+{
+	char	*str;
+
+	(void)data;
+	str = ft_strdup (s1);
+	if (!str || data->debug)
+		ft_exitmsg (data, "strdup malloc");
+	return (str);
+}
+
 /*
  ** Security layer for 'ft_strjoin'.
  */
@@ -90,7 +136,7 @@ void	ft_free_tab(char **tab)
 		{
 			free(*tab);
 			*tab = NULL;
-			tab ++;
+			tab++;
 		}
 		free(temp);
 		temp = NULL;
@@ -98,36 +144,45 @@ void	ft_free_tab(char **tab)
 }
 
 /*
- ** Clear memory and exit.
+ ** Print a common error message, clear and exit.
  */
 
-void	ft_clear_exit(t_data *data)
+void	ft_exitmsg (t_data *data, char *str)
 {
+	if (str && *str)
+	{
+		data->status = EXIT_FAILURE;
+		write(2, "minishell: ", 12);
+		write(2, str, ft_strlen (str));
+		write(2, " error\n", 7);
+	}
+
 	ft_free (data->cwd);
+	ft_free (data->oldcwd);
 	ft_free_tab (data->cmd_path);
 	ft_free_tab (data->envtab);
-	ft_clearlist_cmd (&data->cmdlist, ft_free);
 	ft_clearlist_env (&data->envlist, ft_free);
+	ft_clearlist_cmd (&data->cmdlist, ft_free);
 	ft_clearlist_exp (&data->explist, ft_free);
 	ft_clearlist_red (&data->redlist, ft_free);
 	ft_clearlist_tok (&data->toklist, ft_free);
 	rl_clear_history ();
 	exit(data->status);
+
+
 }
 
 /*
  ** Add a duplicate of 'dup' to 'lst' list.
  */
 
-void	ft_dlst_elem_dup(t_dlist **lst, t_dlist *dup)
+void	ft_dlst_elem_dup(t_data *data, t_dlist **lst, t_dlist *dup)
 {
 	t_tok	*new_tok;
 
-	new_tok = malloc (sizeof(t_tok));
-	if (!new_tok)
-		exit(EXIT_FAILURE);
+	new_tok = ft_w_malloc (data, sizeof(t_tok));
 	new_tok->tokid = ((t_tok *)dup->content)->tokid;
 	new_tok->tokpos = ((t_tok *)dup->content)->tokpos;
-	new_tok->tok = strdup (((t_tok *)dup->content)->tok);
+	new_tok->tok = ft_w_strdup(data, ((t_tok *)dup->content)->tok);
 	ft_dlstadd_back(lst, ft_dlstnew(new_tok));
 }

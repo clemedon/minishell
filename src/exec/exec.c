@@ -35,7 +35,7 @@ static int	ft_parent(t_data *data, t_dlist *cmd, int pid)
 static void	ft_child(t_data *data, t_dlist *cmd)
 {
 	if (ft_is_builtin(cmd) && !ft_fork_builtin(cmd))
-		exit(data->status);
+		exit (data->status);
 	if (((t_cmd *)cmd->content)->file_in)
 	{
 		if (((t_cmd *)cmd->content)->fd_in == -1)

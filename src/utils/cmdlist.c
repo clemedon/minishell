@@ -54,9 +54,7 @@ void    ft_add_cmd(t_data *data)
 {
 	t_cmd   *cmd;
 
-	cmd = malloc(sizeof(t_cmd));
-	if (!cmd)
-		exit (EXIT_FAILURE);
+	cmd = ft_w_malloc(data, sizeof(t_cmd));
 	ft_init_cmd(data, &cmd);
 	ft_dlstadd_back(&data->cmdlist, ft_dlstnew(cmd));
 }
@@ -69,7 +67,7 @@ void	ft_printlist_cmd(t_dlist *lst)
 {
 	t_dlist	*temp;
 	size_t		i;
-	
+
 	printf("IN FT_PRINTLIST_CMD\n");
 	temp = lst;
 	while (temp)

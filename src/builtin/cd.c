@@ -101,6 +101,8 @@ void	ft_update_pwd(t_data *data, char *newpwd)
 		{
 			str = ft_strjoin ("export PWD=", newpwd);
 			exportcmd = ft_split(str, ' ');
+			if (!exportcmd)
+				ft_exitmsg (data, "malloc");
 			ft_free (str);
 		}
 		else
@@ -114,7 +116,7 @@ void	ft_update_pwd(t_data *data, char *newpwd)
 		ft_free_tab (exportcmd);
 	}
 	ft_free (data->cwd);
-	data->cwd = ft_strdup(newpwd);
+	data->cwd = ft_w_strdup(data, newpwd);
 	/* printf("NEW PWD -> [%s]\n", data->cwd); */
 }
 
@@ -135,20 +137,26 @@ void	ft_update_oldpwd(t_data *data, char *oldpwd)
 		{
 			str = ft_strjoin ("export OLDPWD=", oldpwd);
 			exportcmd = ft_split(str, ' ');
+			if (!exportcmd)
+				ft_exitmsg (data, "malloc");
 			ft_free (str);
 		}
 		else
 		{
 			exportcmd = ft_split("export OLDPWD", ' ');
+			if (!exportcmd)
+				ft_exitmsg (data, "malloc");
 		}
 		unsetcmd = ft_split("unset OLDPWD", ' ');
+		if (!unsetcmd)
+			ft_exitmsg (data, "malloc");
 		ft_unset (data, unsetcmd);
 		ft_export (data, exportcmd);
 		ft_free_tab (unsetcmd);
 		ft_free_tab (exportcmd);
 	}
 	ft_free (data->oldcwd);
-	data->oldcwd = ft_strdup(oldpwd);
+	data->oldcwd = ft_w_strdup(data, oldpwd);
 }
 
 /*
@@ -188,7 +196,7 @@ int	ft_cd_path(t_data *data, char *cmd)
 	ft_update_oldpwd (data, data->cwd);
 	// UPDATE
 	/* printf("before cwd\n"); */
-	cwd = getcwd (NULL, PATH_MAX);
+	cwd = ft_w_getcwd(data);
 	/* printf("after cwd\n"); */
 	ft_update_pwd (data, cwd);
 	/* printf("after update pwd\n"); */
@@ -214,7 +222,7 @@ int	ft_cd_hyphen(t_data *data)
 	if (!ft_chdir (data->oldcwd))
 		return (FAILURE);
 	// UPDATE
-	swap = ft_strdup(data->oldcwd);
+	swap = ft_w_strdup(data, data->oldcwd);
 	ft_update_oldpwd (data, data->cwd);
 	ft_update_pwd (data, swap);
 	ft_free (swap);
@@ -230,7 +238,7 @@ int	ft_cd_alone(t_data *data)
 {
 	char	*homedir;
 
-	homedir = ft_getexp (data->explist, "HOME");
+	homedir = ft_getexp (data, data->explist, "HOME");
 	// CHECKS
 	if (!ft_check_exp_entry (data->explist, "HOME") || !*homedir)
 	{

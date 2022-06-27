@@ -57,10 +57,7 @@ static void	ft_tokenize(t_data *data, char **cmdline, int *pos)
 
 	size = ft_token_size(*cmdline);
 
-	newtok = ft_substr(*cmdline, 0, size);
-
-	if (!newtok)
-		exit (EXIT_FAILURE);
+	newtok = ft_w_substr(data, *cmdline, 0, size);
 
 	id = ft_set_token(newtok);
 	ft_add_tok(data, id, *pos, newtok);
