@@ -15,9 +15,6 @@
 
 # //////////////////////// CVIDON
 
-- Protect all the malloc
-> Create a `ft_clear_exit("malloc error")` and a `ft_strdup` wrapper.
-
 - Fix heredoc SIGINT (<C-C>)
 
 - Protect all the signal
