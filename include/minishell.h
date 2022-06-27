@@ -206,15 +206,29 @@ void	ft_dlst_elem_dup(t_data *data, t_dlist **lst, t_dlist *dup);
 /* #----------------------------------------------------------------------# */
 
 /*
- ** [ builtin/exit.c ]
+ ** [ builtin/exit.c ] NORMED
  */
 
+/* static int	ft_isnumeric(char *str) */
+/* static void	ft_exit_cases(t_data *data, char **cmd) */
 void    ft_exit(t_data *data, char **cmd);
 
 /*
- ** [ builtin/cd.c ]
+ ** [ builtin/cd_2.c ] NORMED
  */
 
+void    ft_update_pwd(t_data *data, char *newpwd);
+/* static void ft_update_oldpwd_2(t_data *data, char **exportcmd) */
+void    ft_update_oldpwd(t_data *data, char *oldpwd);
+
+/*
+ ** [ builtin/cd.c ] NORMED
+ */
+
+/* static int  ft_chdir(char *path) */
+/* static int  ft_cd_path(t_data *data, char *cmd) */
+/* static int  ft_cd_hyphen(t_data *data) */
+/* static int  ft_cd_alone(t_data *data) */
 int		ft_cd(t_data *data, char **cmd);
 
 /*
@@ -243,17 +257,17 @@ int		ft_export(t_data *data, char **cmd);
 int		ft_unset(t_data *data, char **args);
 
 /*
- ** [ builtin/echo.c ]
+ ** [ builtin/echo.c ] NORMED
  */
 
-int		ft_is_n_flag(char *arg);
+/* static int	ft_is_n_flag(char *arg) */
 int		ft_echo(t_data *data, char **arg);
 
 /*
- ** [ builtin/env.c ]
+ ** [ builtin/env.c ] NORMED
  */
 
-char	**ft_update_envtab (t_data *data);
+/* static char	**ft_update_envtab (t_data *data) */
 int		ft_env(t_dlist *envlist);
 
 /* #----------------------------------------------------------------------# */

@@ -32,6 +32,9 @@
 
 ##  Errors
 
+- Fix builtin export
+> `export z` -> malloc error
+
 - Fix errmsg
 > `/`, `//`, `///` etc. Should print `Is a directory` not `Permission denied`
 

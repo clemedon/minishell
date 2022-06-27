@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-
 /*
  ** Export data->cwd and data->oldcwd.
  **
@@ -15,7 +14,7 @@
  **   Else             -> replace
  */
 
-static void	ft_data_export (t_data *data, char *cmd)
+static void	ft_data_export(t_data *data, char *cmd)
 {
 	char	*val;
 	char	*key;
@@ -62,7 +61,8 @@ static void	ft_data_export (t_data *data, char *cmd)
  **   EXPLIST only.
  ** - EXPLIST saves variables from LEFT to RIGHT.
  **
- ** TODO:HELP On perd les pointeur si on mets les ft_free key/val dans ft_add_exp plutot qu'ici.
+ ** TODO:HELP On perd les pointeur si on mets les ft_free key/val dans
+ ** ft_add_exp plutot qu'ici.
  */
 
 static void	ft_explist_export(t_data *data, char *cmd)
@@ -122,6 +122,27 @@ static void	ft_explist_export(t_data *data, char *cmd)
  ** - ENVLIST saves variables from RIGHT to LEFT.
  */
 
+static void ft_envlist_export_2(t_data *data, char *cmd, char *val, char *key, t_dlist *temp)
+{
+	while (temp)
+	{
+		if (ft_strncmp(((t_env *) temp->content)->key, key, 3) == SUCCESS)
+		{
+			if (val && cmd[ft_strlen (cmd) - ft_strlen (val) - 2] == '+')
+			{
+				val = ft_strjoin_free (((t_env *) temp->content)->val, val);
+				((t_env *) temp->content)->val = ft_w_strdup(data, val);
+			}
+			else if (val && ((t_env *) temp->content)->val)
+			{
+				ft_free (((t_env *) temp->content)->val);
+				((t_env *) temp->content)->val = ft_w_strdup(data, val);
+			}
+		}
+		temp = temp->next;
+	}
+}
+
 static void	ft_envlist_export(t_data *data, char *cmd)
 {
 	char	*val;
@@ -134,23 +155,7 @@ static void	ft_envlist_export(t_data *data, char *cmd)
 			- (cmd[ft_strlen (cmd) - ft_strlen(val) - 2] == '+'));
 	if (ft_check_env_entry (data->envlist, key))
 	{
-		while (temp)
-		{
-			if (ft_strncmp(((t_env *) temp->content)->key, key, 3) == SUCCESS)
-			{
-				if (val && cmd[ft_strlen (cmd) - ft_strlen (val) - 2] == '+')
-				{
-					val = ft_strjoin_free (((t_env *) temp->content)->val, val);
-					((t_env *) temp->content)->val = ft_w_strdup(data, val);
-				}
-				else if (val && ((t_env *) temp->content)->val)
-				{
-					ft_free (((t_env *) temp->content)->val);
-					((t_env *) temp->content)->val = ft_w_strdup(data, val);
-				}
-			}
-			temp = temp->next;
-		}
+		ft_envlist_export_2(data, cmd, val, key, temp);
 	}
 	else
 		ft_add_env (data, ft_w_strdup(data, key), ft_w_strdup(data, val));
@@ -209,7 +214,6 @@ int	ft_export(t_data *data, char **cmd)
 	int		ret;
 	int		valid;
 
-	/* ft_update_exp (data); */
 	ret = SUCCESS;
 	if (!cmd[1])
 		ft_printlist_exp(data, data->explist);
@@ -220,9 +224,7 @@ int	ft_export(t_data *data, char **cmd)
 		if (!valid)
 			ret = FAILURE;
 		else if (valid == 1)
-		{
 			ft_explist_export (data, cmd[i]);
-		}
 		else if (valid == 2)
 		{
 			ft_data_export (data, cmd[i]);
@@ -233,23 +235,3 @@ int	ft_export(t_data *data, char **cmd)
 	}
 	return (ret);
 }
-
-// TESTS-> main.c
-// //ft_export/////////
-//
-// ft_add_env (&data, ft_strdup("Alo"), ft_strdup("000"));
-// ft_add_env (&data, ft_strdup("Ciao"), ft_strdup("111"));
-// ft_add_env (&data, ft_strdup("Bello"), ft_strdup("222"));
-//
-// /* cmd = ft_split ("export DZZ3 _ZZ1 ZZ_Z2= ZZ3_=\"hello\"", ' '); */
-//
-// char	**cmd;
-// cmd = ft_split ("export ZZZ=333 ZZZZ= ZZZZZ", ' ');
-// ft_export (&data, cmd);
-// ft_free_tab (cmd);
-//
-//
-// ft_printlist_exp (data.explist);
-// ft_printlist_env (data.envlist);
-//
-// ft_clear_exit (&data);

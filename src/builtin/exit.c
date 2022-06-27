@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cvidon <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/27 15:49:26 by cvidon            #+#    #+#             */
+/*   Updated: 2022/06/27 15:49:26 by cvidon           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /*
  ** Check whether a string is numeric.
  */
 
-int ft_isnumeric (char *str)
+static int	ft_isnumeric(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (*str == '+' || *str == '-')
@@ -62,24 +74,14 @@ int ft_isnumeric (char *str)
  **
  */
 
-void    ft_exit(t_data *data, char **cmd)
+static void	ft_exit_cases(t_data *data, char **cmd)
 {
-	int fd;
-
-	fd = open ("/dev/stdin", O_WRONLY, 0777);
-	if (fd == -1)
-		ft_exitmsg (data, "open");
-	ft_putendl_fd ("exit", fd);
 	if (cmd[1])
 	{
 		if (!cmd[2] && ft_isnumeric (cmd[1]))
-		{
-			// TODO ft_shlvl_down (data);
 			data->status = ft_atoi(cmd[1]) % 256;
-		}
 		else if (!cmd[2] && !ft_isnumeric (cmd[1]))
 		{
-			// TODO ft_shlvl_down (data);
 			data->status = 2;
 			write (2, "minishell: exit: ", 17);
 			write (2, cmd[1], ft_strlen(cmd[1]));
@@ -93,13 +95,23 @@ void    ft_exit(t_data *data, char **cmd)
 		}
 		else if (cmd[2] && !ft_isnumeric (cmd[1]))
 		{
-			// TODO ft_shlvl_down (data);
 			data->status = 2;
 			write (2, "minishell: exit: ", 17);
 			write (2, cmd[1], ft_strlen(cmd[1]));
 			write (2, ": numeric argument required\n", 28);
 		}
 	}
+}
+
+void	ft_exit(t_data *data, char **cmd)
+{
+	int	fd;
+
+	fd = open ("/dev/stdin", O_WRONLY, 0777);
+	if (fd == -1)
+		ft_exitmsg (data, "open");
+	ft_putendl_fd ("exit", fd);
+	ft_exit_cases(data, cmd);
 	if (close (fd) == -1)
 		ft_exitmsg (data, "close");
 	ft_exitmsg (data, "");

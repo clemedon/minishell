@@ -13,11 +13,9 @@ INC_DIR		= include
 SRC_DIR		= src
 SRCS		= main.c 				\
 			  utils/tty.c			\
-			  utils/signals.c		\
 			  utils/envlist.c		\
 			  utils/explist.c		\
 			  utils/prompt.c		\
-			  utils/path.c			\
 			  lexer/lexer.c			\
 			  utils/toklist.c		\
 			  parser/parser.c		\
@@ -45,6 +43,7 @@ SRCS		= main.c 				\
 			  builtin/echo.c		\
 			  utils/utils.c			\
 			  builtin/cd.c			\
+			  builtin/cd_2.c		\
 			  builtin/exit.c
 
 OBJ_DIR 	= obj

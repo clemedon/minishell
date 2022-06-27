@@ -81,6 +81,52 @@ static void	ft_readline(t_data *data)
 }
 
 /*
+ ** Convert envlist to envtab
+ */
+
+static char	**ft_update_envtab(t_data *data)
+{
+	t_dlist	*temp;
+	char	**envtab;
+	int		i;
+
+	temp = data->envlist;
+	envtab = ft_w_malloc
+		(data, sizeof (char *)
+			* (long unsigned int)(ft_dlstsize(data->envlist) + 1));
+	i = 0;
+	while (temp)
+	{
+		envtab[i] = ft_strjoin (((t_env *)temp->content)->key, "=");
+		envtab[i] = ft_strjoin_free_s1
+			(envtab[i], ((t_env *)temp->content)->val);
+		i++;
+		temp = temp->next;
+	}
+	envtab[i] = NULL;
+	return (envtab);
+}
+
+/*
+ ** Split the PATH.
+ */
+
+char	**ft_split_path(t_data *data)
+{
+	char	*path;
+	char	**splittedpath;
+
+	path = ft_getenv(data, data->envlist, "PATH");
+	if (!path)
+		return (NULL);
+	splittedpath = ft_split(path, ':');
+	ft_free (path);
+	if (!splittedpath)
+		return (NULL);
+	return (splittedpath);
+}
+
+/*
  ** Prompt.
  */
 

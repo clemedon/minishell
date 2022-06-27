@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cvidon <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/27 15:41:06 by cvidon            #+#    #+#             */
+/*   Updated: 2022/06/27 15:48:31 by cvidon           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /*
  ** Check is there is a valid '-n' flag.
  */
 
-int	ft_is_n_flag(char *arg)
+static int	ft_is_n_flag(char *arg)
 {
 	size_t	i;
 
@@ -20,14 +32,6 @@ int	ft_is_n_flag(char *arg)
 	return (FALSE);
 }
 
-/* static void	ft_display_status_code(t_data *data, char *str) */
-/* { */
-/* 	ft_putnbr_fd(data->status, 2); */
-/* 	if (ft_strlen(str) > 2) */
-/* 		ft_putstr_fd(str + 2, 2); */
-/* } */
-
-
 /*
  ** Tiny 'echo' builtin that handle the '-n' flag.
  */
@@ -37,6 +41,7 @@ int	ft_echo(t_data *data, char **cmd)
 	int		i;
 	int		argcount;
 	int		n_flag;
+
 	(void)data;
 	n_flag = 0;
 	i = 1;

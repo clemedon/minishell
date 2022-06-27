@@ -54,6 +54,27 @@ Display all the fds that are open by minishell:
 
 [Interactive Shell Behavior](https://www.gnu.org/software/bash/manual/html_node/Interactive-Shell-Behavior.html)
 
+
+ README
+
+ 'sigaction()'
+ 	https://www.i-programmer.info/programming/cc/13528-applying-c-signals.html
+
+ 'rl_on_new_line()'
+ 	Tell the update functions that we have moved onto a new (empty) line,
+ 	usually after outputting a newline.
+
+ 'rl_replace_line()'
+		Replace the contents of rl_line_buffer with text. The point and mark
+ 	are preserved, if possible. If clear_undo is non-zero, the undo list
+		associated with the current line is cleared.
+
+ 'rl_redisplay()'
+		Change what's displayed on the screen to reflect the current contents
+		of rl_line_buffer.
+
+
+
 1. *Startup* file `~/.bashrc` is read and executed.
 
 2. *Job Control* is (enabled by default) in effect, Bash ignores the
