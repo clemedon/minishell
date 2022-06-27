@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clem </var/mail/clem>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/27 18:25:15 by clem              #+#    #+#             */
+/*   Updated: 2022/06/27 18:25:15 by clem             888   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /*
  ** Unset data->cwd and data->oldcwd.
  */
 
-static void	ft_data_unset (t_data *data, char *cmd)
+static void	ft_data_unset(t_data *data, char *cmd)
 {
 	if (ft_strlen(cmd) == 3 && ft_strcmp (cmd, "PWD") == SUCCESS)
 	{
@@ -35,7 +47,7 @@ static void	ft_explist_unset(t_data *data, char *key)
 		expkey = ((t_exp *)temp->content)->key;
 		expkeylen = ft_strlen (expkey);
 		if (ft_strlen (key) == expkeylen
-				&& !ft_strncmp (expkey, key, expkeylen))
+			&& !ft_strncmp (expkey, key, expkeylen))
 		{
 			freetemp = temp;
 			data->explist = ft_remove_exp (data->explist, temp);
@@ -60,7 +72,7 @@ static void	ft_envlist_unset(t_data *data, char *key)
 		envkey = ((t_env *)temp->content)->key;
 		envkeylen = ft_strlen (envkey);
 		if (ft_strlen (key) == envkeylen
-				&& !ft_strncmp (envkey, key, envkeylen))
+			&& !ft_strncmp (envkey, key, envkeylen))
 		{
 			freetemp = temp;
 			data->envlist = ft_remove_env (data->envlist, temp);

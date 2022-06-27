@@ -39,6 +39,7 @@ SRCS		= main.c 				\
 			  builtin/env.c			\
 			  builtin/unset.c		\
 			  builtin/export.c		\
+			  builtin/export_2.c	\
 			  builtin/pwd.c			\
 			  builtin/echo.c		\
 			  utils/utils.c			\

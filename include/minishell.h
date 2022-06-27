@@ -238,14 +238,24 @@ int		ft_cd(t_data *data, char **cmd);
 int		ft_pwd(t_data *data);
 
 /*
- ** [ builtin/export.c ]
+ ** [ builtin/export_2.c ] NORMED
  */
 
-/* static void	ft_explist_export_2 (t_data *data, char *key, char *val) */
-/* static void	ft_explist_export (t_data *data, char *cmd) */
-/* static void	ft_envlist_export(t_data *data, char *cmd) */
-/* static int	ft_is_valid_export(char *key) */
-int		ft_export(t_data *data, char **cmd);
+/* static void ft_explist_export_2(t_data *data, char *cmd, t_dlist *temp, char **val) */
+/* static void ft_explist_export_1(t_data *data, char *cmd, char **key, char **val) */
+void	ft_explist_export(t_data *data, char *cmd);
+/* static void ft_envlist_export_2(t_data *data, char *cmd, char **val, t_dlist *temp) */
+void   	ft_envlist_export(t_data *data, char *cmd);
+
+/*
+ ** [ builtin/export.c ] NORMED
+ */
+
+/* static void ft_data_export_pwd(t_data *data, char *cmd, char **val) */
+/* static void ft_data_export_oldpwd(t_data *data, char *cmd, char **val) */
+/* static void ft_data_export(t_data *data, char *cmd) */
+/* static int  ft_is_valid_export(char *key) */
+int ft_export(t_data *data, char **cmd);
 
 /*
  ** [ builtin/unset.c ]

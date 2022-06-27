@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pwd.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clem </var/mail/clem>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/27 18:24:50 by clem              #+#    #+#             */
+/*   Updated: 2022/06/27 18:24:50 by clem             888   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /*
@@ -14,7 +26,7 @@ int	ft_pwd(t_data *data)
 	if (!check_value)
 		ft_putstr_fd (env_pwd, 1);
 	else
-		ft_putstr_fd (data->cwd , 1);
+		ft_putstr_fd (data->cwd, 1);
 	ft_putstr_fd ("\n", 1);
 	ft_free (check_value);
 	ft_free (env_pwd);

@@ -66,7 +66,6 @@ void	ft_update_env(t_data *data)
 	env = data->envlist;
 	while (env && data->explist)
 	{
-
 		exp = data->explist;
 		while (exp)
 		{
@@ -80,10 +79,7 @@ void	ft_update_env(t_data *data)
 				break ;
 			}
 			else
-			{
-				/* ft_add_exp (data, ((t_env *) env->content)->key, ((t_env *) env->content)->val); */
 				break ;
-			}
 			exp = exp->next;
 		}
 		env = env->next;

@@ -161,12 +161,15 @@ void	ft_init_exp(t_data *data)
 		if (ft_strncmp(key, "_", 2) != SUCCESS)
 		{
 			if (ft_strncmp (key, "PWD", 3) == SUCCESS)
-				val = ft_w_getcwd(data);
+				val = getcwd (NULL, PATH_MAX);
 			else if (ft_strncmp(key, "SHELL", 3) == SUCCESS && !key[5])
 				val = ft_w_strdup(data, "minishell");
 			else
 				val = ft_w_substr (data, data->environ[i], j + 1, ft_strlen (data->environ[i]) - j);
-			ft_add_exp (data, ft_w_strdup(data, key), ft_w_strdup(data, val));
+			if (val == NULL)
+				ft_add_exp (data, ft_w_strdup(data, key), ft_strdup(val));
+			else
+				ft_add_exp (data, ft_w_strdup(data, key), ft_w_strdup(data, val));
 			ft_free(val);
 			ft_free(key);
 		}
