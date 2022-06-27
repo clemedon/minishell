@@ -1,5 +1,32 @@
 #include "minishell.h"
 
+void	ft_heredoc_sigint(int sig)
+{
+	extern int	g_sig_status;
+
+	g_sig_status = (128 + sig);
+
+	(void)sig;
+	ft_putstr_fd("\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
+void	ft_heredoc_signals ()
+{
+	signal(SIGHUP, SIG_IGN);
+	signal(SIGTERM, SIG_IGN);
+
+	signal(SIGTTIN, SIG_IGN);
+	signal(SIGTTOU, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+
+	signal(SIGINT, ft_heredoc_sigint);
+}
+
+
 int	ft_has_a_var(char *str)
 {
 	int	i;
@@ -132,18 +159,25 @@ static void     ft_end_heredoc(t_dlist *cmd)
 
 static void     ft_here_doc(t_data *data, t_dlist *cmd, t_dlist *redir, char *file)
 {
-	char	*temp;
-	char	*expand;
-	int		fd_file;
+	char		*temp;
+	char		*expand;
+	int			fd_file;
+	extern int	g_sig_status;
 
 	expand = NULL;
 	fd_file = open(file, O_CREAT | O_TRUNC | O_RDWR, 0644);
 	if (fd_file == -1)
 		ft_perror(data, cmd, errno);
+	g_sig_status = 0;
 	while (1)
 	{
+
+		ft_heredoc_signals (); // TODO
+
 		write(1, "> ", 2);
 		temp = get_next_line(0);
+		if (g_sig_status)
+			break ;
 		if (temp == NULL)
 		{
 			ft_end_heredoc(cmd);
@@ -161,11 +195,17 @@ static void     ft_here_doc(t_data *data, t_dlist *cmd, t_dlist *redir, char *fi
 		else
 			write(fd_file, temp, ft_strlen(temp));
 		ft_free(temp);
+
+		ft_init_signals (); // TODO
+
+
 	}
 	ft_free(temp);
 	ft_close(data, cmd, &fd_file);
 	((t_cmd *)cmd->content)->fd_in = open(file, O_RDONLY);
 	unlink(file);
+
+
 }
 
 int    ft_open(t_data *data, t_dlist *cmd)

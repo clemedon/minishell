@@ -9,16 +9,7 @@ int	ft_hd_write(t_list **lst, t_node *params, t_list **lst_to_free)
 	pid = fork();
 	if (pid == 0)
 	{
-		sig_choice(3);
-
-
-
-
-
-
-
-
-
+		sig_choice(3); // TODO
 
 		while (tmp)
 		{
@@ -27,15 +18,8 @@ int	ft_hd_write(t_list **lst, t_node *params, t_list **lst_to_free)
 			tmp = tmp->next;
 		}
 
+		sig_choice(0); // TODO
 
-
-
-
-
-
-
-
-		sig_choice(0);
 		ft_hd_close(lst_to_free);
 		ft_hd_exit(params, lst_to_free, 0);
 	}
