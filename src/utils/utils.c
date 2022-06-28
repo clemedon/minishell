@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	*ft_w_malloc (t_data *data, size_t size)
+void	*ft_w_malloc(t_data *data, size_t size)
 {
 	void	*mem;
 
@@ -12,7 +12,7 @@ void	*ft_w_malloc (t_data *data, size_t size)
 	return (mem);
 }
 
-char	*ft_w_getcwd (t_data *data)
+char	*ft_w_getcwd(t_data *data)
 {
 	char	*cwd;
 
@@ -24,7 +24,7 @@ char	*ft_w_getcwd (t_data *data)
 	return (cwd);
 }
 
-char	*ft_w_substr (t_data *data, char const *s, unsigned int start, size_t len)
+char	*ft_w_substr(t_data *data, char const *s, size_t start, size_t len)
 {
 	char	*str;
 
@@ -35,7 +35,7 @@ char	*ft_w_substr (t_data *data, char const *s, unsigned int start, size_t len)
 	return (str);
 }
 
-char	*ft_w_strdup (t_data *data, const char *s1)
+char	*ft_w_strdup(t_data *data, const char *s1)
 {
 	char	*str;
 
@@ -147,7 +147,7 @@ void	ft_free_tab(char **tab)
  ** Print a common error message, clear and exit.
  */
 
-void	ft_exitmsg (t_data *data, char *str)
+void	ft_exitmsg(t_data *data, char *str)
 {
 	if (str && *str)
 	{
@@ -156,8 +156,6 @@ void	ft_exitmsg (t_data *data, char *str)
 		write(2, str, ft_strlen (str));
 		write(2, " error\n", 7);
 	}
-
-
 	ft_free (data->cwd);
 	ft_free (data->oldcwd);
 	ft_free_tab (data->cmd_path);
@@ -169,8 +167,6 @@ void	ft_exitmsg (t_data *data, char *str)
 	ft_clearlist_tok (&data->toklist, ft_free);
 	rl_clear_history ();
 	exit(data->status);
-
-
 }
 
 /*

@@ -232,7 +232,7 @@ void    ft_update_oldpwd(t_data *data, char *oldpwd);
 int		ft_cd(t_data *data, char **cmd);
 
 /*
- ** [ builtin/pwd.c ]
+ ** [ builtin/pwd.c ] NORMED
  */
 
 int		ft_pwd(t_data *data);
@@ -258,7 +258,7 @@ void   	ft_envlist_export(t_data *data, char *cmd);
 int ft_export(t_data *data, char **cmd);
 
 /*
- ** [ builtin/unset.c ]
+ ** [ builtin/unset.c ] NORMED
  */
 
 /* static void	ft_explist_unset(t_data *data, char *key) */
@@ -330,16 +330,17 @@ int		ft_exec(t_data *data);
 /* #----------------------------------------------------------------------# */
 
 /*
- ** [ utils/cmdlist.c ]
+ ** [ utils/cmdlist.c ] NORMED
  */
 
-void	ft_create_cmdlist(t_data *data);
-void	ft_add_cmd(t_data *data);
-void	ft_printlist_cmd(t_dlist *cmdlist);
-void	ft_clearlist_cmd(t_dlist **cmdlist, void (*del)(void *));
+void    ft_remove_cmd(t_dlist *cmdlist, t_dlist *cmd);
+void    ft_init_cmd(t_data *data, t_cmd **cmd);
+void    ft_create_cmdlist(t_data *data);
+void    ft_add_cmd(t_data *data);
+void    ft_clearlist_cmd(t_dlist **lst, void (*del)(void *));
 
 /*
- ** [ parser/parser_utils.c ]
+ ** [ parser/parser_utils.c ] NORMED
  */
 
 int		ft_is_tokid(t_dlist *toklist, int tokid);
@@ -354,23 +355,19 @@ char	**ft_arg_cmd(t_data *data, t_dlist **cmd, t_dlist **toklist);
 void	ft_parse_command(t_data *data);
 
 /*
- ** [ utils/pipe.c ]
+ ** [ utils/pipe.c ] NORMED
  */
 
 void	ft_count_pipe(t_data *data);
 
 /*
- ** [ parser/expand_tilde.c ]
+ ** [ parser/expand_tilde.c ] NORMED
  */
 
-void	ft_expand_tilde(t_data *data);
-
-/*
- ** [ parser/expand_word.c ]
- */
-
-/* static char *ft_concat_all_words(t_data *data, t_dlist *toklist) */
-void	ft_expand_word(t_data *data);
+char    *ft_concat_path(t_data *data, char *home, char *path)
+t_dlist *ft_expand_tilde_3(t_data *data, t_dlist *temp, char *home)
+t_dlist *ft_expand_tilde_2(t_dlist *temp)
+void    ft_expand_tilde(t_data *data)
 
 /*
  ** [ utils/redlist.c ] NORMED
@@ -391,8 +388,8 @@ void	ft_parse_redir(t_data *data);
  ** [ parser/parse_space.c ] NORMED
  */
 
-/* static void	ft_remove_spaces(t_data *data); */
-void	ft_parse_space(t_data *data);
+/* static void ft_remove_spaces(t_data *data) */
+void    ft_parse_space(t_data *data)
 
 /*
  ** [ parser/expand_quote.c ] TODO
@@ -420,19 +417,20 @@ void	ft_expand_vars(t_data *data);
  ** [ parser/parse_pipe.c ] NORMED
  */
 
-/* static void	ft_trim_toklist(t_dlist *toklist, t_dlist *token); */
-/* static int	ft_pre_checks(t_dlist **token) */
-int		ft_parse_pipe(t_data *data);
+/* static int  ft_multiple_pipe(t_dlist **token) */
+/* static int  ft_last_tok_is_pipe(t_dlist *token) */
+/* static int  ft_just_pipe(t_dlist *token) */
+int ft_parse_pipe(t_data *data);
 
 /*
  ** [ parser/parse_quote.c ] NORMED
  */
 
-/* static int		ft_check_last_tok(t_dlist *toklist); */
-/* static void	ft_set_word_token(t_dlist **token) */
-/* static void	ft_quoted_becomes_words(t_dlist *toklist); */
-/* static int		ft_check_quote_pairs(t_dlist *toklist); */
-int		ft_parse_quote(t_data *data, t_dlist *toklist);
+/* static int  ft_check_last_tok(t_dlist *toklist) */
+/* static void ft_set_word_token(t_dlist **token) */
+/* static void ft_quoted_becomes_words(t_dlist *toklist) */
+/* static int  ft_check_quote_pairs(t_dlist *toklist) */
+int ft_parse_quote(t_data *data, t_dlist *toklist);
 
 /*
  ** [ parser/parser.c ] NORMED

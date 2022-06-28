@@ -29,7 +29,6 @@ SRCS		= main.c 				\
 			  parser/parse_space.c	\
 			  parser/parse_redir.c	\
 			  utils/redlist.c		\
-			  parser/expand_word.c	\
 			  parser/expand_tilde.c	\
 			  utils/pipe.c			\
 			  parser/parse_command.c\
