@@ -12,7 +12,7 @@ INC_DIR		= include
 
 SRC_DIR		= src
 SRCS		= main.c 				\
-			  utils/tty.c			\
+			  utils/shlvl.c			\
 			  utils/envlist.c		\
 			  utils/explist.c		\
 			  utils/prompt.c		\

@@ -514,17 +514,18 @@ void	ft_printlist_env(t_dlist *envlist);
 void	ft_clearlist_env(t_dlist **envlist, void (*del)(void *));
 
 /*
- ** [ utils/tty.c ]
+ ** [ utils/shlvl.c ] NORMED
  */
 
-void	ft_init_tty(void);
+void    ft_shlvl_update(t_data *data);
 
 /*
- ** [ main.c ]
+ ** [ main.c ] NORMED
  */
 
-/* static void	ft_init_data(t_data *data) */
-void	ft_init_signals();
-int		main(int ac, char **av);
+/* static void ft_sigint(int sig) */
+void    ft_init_signals(void);
+/* static void ft_init_data(t_data *data) */
+int main(int ac, char **av);
 
 #endif

@@ -23,7 +23,6 @@ void	ft_exec_cmd(t_data *data, t_dlist *cmd)
 	{
 		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, SIG_IGN);
-		ft_init_tty ();
 		ft_parent (data, cmd, pid);
 	}
 	if (pid == 0)

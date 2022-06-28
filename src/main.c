@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clem </var/mail/clem>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/28 15:34:00 by clem              #+#    #+#             */
+/*   Updated: 2022/06/28 15:34:00 by clem             888   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int  g_sig_status = 0;
+int	g_sig_status = 0;
 
 /*
  ** Interactive mode signals handling
  */
 
-void	ft_sigint(int sig)
+static void	ft_sigint(int sig)
 {
 	g_sig_status = 128 + sig;
 	(void)sig;
@@ -16,16 +28,14 @@ void	ft_sigint(int sig)
 	rl_redisplay();
 }
 
-void	ft_init_signals()
+void	ft_init_signals(void)
 {
 	signal(SIGHUP, SIG_IGN);
 	signal(SIGTERM, SIG_IGN);
-
 	signal(SIGTTIN, SIG_IGN);
 	signal(SIGTTOU, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-
 	signal(SIGINT, ft_sigint);
 }
 
@@ -43,7 +53,6 @@ static void	ft_init_data(t_data *data)
 	data->oldcwd = NULL;
 	data->cmd_path = NULL;
 	data->envtab = NULL;
-
 	data->cmdline = NULL;
 	data->environ = environ;
 	data->toklist = NULL;
@@ -51,41 +60,11 @@ static void	ft_init_data(t_data *data)
 	data->envlist = NULL;
 	data->explist = NULL;
 	data->redlist = NULL;
-
 	data->cmd_path = NULL;
 	data->status = 0;
-
-	data->debug = 0; // TODO delete
-
+	data->debug = 0;
 	data->cwd = ft_w_getcwd(data);
 	data->oldcwd = ft_w_getcwd(data);
-
-}
-
-/*
- ** Update the SHLVL. TODO remove '-' and 'sign' param
- ** sign == '+' to increase, '-' to decrease.
- */
-
-void	ft_shlvl_update (t_data *data)
-{
-	char	*str;
-	char	**unsetcmd;
-	char	**exportcmd;
-
-	unsetcmd = ft_split ("unset SHLVL", ' ');
-	if (!unsetcmd)
-		ft_exitmsg (data, "malloc");
-	ft_unset (data, unsetcmd);
-	ft_free_tab (unsetcmd);
-	str = ft_strjoin_free_s2 ("export SHLVL=", ft_itoa (++data->shlvl));
-	exportcmd = ft_split(str, ' ');
-	if (!exportcmd)
-		ft_exitmsg (data, "malloc");
-
-	ft_free (str);
-	ft_export (data, exportcmd);
-	ft_free_tab (exportcmd);
 }
 
 /*
@@ -95,28 +74,14 @@ void	ft_shlvl_update (t_data *data)
 int	main(int ac, char **av)
 {
 	t_data	data;
-	char	*temp;
 
-	(void) av;
 	if (ac == 1)
 	{
-		/* ft_init_tty (); */
 		ft_init_signals ();
 		ft_init_data (&data);
-
 		ft_init_env (&data);
 		ft_init_exp (&data);
-
-		temp = ft_getenv (&data, data.envlist, "SHLVL");
-		data.shlvl = ft_atoi(temp);
-		ft_free (temp);
-
 		ft_shlvl_update (&data);
-
-		temp = ft_getenv (&data, data.envlist, "SHLVL");
-		data.shlvl = ft_atoi(temp);
-		ft_free (temp);
-
 		ft_prompt (&data);
 	}
 	else
