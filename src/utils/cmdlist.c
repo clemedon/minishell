@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cmdlist.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clem </var/mail/clem>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/28 19:18:52 by clem              #+#    #+#             */
+/*   Updated: 2022/06/28 19:18:52 by clem             888   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	ft_remove_cmd(t_dlist *cmdlist, t_dlist *cmd)
@@ -20,7 +32,7 @@ void	ft_remove_cmd(t_dlist *cmdlist, t_dlist *cmd)
 	}
 }
 
-void    ft_init_cmd(t_data *data, t_cmd **cmd)
+void	ft_init_cmd(t_data *data, t_cmd **cmd)
 {
 	(*cmd)->error = 0;
 	(*cmd)->cmdid = data->cmdid ++;
@@ -37,9 +49,9 @@ void    ft_init_cmd(t_data *data, t_cmd **cmd)
 	(*cmd)->fd_out = STDOUT_FILENO;
 }
 
-void    ft_create_cmdlist(t_data *data)
+void	ft_create_cmdlist(t_data *data)
 {
-	int     i;
+	int	i;
 
 	i = 0;
 	while (i <= data->nb_pipes)
@@ -50,9 +62,9 @@ void    ft_create_cmdlist(t_data *data)
 	ft_parse_command (data);
 }
 
-void    ft_add_cmd(t_data *data)
+void	ft_add_cmd(t_data *data)
 {
-	t_cmd   *cmd;
+	t_cmd	*cmd;
 
 	cmd = ft_w_malloc(data, sizeof(t_cmd));
 	ft_init_cmd(data, &cmd);
@@ -63,37 +75,44 @@ void    ft_add_cmd(t_data *data)
  ** Print cmd list.
  */
 
-void	ft_printlist_cmd(t_dlist *lst)
-{
-	t_dlist	*temp;
-	size_t		i;
+/* void	ft_printlist_cmd(t_dlist *lst) */
+/* { */
+/* 	t_dlist	*temp; */
+/* 	size_t	i; */
 
-	printf("IN FT_PRINTLIST_CMD\n");
-	temp = lst;
-	while (temp)
-	{
-		i = 0;
-		ft_printf(" [ error: '%i', id: '%i', ", ((t_cmd *)temp->content)->error, ((t_cmd *)temp->content)->cmdid);
-		while (((t_cmd *)temp->content)->cmd && i < ((t_cmd *)temp->content)->nb_arg)
-		{
-			printf("cmd[%ld]: '%s', ", i, ((t_cmd *)temp->content)->cmd[i]);
-			i++;
-		}
-		printf("pg: '%s', type_in: '%i', type_out: '%i', file_in: '%s', file_out: '%s', stop_word: '%s', is_here_doc: '%i', fd_in: '%i', fd_out: '%i' ]\n",
-				((t_cmd *)temp->content)->prg,
-				((t_cmd *)temp->content)->type_in,
-				((t_cmd *)temp->content)->type_out,
-				((t_cmd *)temp->content)->file_in,
-				((t_cmd *)temp->content)->file_out,
-				((t_cmd *)temp->content)->stop_word,
-				((t_cmd *)temp->content)->is_here_doc,
-				((t_cmd *)temp->content)->fd_in,
-				((t_cmd *)temp->content)->fd_out);
-		temp = temp->next;
-	}
-	ft_printf(" (NULL / list back)\n");
-	ft_printf("\n");
-}
+/* 	printf("IN FT_PRINTLIST_CMD\n"); */
+/* 	temp = lst; */
+/* 	while (temp) */
+/* 	{ */
+/* 		i = 0; */
+/* 		ft_printf(" [ error: '%i', id: '%i', ", */
+/* 				((t_cmd *)temp->content)->error, */
+/* 				((t_cmd *)temp->content)->cmdid); */
+/* 		while (((t_cmd *)temp->content)->cmd && i */
+/* 				< ((t_cmd *)temp->content)->nb_arg) */
+/* 		{ */
+/* 			printf("cmd[%ld]: '%s', ", i, ((t_cmd *)temp->content)->cmd[i]); */
+/* 			i++; */
+/* 		} */
+/* 		printf */
+/* 			("pg: '%s', type_in: '%i', type_out: '%i', */
+/* 				file_in: '%s', */
+/* 				file_out: '%s', stop_word: '%s', is_here_doc: '%i', */
+/* 				fd_in: '%i', fd_out: '%i' ]\n", */
+/* 				((t_cmd *)temp->content)->prg, */
+/* 				((t_cmd *)temp->content)->type_in, */
+/* 				((t_cmd *)temp->content)->type_out, */
+/* 				((t_cmd *)temp->content)->file_in, */
+/* 				((t_cmd *)temp->content)->file_out, */
+/* 				((t_cmd *)temp->content)->stop_word, */
+/* 				((t_cmd *)temp->content)->is_here_doc, */
+/* 				((t_cmd *)temp->content)->fd_in, */
+/* 				((t_cmd *)temp->content)->fd_out); */
+/* 		temp = temp->next; */
+/* 	} */
+/* 	ft_printf(" (NULL / list back)\n"); */
+/* 	ft_printf("\n"); */
+/* } */
 
 /*
  ** Clear a cmd list.
