@@ -74,11 +74,11 @@ void	ft_sort_exp(t_data *data, t_dlist *explist)
 				ft_free (((t_exp *) new->next->content)->key);
 				((t_exp *) new->next->content)->key = ft_w_strdup(data, swap);
 				ft_free (swap);
-				swap = ft_w_strdup(data, ((t_exp *) new->content)->val);
+				swap = ft_strdup(((t_exp *) new->content)->val);
 				ft_free (((t_exp *) new->content)->val);
-				((t_exp *) new->content)->val = ft_w_strdup(data, ((t_exp *) new->next->content)->val);
+				((t_exp *) new->content)->val = ft_strdup(((t_exp *) new->next->content)->val);
 				ft_free (((t_exp *) new->next->content)->val);
-				((t_exp *) new->next->content)->val = ft_w_strdup(data, swap);
+				((t_exp *) new->next->content)->val = ft_strdup(swap);
 				ft_free (swap);
 
 			}
