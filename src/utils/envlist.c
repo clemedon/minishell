@@ -1,156 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   envlist.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clem </var/mail/clem>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/28 17:48:30 by clem              #+#    #+#             */
+/*   Updated: 2022/06/28 17:48:30 by clem             888   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
-
-/*
- ** Return 1 if the entry key is defined in envlist.
- */
-
-int	ft_check_env_entry (t_dlist *envlist, char *key)
-{
-	t_dlist	*temp;
-	char	*envkey;
-	size_t	keylen;
-	size_t	envkeylen;
-
-	temp = envlist;
-	keylen = ft_strlen(key);
-	while (temp)
-	{
-		envkey = ((t_env *)temp->content)->key;
-		envkeylen = ft_strlen (envkey);
-
-		if (keylen == envkeylen && !ft_strncmp (key, envkey, envkeylen))
-			return (TRUE);
-		temp = temp->next;
-	}
-	return (FALSE);
-}
-
-/*
- ** Return the 'value' attached to the given 'key' within minishel env.
- */
-
-char	*ft_getenv(t_data *data, t_dlist *envlist, char *key)
-{
-	t_dlist	*temp;
-	char	*envkey;
-	size_t	keylen;
-	size_t	envkeylen;
-
-	temp = envlist;
-	keylen = ft_strlen(key);
-	while (temp)
-	{
-		envkey = ((t_env *)temp->content)->key;
-		envkeylen = ft_strlen (envkey);
-
-		if (keylen == envkeylen && !ft_strncmp (envkey, key, envkeylen))
-			return (ft_w_strdup(data, ((t_env *)temp->content)->val));
-		temp = temp->next;
-	}
-	return (NULL);
-}
-
-/*
- ** Update the explist so it is the same as envlist.
- **
- ** Cycle each export variable and copy the env variable value to the matching
- ** export variable.
- */
-
-void	ft_update_env(t_data *data)
-{
-	t_dlist	*env;
-	t_dlist	*exp;
-	char	*temp;
-
-	env = data->envlist;
-	while (env && data->explist)
-	{
-		exp = data->explist;
-		while (exp)
-		{
-			// TODO replace exp->contentkey with key = exp->contentkey -> key
-			if (ft_strcmp (((t_env *) env->content)->key, ((t_exp *) exp->content)->key) == 0)
-			{
-				temp = ft_w_strdup(data, ((t_exp *) exp->content)->val);
-				ft_free ((((t_exp *) exp->content)->val));
-				((t_exp *) exp->content)->val = ft_w_strdup(data, temp);
-				ft_free (temp);
-				break ;
-			}
-			else
-				break ;
-			exp = exp->next;
-		}
-		env = env->next;
-	}
-	if (!data->explist)
-		while (env)
-		{
-			ft_add_exp (data, ((t_env *) env->content)->key, ((t_env *) env->content)->val);
-			env = env->next;
-		}
-}
-
-
-/*
- ** Set the minimal env, in case there is no env in the parent shell.
- **
- ** $ env -i bash
- ** $ env
- **
- **		PWD=/mnt/nfs/homes/cvidon/git/minishell_42
- **		SHLVL=1
- **		_=/usr/bin/env
- */
-
-void	ft_init_minimal_env(t_data *data)
-{
-	ft_add_env (data, ft_w_strdup(data, "PWD"), ft_w_getcwd(data));
-	ft_add_env (data, ft_w_strdup(data, "SHLVL"), ft_w_strdup(data, "1"));
-	ft_add_env (data, ft_w_strdup(data, "_"), ft_w_getcwd(data));
-}
-
-/*
- ** Initialize the env.
- **
- ** - Generate the env based on 'environ' the parent shell 'env'.
- ** - Set PWD to CWD if it is unset.
- ** - SHELL is set to 'minishell'.
- */
-
-void	ft_init_env(t_data *data)
-{
-	char			*key;
-	char			*val;
-	unsigned int	i;
-	unsigned int	j;
-
-	if (!data->environ)
-		ft_exitmsg (data, "env"); // TODO ca quitte pas quand env -i
-	i = 0;
-	if (*data->environ == NULL)
-	{
-		ft_init_minimal_env(data);
-		return ;
-	}
-	while (data->environ[i] != NULL)
-	{
-		j = 0;
-		while (data->environ[i][j] != '=')
-			j++;
-
-		key = ft_w_substr (data, data->environ[i], 0, j);
-		if (ft_strncmp(key, "PWD", 3) == SUCCESS && !key[3])
-			val = ft_w_getcwd(data);
-		else if (ft_strncmp(key, "SHELL", 3) == SUCCESS && !key[5])
-			val = ft_w_strdup(data, "minishell");
-		else
-			val = ft_w_substr (data, data->environ[i], j + 1, ft_strlen (data->environ[i]) - j);
-		ft_add_env (data, key, val);
-		i++;
-	}
-}
 
 /*
  ** Remove the given entry from envlist.
@@ -168,7 +28,6 @@ t_dlist	*ft_remove_env(t_dlist *envlist, t_dlist *entry)
 			entry->next->prev = entry->prev;
 		if (entry->prev)
 			entry->prev->next = entry->next;
-
 		free(((t_env *) entry->content)->key);
 		free(((t_env *) entry->content)->val);
 		free(entry->content);
@@ -176,7 +35,6 @@ t_dlist	*ft_remove_env(t_dlist *envlist, t_dlist *entry)
 	}
 	return (NULL);
 }
-
 
 /*
  ** Init an env list or add variable to it
@@ -222,8 +80,8 @@ void	ft_printlist_env(t_dlist *envlist)
 	while (temp)
 	{
 		ft_printf ("%s=%s\n",
-				((t_env *)temp->content)->key,
-				((t_env *)temp->content)->val);
+			((t_env *)temp->content)->key,
+			((t_env *)temp->content)->val);
 		temp = temp->next;
 	}
 }

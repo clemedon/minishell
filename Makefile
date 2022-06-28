@@ -14,6 +14,7 @@ SRC_DIR		= src
 SRCS		= main.c 				\
 			  utils/shlvl.c			\
 			  utils/envlist.c		\
+			  utils/envlist_2.c		\
 			  utils/explist.c		\
 			  utils/prompt.c		\
 			  lexer/lexer.c			\

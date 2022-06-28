@@ -499,14 +499,18 @@ void	ft_printlist_exp(t_data *data, t_dlist *explist);
 void	ft_clearlist_exp(t_dlist **explist, void (*del)(void *));
 
 /*
- ** [ utils/envlist.c ]
+ ** [ utils/envlist_2.c ] NORMED
  */
 
 int		ft_check_env_entry(t_dlist *envlist, char *key);
 char	*ft_getenv(t_data *data, t_dlist *envlist, char *key);
-void	ft_update_env_pwd(t_data *data);
 void	ft_init_minimal_env(t_data *data);
 void	ft_init_env(t_data *data);
+
+/*
+ ** [ utils/envlist.c ] NORMED
+ */
+
 t_dlist	*ft_remove_env(t_dlist *envlist, t_dlist *entry);
 void	ft_add_env(t_data *data, char *key, char *val);
 void	ft_printlist_elem_env(t_data *data, t_dlist *envlist, char *key);
