@@ -285,41 +285,45 @@ int		ft_env(t_dlist *envlist);
 /* #----------------------------------------------------------------------# */
 
 /*
- ** [ exec/exec.c ]
+ ** [ exec/exec_error.c ] NORMED
  */
 
-int	ft_exec(t_data *data);
+/* static void ft_cmd_error(t_dlist *cmd, int error) */
+void	ft_file_error(t_data *data, char *file, int error);
+void	ft_perror(t_data *data, t_dlist *cmd, int error);
 
 /*
- ** [ exec/exec_builtin.c ]
- */
-
-int ft_fork_builtin(t_dlist *cmd);
-int ft_is_builtin(t_dlist *cmd);
-int ft_exec_builtin(t_data *data, t_dlist *cmd, int builtin_id);
-
-/*
- ** [ exec/file.c ]
+ ** [ exec/heredoc.c ] TODO
  */
 
 int		ft_open(t_data *data, t_dlist *cmd);
-void    ft_close(t_data *data, t_dlist *cmd, int *fd);
+void	ft_close(t_data *data, t_dlist *cmd, int *fd);
 
 /*
- ** [ exec/error.c ]
+ ** [ exec/exec_builtin.c ] NORMED
  */
 
-void	ft_file_error(t_data *data, char *file, int error);
-void    ft_cmd_error(t_dlist *cmd, int error);
-void    ft_perror(t_data *data, t_dlist *cmd, int error);
+int	ft_fork_builtin(t_dlist *cmd);
+int	ft_is_builtin(t_dlist *cmd);
+int	ft_exec_builtin(t_data *data, t_dlist *cmd, int builtin_id);
 
 /*
- ** [ exec/close.c ]
+ ** [ exec/exec_2.c ] NORMED
  */
 
-void    ft_close_fd(t_data *data, t_dlist *cmd);
-void    ft_close_std(void);
-void    ft_close_all(t_data *data, t_dlist *cmd);
+/* static void ft_parent_2(t_data *data, t_dlist *cmd, int pid) */
+int		ft_parent(t_data *data, t_dlist *cmd, int pid);
+/* static void ft_child_2(t_data *data, t_dlist *cmd) */
+void	ft_child(t_data *data, t_dlist *cmd);
+
+/*
+ ** [ exec/exec.c ] NORMED
+ */
+
+void	ft_exec_cmd(t_data *data, t_dlist *cmd);
+/* static t_dlist *ft_init_pipe(t_data *data) */
+int		ft_exec(t_data *data);
+
 
 /* #----------------------------------------------------------------------# */
 /* #                  PARSER                                              # */

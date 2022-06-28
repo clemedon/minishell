@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_error.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clem </var/mail/clem>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/28 14:27:44 by clem              #+#    #+#             */
+/*   Updated: 2022/06/28 14:27:44 by clem             888   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void	ft_cmd_error(t_dlist *cmd, int error)
+static void	ft_cmd_error(t_dlist *cmd, int error)
 {
 	if (((t_cmd *)cmd->content)->cmd)
 	{
@@ -20,7 +32,6 @@ void	ft_file_error(t_data *data, char *file, int error)
 {
 	if (error == 2 || error == 13)
 	data->status = 1;
-
 	ft_putstr_fd("minishell: ", 2);
 	if (file)
 		ft_putstr_fd(file, 2);

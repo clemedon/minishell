@@ -15,6 +15,10 @@
 
 # //////////////////////// CVIDON
 
+- Exec signals
+> `cat | ls` + SIGINT/SIGQUIT not handled.
+> Should be same as `cat` + SIGINT/SIGQUIT.
+
 - Fix heredoc SIGINT (<C-C>)
 
 - Protect all the signal

@@ -33,9 +33,10 @@ SRCS		= main.c 				\
 			  parser/parser_utils.c	\
 			  utils/cmdlist.c		\
 			  exec/exec.c			\
+			  exec/exec_2.c			\
 			  exec/exec_builtin.c	\
-			  exec/file.c			\
-			  exec/error.c			\
+			  exec/heredoc.c			\
+			  exec/exec_error.c			\
 			  builtin/env.c			\
 			  builtin/unset.c		\
 			  builtin/export.c		\

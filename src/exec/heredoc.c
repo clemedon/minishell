@@ -5,7 +5,6 @@ void	ft_heredoc_sigint(int sig)
 	extern int	g_sig_status;
 
 	g_sig_status = (128 + sig);
-
 	(void)sig;
 	ft_putstr_fd("\n", 1);
 	rl_on_new_line();
@@ -13,19 +12,16 @@ void	ft_heredoc_sigint(int sig)
 	rl_redisplay();
 }
 
-void	ft_heredoc_signals ()
+void	ft_heredoc_signals(void)
 {
 	signal(SIGHUP, SIG_IGN);
 	signal(SIGTERM, SIG_IGN);
-
 	signal(SIGTTIN, SIG_IGN);
 	signal(SIGTTOU, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-
 	signal(SIGINT, ft_heredoc_sigint);
 }
-
 
 int	ft_has_a_var(char *str)
 {
@@ -47,7 +43,8 @@ char	*ft_get_var(t_data *data, char *str)
 	char		*var;
 
 	i = 0;
-	while (str[i] && str[i] != '$' && str[i] !=  '\'' && str[i] != '\"' && str[i] != ' ' && str[i] != '\n')
+	while (str[i] && str[i] != '$' && str[i] != '\'' && str[i] != '\"'
+		&& str[i] != ' ' && str[i] != '\n')
 		i ++;
 	var = ft_substr(str, 0, i);
 	var = ft_getenv(data, data->envlist, var);
@@ -61,7 +58,8 @@ int	ft_len_var(t_data *data, char *str)
 	char		*temp_var;
 
 	len = 0;
-	while (str[len] && str[len] != '$' && str[len] !=  '\'' && str[len] != '\"' && str[len] != ' ' && str[len] != '\n')
+	while (str[len] && str[len] != '$' && str[len] != '\'' && str[len] != '\"'
+		&& str[len] != ' ' && str[len] != '\n')
 		len ++;
 	temp_var = ft_substr(str, 0, len);
 	var = ft_getenv(data, data->envlist, temp_var);
@@ -77,13 +75,13 @@ int	ft_len_var(t_data *data, char *str)
 
 char	*ft_update_here_doc(t_data *data, char *str)
 {
-	char	*temp;
-	char	*var;
-	char	*temp_var;
-	int		len;
-	int		len_var;
-	int		i;
-	int		j;
+	int		i; // everywhere
+	int		len_var; // up, down BUT not center (while str)
+	char	*temp; // not upper
+	int		len; // center (while str)
+	char	*temp_var; // very center
+	char	*var; // very center
+	int		j; // very center
 
 	i = 0;
 	len_var = 0;
@@ -171,9 +169,7 @@ static void     ft_here_doc(t_data *data, t_dlist *cmd, t_dlist *redir, char *fi
 	g_sig_status = 0;
 	while (1)
 	{
-
 		ft_heredoc_signals (); // TODO
-
 		write(1, "> ", 2);
 		temp = get_next_line(0);
 		if (g_sig_status)
@@ -195,22 +191,17 @@ static void     ft_here_doc(t_data *data, t_dlist *cmd, t_dlist *redir, char *fi
 		else
 			write(fd_file, temp, ft_strlen(temp));
 		ft_free(temp);
-
 		ft_init_signals (); // TODO
-
-
 	}
 	ft_free(temp);
 	ft_close(data, cmd, &fd_file);
 	((t_cmd *)cmd->content)->fd_in = open(file, O_RDONLY);
 	unlink(file);
-
-
 }
 
-int    ft_open(t_data *data, t_dlist *cmd)
+int	ft_open(t_data *data, t_dlist *cmd)
 {
-	t_dlist *temp;
+	t_dlist	*temp;
 	int		redir_in_ok;
 
 	temp = data->redlist;
