@@ -1,15 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_pipe.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clem </var/mail/clem>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/28 18:36:39 by clem              #+#    #+#             */
+/*   Updated: 2022/06/28 18:36:39 by clem             888   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	ft_multiple_pipe(t_dlist **token)
 {
-	t_dlist *temp;
+	t_dlist	*temp;
 
 	temp = *token;
 	while (temp)
 	{
 		if (temp && temp->next && ft_is_tokid(temp, PP)
-			&& ft_is_tokid(temp->next, PP)) 
-				return (1);
+			&& ft_is_tokid(temp->next, PP))
+			return (1);
 		else if (temp && temp->next && ft_is_tokid(temp, PP)
 			&& ft_is_tokid(temp->next, WS))
 		{
@@ -30,8 +42,8 @@ static int	ft_multiple_pipe(t_dlist **token)
 
 static int	ft_last_tok_is_pipe(t_dlist *token)
 {
-	t_dlist *temp;
-	t_dlist *last;
+	t_dlist	*temp;
+	t_dlist	*last;
 
 	temp = token;
 	while (temp->next)
@@ -45,14 +57,13 @@ static int	ft_last_tok_is_pipe(t_dlist *token)
 	return (0);
 }
 
-
 /*
  ** Check pipes validity.
  */
 
 static int	ft_just_pipe(t_dlist *token)
 {
-	t_dlist *temp;
+	t_dlist	*temp;
 	int		i;
 
 	temp = token;
@@ -75,9 +86,11 @@ int	ft_parse_pipe(t_data *data)
 	if (error)
 	{
 		if (error >= 2)
-			ft_putstr_fd("minishell: syntax error near unexpected token `||'\n", 2);
-		else 
-			ft_putstr_fd("minishell: syntax error near unexpected token `|'\n", 2);	
+			ft_putstr_fd
+				("minishell: syntax error near unexpected token `||'\n", 2);
+		else
+			ft_putstr_fd
+				("minishell: syntax error near unexpected token `|'\n", 2);
 		return (0);
 	}
 	if (ft_last_tok_is_pipe(data->toklist))

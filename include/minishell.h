@@ -417,7 +417,7 @@ void	ft_expand_quote(t_data *data);
 void	ft_expand_vars(t_data *data);
 
 /*
- ** [ parser/parse_pipe.c ]
+ ** [ parser/parse_pipe.c ] NORMED
  */
 
 /* static void	ft_trim_toklist(t_dlist *toklist, t_dlist *token); */
