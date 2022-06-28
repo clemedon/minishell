@@ -13,6 +13,33 @@
 #include "minishell.h"
 
 /*
+ ** Convert envlist to envtab
+ */
+
+char	**ft_update_envtab(t_data *data)
+{
+	t_dlist	*temp;
+	char	**envtab;
+	int		i;
+
+	temp = data->envlist;
+	envtab = ft_w_malloc
+		(data, sizeof (char *)
+			* (long unsigned int)(ft_dlstsize(data->envlist) + 1));
+	i = 0;
+	while (temp)
+	{
+		envtab[i] = ft_strjoin (((t_env *)temp->content)->key, "=");
+		envtab[i] = ft_strjoin_free_s1
+			(envtab[i], ((t_env *)temp->content)->val);
+		i++;
+		temp = temp->next;
+	}
+	envtab[i] = NULL;
+	return (envtab);
+}
+
+/*
  ** Return 1 if the entry key is defined in envlist.
  */
 

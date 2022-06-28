@@ -480,10 +480,11 @@ char	**ft_split_path(t_data *data);
 /* static char *ft_prompt_prefix(t_data *data) */
 /* static char *ft_prompt_line(t_data *data) */
 /* static void ft_readline(t_data *data) */
-void	ft_prompt(t_data *data);
+/* static char **ft_split_path(t_data *data) */
+void    ft_prompt(t_data *data);
 
 /*
- ** [ utils/explist_3.c ]
+ ** [ utils/explist_3.c ] NORMED
  */
 
 int		ft_check_exp_entry(t_dlist *explist, char *key);
@@ -492,7 +493,7 @@ t_dlist	*ft_sort_exp_2(t_data *data, t_dlist *new);
 void	ft_sort_exp(t_data *data, t_dlist *explist);
 
 /*
- ** [ utils/explist_2.c ]
+ ** [ utils/explist_2.c ] NORMED
  */
 
 t_dlist	*ft_remove_exp(t_dlist *explist, t_dlist *entry);
@@ -501,7 +502,7 @@ void	ft_init_exp_2(t_data *data, unsigned int i, unsigned int j);
 void	ft_init_exp(t_data *data);
 
 /*
- ** [ utils/explist.c ]
+ ** [ utils/explist.c ] NORMED
  */
 
 void	ft_add_exp(t_data *data, char *key, char *val);
@@ -514,6 +515,7 @@ void	ft_clearlist_exp(t_dlist **explist, void (*del)(void *));
  ** [ utils/envlist_2.c ] NORMED
  */
 
+char    **ft_update_envtab(t_data *data);
 int		ft_check_env_entry(t_dlist *envlist, char *key);
 char	*ft_getenv(t_data *data, t_dlist *envlist, char *key);
 void	ft_init_minimal_env(t_data *data);
