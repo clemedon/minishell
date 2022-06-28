@@ -382,7 +382,7 @@ void	ft_printlist_redir(t_dlist *lst);
 void	ft_clearlist_red(t_dlist **lst, void (*del)(void *));
 
 /*
- ** [ parser/parse_redir.c ]
+ ** [ parser/parse_redir.c ] NORMED
  */
 
 void	ft_parse_redir(t_data *data);
