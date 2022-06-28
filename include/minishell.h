@@ -345,7 +345,7 @@ void	ft_clearlist_cmd(t_dlist **cmdlist, void (*del)(void *));
 int		ft_is_tokid(t_dlist *toklist, int tokid);
 
 /*
- ** [ parser/parse_command.c ]
+ ** [ parser/parse_command.c ] TODO
  */
 
 char	*ft_expand_cwd (char *command);
@@ -388,14 +388,14 @@ void	ft_clearlist_red(t_dlist **lst, void (*del)(void *));
 void	ft_parse_redir(t_data *data);
 
 /*
- ** [ parser/parse_space.c ]
+ ** [ parser/parse_space.c ] NORMED
  */
 
 /* static void	ft_remove_spaces(t_data *data); */
 void	ft_parse_space(t_data *data);
 
 /*
- ** [ parser/expand_quote.c ]
+ ** [ parser/expand_quote.c ] TODO
  */
 
 /* static char	*ft_concat_quoted_words(t_data *data, t_dlist *toklist); */
@@ -404,7 +404,7 @@ void	ft_parse_space(t_data *data);
 void	ft_expand_quote(t_data *data);
 
 /*
- ** [ parser/expand_var.c ]
+ ** [ parser/expand_var.c ] TODO
  */
 
 /* static char *ft_expand_var(t_data *data, char *key) */
