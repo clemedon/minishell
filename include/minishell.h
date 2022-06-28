@@ -435,17 +435,20 @@ int		ft_parse_pipe(t_data *data);
 int		ft_parse_quote(t_data *data, t_dlist *toklist);
 
 /*
- ** [ parser/parser.c ]
+ ** [ parser/parser.c ] NORMED
  */
 
-void	ft_parser(t_data *data);
+/* static int  ft_parse_special_tok(t_data *data) */
+/* static int  ft_parse_empty_cmd(t_data *data) */
+/* static int  ft_check_redir(t_data *data) */
+void    ft_parser(t_data *data);
 
 /* #----------------------------------------------------------------------# */
 /* #                  LEXER                                               # */
 /* #----------------------------------------------------------------------# */
 
 /*
- ** [ utils/toklist.c ]
+ ** [ utils/toklist.c ] NORMED
  */
 
 void	ft_update_tokpos(t_dlist *toklist);

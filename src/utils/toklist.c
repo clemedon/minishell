@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   toklist.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clem </var/mail/clem>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/28 18:31:15 by clem              #+#    #+#             */
+/*   Updated: 2022/06/28 18:31:15 by clem             888   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /*
@@ -48,11 +60,9 @@ void	ft_add_tok(t_data *data, int tokid, int tokpos, char *token)
 	t_tok	*tok;
 
 	tok = ft_w_malloc (data, sizeof(t_tok));
-
 	tok->tokid = tokid;
 	tok->tokpos = tokpos;
 	tok->tok = token;
-
 	ft_dlstadd_back (&data->toklist, ft_dlstnew(tok));
 }
 
