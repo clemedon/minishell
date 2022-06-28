@@ -373,7 +373,7 @@ void	ft_expand_tilde(t_data *data);
 void	ft_expand_word(t_data *data);
 
 /*
- ** [ utils/redlist.c ]
+ ** [ utils/redlist.c ] NORMED
  */
 
 void	ft_create_redlist(t_data *data);

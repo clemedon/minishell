@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redlist.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clem </var/mail/clem>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/28 18:39:12 by clem              #+#    #+#             */
+/*   Updated: 2022/06/28 18:39:12 by clem             888   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /*
@@ -63,7 +75,7 @@ void	ft_printlist_redir(t_dlist *lst)
  ** Clear a redir list.
  */
 
-void	ft_clearlist_red (t_dlist **lst, void (*del)(void *))
+void	ft_clearlist_red(t_dlist **lst, void (*del)(void *))
 {
 	t_dlist	*ptr;
 
