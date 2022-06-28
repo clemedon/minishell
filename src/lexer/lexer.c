@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clem </var/mail/clem>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/28 18:30:37 by clem              #+#    #+#             */
+/*   Updated: 2022/06/28 18:30:37 by clem             888   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /*
@@ -56,9 +68,7 @@ static void	ft_tokenize(t_data *data, char **cmdline, int *pos)
 	int		id;
 
 	size = ft_token_size(*cmdline);
-
 	newtok = ft_w_substr(data, *cmdline, 0, size);
-
 	id = ft_set_token(newtok);
 	ft_add_tok(data, id, *pos, newtok);
 	*cmdline += size;

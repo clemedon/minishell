@@ -455,7 +455,7 @@ void	ft_printlist_tok(t_dlist *toklist);
 void	ft_clearlist_tok(t_dlist **toklist, void (*del)(void *));
 
 /*
- ** [ lex/lexer.c ]
+ ** [ lexer/lexer.c ] NORMED
  */
 
 /* static int	ft_set_token(char *tok) */
@@ -468,13 +468,7 @@ void	ft_lexer(t_data *data);
 /* #----------------------------------------------------------------------# */
 
 /*
- ** [ utils/path.c ]
- */
-
-char	**ft_split_path(t_data *data);
-
-/*
- ** [ utils/prompt.c ]
+ ** [ utils/prompt.c ] NORMED
  */
 
 /* static char *ft_prompt_prefix(t_data *data) */
