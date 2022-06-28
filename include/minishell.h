@@ -425,7 +425,7 @@ void	ft_expand_vars(t_data *data);
 int		ft_parse_pipe(t_data *data);
 
 /*
- ** [ parser/parse_quote.c ]
+ ** [ parser/parse_quote.c ] NORMED
  */
 
 /* static int		ft_check_last_tok(t_dlist *toklist); */

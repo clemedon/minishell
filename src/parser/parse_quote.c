@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_quote.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: clem </var/mail/clem>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/28 18:35:31 by clem              #+#    #+#             */
+/*   Updated: 2022/06/28 18:35:31 by clem             888   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /*
@@ -106,7 +118,8 @@ int	ft_parse_quote(t_data *data, t_dlist *toklist)
 	ft_quoted_becomes_words (toklist);
 	if (!ft_check_last_tok (toklist))
 	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
+		ft_putstr_fd
+			("minishell: syntax error near unexpected token `newline'\n", 2);
 		return (0);
 	}
 	return (1);
