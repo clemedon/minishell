@@ -483,18 +483,30 @@ char	**ft_split_path(t_data *data);
 void	ft_prompt(t_data *data);
 
 /*
- ** [ utils/explist.c ]
+ ** [ utils/explist_3.c ]
  */
 
 int		ft_check_exp_entry(t_dlist *explist, char *key);
 char	*ft_getexp(t_data *data, t_dlist *explist, char *key);
+t_dlist	*ft_sort_exp_2(t_data *data, t_dlist *new);
 void	ft_sort_exp(t_data *data, t_dlist *explist);
-void	ft_update_exp(t_data *data);
-void	ft_init_minimal_exp(t_data *data);
-void	ft_init_exp(t_data *data);
+
+/*
+ ** [ utils/explist_2.c ]
+ */
+
 t_dlist	*ft_remove_exp(t_dlist *explist, t_dlist *entry);
+void	ft_init_minimal_exp(t_data *data);
+void	ft_init_exp_2(t_data *data, unsigned int i, unsigned int j);
+void	ft_init_exp(t_data *data);
+
+/*
+ ** [ utils/explist.c ]
+ */
+
 void	ft_add_exp(t_data *data, char *key, char *val);
 void	ft_printlist_elem_exp(t_data *data, t_dlist *explist, char *key);
+void	ft_printlist_exp_2(t_dlist *temp);
 void	ft_printlist_exp(t_data *data, t_dlist *explist);
 void	ft_clearlist_exp(t_dlist **explist, void (*del)(void *));
 

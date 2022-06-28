@@ -16,6 +16,8 @@ SRCS		= main.c 				\
 			  utils/envlist.c		\
 			  utils/envlist_2.c		\
 			  utils/explist.c		\
+			  utils/explist_2.c		\
+			  utils/explist_3.c		\
 			  utils/prompt.c		\
 			  lexer/lexer.c			\
 			  utils/toklist.c		\
