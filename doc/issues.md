@@ -10,8 +10,6 @@
 - Protect all the signal
 > if (signal(blabla) == SIG_ERR) print(errno);
 
-- Comply to norm
-
 - Protect every dup2
 
 - Close all fds that remains open
