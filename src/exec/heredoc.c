@@ -1,237 +1,82 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/29 20:38:35 by athirion          #+#    #+#             */
+/*   Updated: 2022/06/29 20:53:21 by athirion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void	ft_heredoc_sigint(int sig)
+void	ft_end_heredoc(t_dlist *cmd)
 {
-	extern int	g_sig_status;
-
-	g_sig_status = (128 + sig);
-	(void)sig;
-	ft_putstr_fd("\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-
-void	ft_heredoc_signals(void)
-{
-	signal(SIGHUP, SIG_IGN);
-	signal(SIGTERM, SIG_IGN);
-	signal(SIGTTIN, SIG_IGN);
-	signal(SIGTTOU, SIG_IGN);
-	signal(SIGTSTP, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, ft_heredoc_sigint);
-}
-
-int	ft_has_a_var(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-			return (1);
-		i ++;
-	}
-	return (0);
-}
-
-char	*ft_get_var(t_data *data, char *str)
-{
-	size_t		i;
-	char		*var;
-
-	i = 0;
-	while (str[i] && str[i] != '$' && str[i] != '\'' && str[i] != '\"'
-		&& str[i] != ' ' && str[i] != '\n')
-		i ++;
-	var = ft_substr(str, 0, i);
-	var = ft_getenv(data, data->envlist, var);
-	return (var);
-}
-
-int	ft_len_var(t_data *data, char *str)
-{
-	size_t		len;
-	char		*var;
-	char		*temp_var;
-
-	len = 0;
-	while (str[len] && str[len] != '$' && str[len] != '\'' && str[len] != '\"'
-		&& str[len] != ' ' && str[len] != '\n')
-		len ++;
-	temp_var = ft_substr(str, 0, len);
-	var = ft_getenv(data, data->envlist, temp_var);
-	len = 0;
-	if (var)
-	{
-		len = ft_strlen(var);
-		free(var);
-	}
-	free(temp_var);
-	return ((int)len);
-}
-
-char	*ft_update_here_doc(t_data *data, char *str)
-{
-	int		i; // everywhere
-	int		len_var; // up, down BUT not center (while str)
-	char	*temp; // not upper
-	int		len; // center (while str)
-	char	*temp_var; // very center
-	char	*var; // very center
-	int		j; // very center
-
-	i = 0;
-	len_var = 0;
-	while (str[i])
-	{
-		if (str[i] == '$')
-		{
-			i ++;
-			len_var += ft_len_var(data, str + i);
-			while (str[i] && str[i] != '$' && str[i] !=  '\'' && str[i] != '\"' && str[i] != ' ' && str[i] != '\n')
-				i ++;
-		}
-		len_var ++;
-		i ++;
-		len_var ++;
-	}
-	temp = (char *)malloc(sizeof(char) * ((size_t)len_var + 1));
-	if (!temp)
-		return (NULL);
-	i = 0;
-	while (*str)
-	{
-		len = 0;
-		if (*str == '$')
-		{
-			str ++;
-			if (str[len] && str[len] != '$' && str[len] != '\'' && str[len] != '\"' && str[len] != ' ' && str[len] != '\n')
-			{
-				while (str[len] && str[len] != '$' && str[len] != '\'' && str[len] != '\"' && str[len] != ' ' && str[len] != '\n')
-					len ++;
-				temp_var = ft_substr(str, 0, (size_t)len);
-				var = ft_getenv(data, data->envlist, temp_var);
-				j = 0;
-				while (var && var[j])
-					temp[i++] = var[j++];
-				free(temp_var);
-				free(var);
-				str += len;
-			}
-			else if (str[len] && (str[len] == ' ' || str[len] == '\n'))
-			{
-				temp[i] = str[len - 1];
-				if (i < len_var)
-					i ++;
-			}
-		}
-		if (str && temp[i] && *str && *str != '$')
-		{
-			temp[i] = *str;
-			str ++;
-			if (i < len_var)
-				i ++;
-		}
-	}
-	temp[i] = '\0';
-	return(temp);
-}
-
-void	ft_close(t_data *data, t_dlist *cmd, int *fd)
-{
-	if (*fd != -1)
-		if (close(*fd) == -1)
-			ft_perror(data, cmd, errno);
-	*fd = -1;
-}
-
-static void     ft_end_heredoc(t_dlist *cmd)
-{
-	ft_putstr_fd("minishell: warning: here-document delimited by end-of-line (wanted `", 2);
+	ft_putstr_fd("minishell: warning: here-document", 2);
+	ft_putstr_fd(" delimited by end-of-line (wanted `", 2);
 	ft_putstr_fd(((t_cmd *)cmd->content)->stop_word, 2);
 	ft_putendl_fd("')", 2);
 }
 
-static void     ft_here_doc(t_data *data, t_dlist *cmd, t_dlist *redir, char *file)
+void	ft_here_doc_4(t_data *data, t_dlist *cmd, t_hd *hd, char *file)
 {
-	char		*temp;
-	char		*expand;
-	int			fd_file;
-	extern int	g_sig_status;
-
-	expand = NULL;
-	fd_file = open(file, O_CREAT | O_TRUNC | O_RDWR, 0644);
-	if (fd_file == -1)
-		ft_perror(data, cmd, errno);
-	g_sig_status = 0;
-	while (1)
-	{
-		ft_heredoc_signals (); // TODO
-		write(1, "> ", 2);
-		temp = get_next_line(0);
-		if (g_sig_status)
-			break ;
-		if (temp == NULL)
-		{
-			ft_end_heredoc(cmd);
-			break;
-		}
-		if (ft_strlen(((t_redir *)redir->content)->file) == (ft_strlen(temp) - 1)
-				&& !(ft_strncmp(temp, ((t_redir *)redir->content)->file, ft_strlen(temp) - 1)))
-			break;
-		if (ft_has_a_var(temp) && ft_strlen(temp) > 2)
-		{
-			expand = ft_update_here_doc(data, temp);
-			write(fd_file, expand, ft_strlen(expand));
-			ft_free(expand);
-		}
-		else
-			write(fd_file, temp, ft_strlen(temp));
-		ft_free(temp);
-		ft_init_signals (); // TODO
-	}
-	ft_free(temp);
-	ft_close(data, cmd, &fd_file);
+	ft_free(hd->temp);
+	ft_close(data, cmd, &hd->fd_file);
 	((t_cmd *)cmd->content)->fd_in = open(file, O_RDONLY);
 	unlink(file);
 }
 
-int	ft_open(t_data *data, t_dlist *cmd)
+void	ft_here_doc_3(t_data *data, t_hd *hd)
 {
-	t_dlist	*temp;
-	int		redir_in_ok;
-
-	temp = data->redlist;
-	redir_in_ok = 1;
-	while (temp && (((t_cmd *)cmd->content)->cmdid != ((t_redir *)temp->content)->cmdid))
-		temp = temp->next;
-	while (temp && (((t_cmd *)cmd->content)->cmdid == ((t_redir *)temp->content)->cmdid))
+	hd->expand = NULL;
+	if (ft_has_a_var(hd->temp) && ft_strlen(hd->temp) > 2)
 	{
-		if (((t_redir *)temp->content)->type == DL)
-			ft_here_doc(data, cmd, temp, "/tmp/temp_heredoc");
-		else if (((t_redir *)temp->content)->type == LS && redir_in_ok)
-		{
-			((t_cmd *)cmd->content)->fd_in = open(((t_redir *)temp->content)->file, O_RDONLY);
-			if (((t_cmd *)cmd->content)->fd_in == -1)
-			{
-				redir_in_ok = 0;
-				ft_file_error(data, ((t_redir *)temp->content)->file, errno);
-				return (0);
-			}
-		}
-		if ((((t_redir *)temp->content)->type == GT || ((t_redir *)temp->content)->type == DG) && redir_in_ok)
-		{
-			if (((t_redir *)temp->content)->type == DG)
-				((t_cmd *)cmd->content)->fd_out = open(((t_redir *)temp->content)->file, O_CREAT | O_APPEND | O_RDWR, 0644);
-			else if (((t_redir *)temp->content)->type == GT)
-				((t_cmd *)cmd->content)->fd_out = open(((t_redir *)temp->content)->file, O_CREAT | O_TRUNC | O_RDWR, 0644);
-		}
-		if (((t_cmd *)cmd->content)->fd_out == -1)
-			ft_file_error(data, ((t_redir *)temp->content)->file, errno);
-		temp = temp->next;
+		hd->expand = ft_update_here_doc(data, hd->temp);
+		write(hd->fd_file, hd->expand, ft_strlen(hd->expand));
+		ft_free(hd->expand);
 	}
-	return (1);
+	else
+		write(hd->fd_file, hd->temp, ft_strlen(hd->temp));
+	ft_free(hd->temp);
+	ft_init_signals ();
+}
+
+int	ft_here_doc_2(t_hd *hd)
+{
+	extern int	g_sig_status;
+
+	ft_heredoc_signals ();
+	write(1, "> ", 2);
+	hd->temp = get_next_line(0);
+	return (g_sig_status);
+}
+
+void	ft_here_doc(t_data *data, t_dlist *cmd, t_dlist *redir, char *file)
+{
+	extern int	g_sig_status;
+	t_hd		hd;
+
+	hd.fd_file = open(file, O_CREAT | O_TRUNC | O_RDWR, 0644);
+	if (hd.fd_file == -1)
+		ft_perror(data, cmd, errno);
+	g_sig_status = 0;
+	while (1)
+	{
+		if (ft_here_doc_2 (&hd))
+			break ;
+		if (hd.temp == NULL)
+		{
+			ft_end_heredoc(cmd);
+			break ;
+		}
+		if (ft_strlen(((t_redir *)redir->content)->file)
+			== (ft_strlen(hd.temp) - 1)
+			&& !(ft_strncmp(hd.temp,
+					((t_redir *)redir->content)->file, ft_strlen(hd.temp) - 1)))
+			break ;
+		ft_here_doc_3(data, &hd);
+	}
+	ft_here_doc_4(data, cmd, &hd, file);
 }

@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 15:39:23 by athirion          #+#    #+#             */
-/*   Updated: 2022/06/29 17:44:41 by athirion         ###   ########.fr       */
+/*   Updated: 2022/06/29 20:55:03 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,24 @@ typedef struct s_redir
 	struct s_redir	*prev;
 
 }				t_redir;
+
+/*
+ ** heredoc
+ */
+
+typedef struct s_hd
+{
+	int		i[2];
+	int		len_var;
+	char	*temp;
+	int		len;
+	char	*temp_var;
+	char	*var;
+
+	char	*expand;
+	int		fd_file;
+
+}				t_hd;
 
 /*
  ** Data
@@ -319,8 +337,46 @@ void	ft_file_error(t_data *data, char *file, int error);
 void	ft_perror(t_data *data, t_dlist *cmd, int error);
 
 /*
- ** [ exec/heredoc.c ] TODO
+ ** [ utils/heredoc_utils.c ] NORMED
  */
+
+int		ft_has_a_var(char *str);
+char	*ft_get_var(t_data *data, char *str);
+int		ft_len_var(t_data *data, char *str);
+
+/*
+ ** [ exec/sig_heredoc.c ] NORMED
+ */
+
+void	ft_heredoc_sigint(int sig);
+void	ft_heredoc_signals(void);
+
+/*
+ ** [ exec/expand_heredoc.c ] NORMED
+ */
+
+char	*ft_update_here_doc_3(t_data *data, t_hd *hd, char *str);
+void	ft_update_here_doc_2(t_data *data, t_hd *hd, char *str);
+char	*ft_update_here_doc(t_data *data, char *str);
+
+/*
+ ** [ exec/heredoc.c ] NORMED
+ */
+
+void	ft_end_heredoc(t_dlist *cmd);
+void	ft_here_doc_4(t_data *data, t_dlist *cmd, t_hd *hd, char *file);
+void	ft_here_doc_3(t_data *data, t_hd *hd);
+int		ft_here_doc_2(t_hd *hd);
+void	ft_here_doc(t_data *data, t_dlist *cmd, t_dlist *redir, char *file);
+
+/*
+ ** [ exec/file.c ] NORMED
+ */
+
+int		ft_open_2(t_data *data, t_dlist *cmd, t_dlist *temp, int redir_in_ok);
+void	ft_open_3(t_data *data, t_dlist *cmd, t_dlist *temp, int redir_in_ok);
+int		ft_open(t_data *data, t_dlist *cmd);
+void	ft_close(t_data *data, t_dlist *cmd, int *fd);
 
 /*
  ** [ exec/exec_builtin.c ] NORMED

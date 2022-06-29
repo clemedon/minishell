@@ -11,49 +11,53 @@ LIB			= libft
 INC_DIR		= include
 
 SRC_DIR		= src
-SRCS		= main.c 				\
-			  utils/shlvl.c			\
-			  utils/envlist.c		\
-			  utils/envlist_2.c		\
-			  utils/explist.c		\
-			  utils/explist_2.c		\
-			  utils/explist_3.c		\
-			  utils/prompt.c		\
-			  lexer/lexer.c			\
-			  utils/toklist.c		\
-			  parser/parser.c		\
-			  parser/parse_quote.c	\
-			  parser/parse_pipe.c	\
-			  parser/expand_var.c	\
-			  parser/expand_var_2.c	\
-			  parser/expand_var_3.c	\
-			  parser/expand_quote.c	\
+SRCS		= main.c 					\
+			  utils/shlvl.c				\
+			  utils/envlist.c			\
+			  utils/envlist_2.c			\
+			  utils/explist.c			\
+			  utils/explist_2.c			\
+			  utils/explist_3.c			\
+			  utils/prompt.c			\
+			  utils/heredoc_utils.c		\
+			  lexer/lexer.c				\
+			  utils/toklist.c			\
+			  parser/parser.c			\
+			  parser/parse_quote.c		\
+			  parser/parse_pipe.c		\
+			  parser/expand_var.c		\
+			  parser/expand_var_2.c		\
+			  parser/expand_var_3.c		\
+			  parser/expand_quote.c		\
 			  parser/expand_quote_2.c	\
-			  parser/parse_space.c	\
-			  parser/parse_redir.c	\
-			  utils/redlist.c		\
-			  parser/expand_tilde.c	\
-			  utils/pipe.c			\
-			  parser/parse_command.c\
-			  parser/parse_command_2.c\
-			  parser/parser_utils.c	\
-			  utils/cmdlist.c		\
-			  exec/exec.c			\
-			  exec/exec_2.c			\
-			  exec/exec_builtin.c	\
+			  parser/parse_space.c		\
+			  parser/parse_redir.c		\
+			  utils/redlist.c			\
+			  parser/expand_tilde.c		\
+			  utils/pipe.c				\
+			  parser/parse_command.c	\
+			  parser/parse_command_2.c	\
+			  parser/parser_utils.c		\
+			  utils/cmdlist.c			\
+			  exec/exec.c				\
+			  exec/exec_2.c				\
+			  exec/exec_builtin.c		\
 			  exec/heredoc.c			\
+			  exec/expand_heredoc.c		\
+			  exec/file.c				\
+			  exec/sig_heredoc.c		\
 			  exec/exec_error.c			\
-			  builtin/env.c			\
-			  builtin/unset.c		\
-			  builtin/export.c		\
-			  builtin/export_2.c	\
-			  builtin/pwd.c			\
-			  builtin/echo.c		\
-			  utils/utils.c			\
-			  utils/exit_utils.c			\
+			  builtin/env.c				\
+			  builtin/unset.c			\
+			  builtin/export.c			\
+			  builtin/export_2.c		\
+			  builtin/pwd.c				\
+			  builtin/echo.c			\
+			  utils/utils.c				\
+			  utils/exit_utils.c		\
 			  utils/wrappers.c			\
-			  builtin/cd.c			\
-			  builtin/cd_2.c		\
+			  builtin/cd.c				\
+			  builtin/cd_2.c			\
 			  builtin/exit.c
 
 OBJ_DIR 	= obj
