@@ -10,6 +10,15 @@
 ##  ISSUES
 ##  GIT
 
+##  POST-IT
+
+Make a feature branch replace the main:
+    git checkout feature_branch
+    git merge -s ours --no-commit master
+    git commit      # Add a message regarding the replacement that you just did
+    git checkout master
+    git merge feature_branch
+
 ##  RECIPES
 
 ###     WORKFLOW
