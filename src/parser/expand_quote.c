@@ -1,5 +1,32 @@
 #include "minishell.h"
 
+void	ft_clear_emptyquote(t_data *data)
+{
+	t_dlist *temp;
+
+	temp = data->toklist;
+	while (temp)
+	{
+		if ((ft_is_tokid(temp, DQ) || ft_is_tokid(temp, QT)) &&
+			!ft_strcmp(((t_tok *)temp->content)->tok, ""))
+		{
+			if (!temp->next)
+			{
+				ft_remove_tok(data->toklist, temp);
+				break ;
+			}
+			else
+			{
+				if (temp)
+					temp = temp->next;
+				ft_remove_tok(data->toklist, temp->prev);
+			}
+		}
+		if (temp)
+			temp = temp->next;
+	}
+}
+
 /*
  ** Concatenate the given QUOTED WORDS.
  */
@@ -150,4 +177,5 @@ void	ft_expand_quote(t_data *data)
 		ft_update_tokpos (data->toklist);
 	ft_clearlist_tok (&ptrcpy[0], ft_free);
 	ft_free (ptrcpy[1]);
+	ft_clear_emptyquote(data);
 }

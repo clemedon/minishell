@@ -3,33 +3,33 @@
 /*
  ** if $0something -> return to join('minishell' + 'something')
  **
- ** 		echo $0tray
- ** 		     bashtray
+ **			echo $0tray
+ **				 bashtray
  **
  ** if $+1 == digit -> substr(key, 1, strlend(key - 1));
  **
- ** 		echo $100
- ** 		     00
+ **			echo $100
+ **				 00
  **
  ** if $+1 = !alpha_ -> return join('$', key);
  **
- ** 		echo $=42
- ** 		     $=42
+ **			echo $=42
+ **				 $=42
  **
  ** while alphanum_ until !alphanum_ -> join (getenv_var + after !alphanum_)
  **
- ** 		echo 1. "$t=TEST" 2. $USER=USER
- ** 		     1. =TEST     2. cvidon=USER
+ **			echo 1. "$t=TEST" 2. $USER=USER
+ **				 1. =TEST	  2. cvidon=USER
  **
  ** if all alphanum_ -> return getenv_var
  **
- ** 		echo $USERR
+ **			echo $USERR
  */
 
 static char *ft_expand_var(t_data *data, char *key)
 {
-	char 		*val;
-	char 		*ptr;
+	char		*val;
+	char		*ptr;
 	size_t		i;
 
 	if (key[0] == '0')
@@ -51,6 +51,61 @@ static char *ft_expand_var(t_data *data, char *key)
 		}
 		i++;
 	}
+}
+
+void	ft_expand_to_word(t_data *data)
+{
+	t_dlist *temp;
+
+	temp = data->toklist;
+	while (temp)
+	{
+		if (temp && ft_is_tokid(temp, EX))
+			((t_tok *)temp->content)->tokid = WD;
+		temp = temp->next;
+	}
+}
+
+void	ft_concat_expand(t_data *data)
+{
+	t_dlist *temp;
+	char	*str;
+
+	temp = data->toklist;
+	while (temp)
+	{
+		/* printf(">>> WHILE(temp) <<<\n"); */
+		/* ft_printlist_tok(data->toklist); */
+		/* printf(">>> IN CONCAT <<<\n"); */
+		/* printf(">>>>>>> IN CONCAT ->> TEMP = [%s] <<<\n", ((t_tok *)temp->content)->tok); */
+		if (temp && ft_is_tokid(temp, EX))
+		{
+			while (temp && temp->next && ft_is_tokid(temp, EX) && ft_is_tokid(temp->next, EX))
+			{
+				str = ft_strjoin(((t_tok *)temp->content)->tok, ((t_tok *)temp->next->content)->tok);
+				/* printf(">>> IN CONCAT -> STR = [%s] <<<\n", str); */
+				free(((t_tok *)temp->content)->tok);
+				((t_tok *)temp->content)->tok = ft_w_strdup(data, str);
+				/* printf(">>> IN CONCAT -> AFTER STRDUP  = [%s] <<<\n", ((t_tok *)temp->content)->tok); */
+				free(str);
+				/* printf(">>> IN CONCAT ->> TEMP = [%s] <<<\n", ((t_tok *)temp->content)->tok); */
+				/* printf(">>> IN CONCAT ->> TEMP->NEXT  = [%s] <<<\n", ((t_tok *)temp->next->content)->tok); */
+				/* temp = temp->next; */
+				/* printf(">>> IN CONCAT ->> TEMP = [%s] <<<\n", ((t_tok *)temp->content)->tok); */
+				/* printf(">>> BEFORE REMOVE <<<\n"); */
+				/* ft_printlist_tok(data->toklist); */
+				ft_remove_tok(data->toklist, temp->next);
+				/* printf(">>> IN CONCAT ->> TEMP->PREV  = [%s] <<<\n", ((t_tok *)temp->prev->content)->tok); */
+				/* printf(">>> AFTER REMOVE <<<\n"); */
+				/* ft_printlist_tok(data->toklist); */
+			}
+		}
+		/* printf(">>> IN CONCAT <<<\n"); */
+		/* printf(">>>>>>> IN CONCAT ->> TEMP = [%s] <<<\n", ((t_tok *)temp->content)->tok); */
+		if (temp)
+			temp = temp->next;
+	}
+	/* printf(">>> OUT OF WHILE <<<\n"); */
 }
 
 /*
@@ -228,10 +283,9 @@ static void	ft_multiple_dollar(t_data *data)
 	ft_free(newfree);
 }
 
-
 void	ft_expand_vars(t_data *data)
 {
-	t_dlist	*temp;
+	t_dlist *temp;
 	char	*str;
 
 	ft_multiple_dollar(data);
@@ -248,13 +302,33 @@ void	ft_expand_vars(t_data *data)
 			if (ft_strcmp(((t_tok *)temp->content)->tok, "$?"))
 			{
 				str = ft_expand_var (data, ((t_tok *)temp->content)->tok);
-				free (((t_tok *)temp->content)->tok);
-				((t_tok *)temp->content)->tok = ft_w_strdup(data, str);
-				ft_free(str);
+				if (!ft_strcmp(str, ""))
+				{
+					if (!temp->next)
+					{
+						ft_remove_tok(data->toklist, temp);
+						ft_free(str);
+						break;
+					}
+					temp = temp->next;
+					if (temp->prev)
+						ft_remove_tok(data->toklist, temp->prev);
+					temp = temp->prev;
+					ft_free(str);
+				}
+				else
+				{
+					free (((t_tok *)temp->content)->tok);
+					((t_tok *)temp->content)->tok = ft_w_strdup(data, str);
+					((t_tok *)temp->content)->tokid = EX;
+					ft_free(str);
+				}
 			}
 		}
 		if (temp)
 			temp = temp->next;
 	}
 	ft_remove_dollar (data);
+	ft_concat_expand(data);
+	ft_expand_to_word(data);
 }

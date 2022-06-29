@@ -29,7 +29,7 @@ char	*ft_w_substr(t_data *data, char const *s, size_t start, size_t len)
 	char	*str;
 
 	(void)data;
-	str = ft_substr (s, start, len);
+	str = ft_substr (s, (unsigned int) start, len);
 	if (!str || data->debug)
 		ft_exitmsg (data, "substr malloc");
 	return (str);

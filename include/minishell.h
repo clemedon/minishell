@@ -39,6 +39,7 @@
  ** FILE        'file'
  ** S_WORD      'EOF'
  ** WORD        'str'
+ ** EXPAND      'env var val'
  */
 
 # define WS 0
@@ -53,6 +54,7 @@
 # define FI 9
 # define SW 10
 # define WD 11
+# define EX 12
 
 /*
  ** [ RETURN ]
@@ -189,7 +191,7 @@ typedef struct s_data
 
 char	*ft_w_getcwd (t_data *data);
 void	*ft_w_malloc (t_data *data, size_t size);
-char	*ft_w_substr(t_data *data, char const *s, unsigned int start, size_t len);
+char	*ft_w_substr(t_data *data, char const *s, size_t start, size_t len);
 char	*ft_w_strdup(t_data *data, const char *s1);
 
 char	*ft_strjoin_free_s2(char *s1, char *s2);
@@ -364,10 +366,10 @@ void	ft_count_pipe(t_data *data);
  ** [ parser/expand_tilde.c ] NORMED
  */
 
-char    *ft_concat_path(t_data *data, char *home, char *path)
-t_dlist *ft_expand_tilde_3(t_data *data, t_dlist *temp, char *home)
-t_dlist *ft_expand_tilde_2(t_dlist *temp)
-void    ft_expand_tilde(t_data *data)
+char    *ft_concat_path(t_data *data, char *home, char *path);
+t_dlist *ft_expand_tilde_3(t_data *data, t_dlist *temp, char *home);
+t_dlist *ft_expand_tilde_2(t_dlist *temp);
+void    ft_expand_tilde(t_data *data);
 
 /*
  ** [ utils/redlist.c ] NORMED
@@ -389,7 +391,7 @@ void	ft_parse_redir(t_data *data);
  */
 
 /* static void ft_remove_spaces(t_data *data) */
-void    ft_parse_space(t_data *data)
+void    ft_parse_space(t_data *data);
 
 /*
  ** [ parser/expand_quote.c ] TODO

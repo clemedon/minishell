@@ -5,44 +5,12 @@
 
 # //////////////////////// ATHIRION
 
-- Fix << STOP cat << HELL cat >
-> should display 'cat: cat: No such file or directory'
-> error code should be 1 and not 0
-
-- Fix var expansion in parsing
-> 'echo $USER$USERU$USER' should display 'athirionathirion'
-> and not 'athirion  athirion'
-
 # //////////////////////// CVIDON
-
-- Exec signals
-> `cat | ls` + SIGINT/SIGQUIT not handled.
-> Should be same as `cat` + SIGINT/SIGQUIT.
-
-- Fix heredoc SIGINT (<C-C>)
 
 - Protect all the signal
 > if (signal(blabla) == SIG_ERR) print(errno);
 
 - Comply to norm
-
-# //////////////////////// ???
-
-##  Critical
-
-- Fix parsing echo""
-> `echo""` and `echo''` shouldn't print anything.
-> `echo""` and `echo''` shouldn't *break* minishell.
-
-##  Errors
-
-- Fix builtin export
-> `export z` -> malloc error
-
-- Fix errmsg
-> `/`, `//`, `///` etc. Should print `Is a directory` not `Permission denied`
-
-##  Final
 
 - Protect every dup2
 
@@ -51,12 +19,28 @@
 - Check every output STD
 > Check that they're displayed the right STD.OUT/ERROR
 
-- Remove tokpos
+# //////////////////////// ???
+
+##  Wtf
 
 - Backslash is a character
 > `rm \\  <-`
 
-##  Wtf
+- Maybe remove tokpos
+
+- Fix errmsg
+> `/`, `//`, `///` etc. Should print `Is a directory` not `Permission denied`
+
+- Exec signals
+> `cat | ls` + SIGINT/SIGQUIT not handled.
+> Should be same as `cat` + SIGINT/SIGQUIT.
+
+- Fix << STOP cat << HELL cat >
+> should display 'cat: cat: No such file or directory'
+> error code should be 1 and not 0
+
+Mysterious leak
+> `<, )`
 
 - Fix SIGQUIT and SIGINT prompt
 > `$ cat<CR>salut<C-\>` shouldn't print `salut` in the prompt.
