@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/29 15:39:23 by athirion          #+#    #+#             */
+/*   Updated: 2022/06/29 15:39:24 by athirion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -28,18 +40,18 @@
  ** [ TOKENS ]
  **
  ** WHITE_SPACE ' '
- ** PIPE        '|'
- ** DOLLAR      '$'
- ** QUOTE       '''
- ** D_QUOTE     '"'
- ** GREAT       '>'
- ** D_GREAT     '>>'
- ** LESS        '<'
- ** D_LESS      '<<'
- ** FILE        'file'
- ** S_WORD      'EOF'
- ** WORD        'str'
- ** EXPAND      'env var val'
+ ** PIPE		'|'
+ ** DOLLAR		'$'
+ ** QUOTE		'''
+ ** D_QUOTE		'"'
+ ** GREAT		'>'
+ ** D_GREAT		'>>'
+ ** LESS		'<'
+ ** D_LESS		'<<'
+ ** FILE		'file'
+ ** S_WORD		'EOF'
+ ** WORD		'str'
+ ** EXPAND		'env var val'
  */
 
 # define WS 0
@@ -189,8 +201,8 @@ typedef struct s_data
  ** [ utils/utils.c ]
  */
 
-char	*ft_w_getcwd (t_data *data);
-void	*ft_w_malloc (t_data *data, size_t size);
+char	*ft_w_getcwd(t_data *data);
+void	*ft_w_malloc(t_data *data, size_t size);
 char	*ft_w_substr(t_data *data, char const *s, size_t start, size_t len);
 char	*ft_w_strdup(t_data *data, const char *s1);
 
@@ -200,11 +212,11 @@ char	*ft_strjoin_free(char *s1, char *s2);
 void	ft_free(void *ptr);
 void	ft_free_tab(char **tab);
 void	*ft_backfree(char **tab, int i);
-void	ft_exitmsg (t_data *data, char *str);
+void	ft_exitmsg(t_data *data, char *str);
 void	ft_dlst_elem_dup(t_data *data, t_dlist **lst, t_dlist *dup);
 
 /* #----------------------------------------------------------------------# */
-/* #                  BUILTINS                                            # */
+/* #				  BUILTINS											  # */
 /* #----------------------------------------------------------------------# */
 
 /*
@@ -213,15 +225,15 @@ void	ft_dlst_elem_dup(t_data *data, t_dlist **lst, t_dlist *dup);
 
 /* static int	ft_isnumeric(char *str) */
 /* static void	ft_exit_cases(t_data *data, char **cmd) */
-void    ft_exit(t_data *data, char **cmd);
+void	ft_exit(t_data *data, char **cmd);
 
 /*
  ** [ builtin/cd_2.c ] NORMED
  */
 
-void    ft_update_pwd(t_data *data, char *newpwd);
+void	ft_update_pwd(t_data *data, char *newpwd);
 /* static void ft_update_oldpwd_2(t_data *data, char **exportcmd) */
-void    ft_update_oldpwd(t_data *data, char *oldpwd);
+void	ft_update_oldpwd(t_data *data, char *oldpwd);
 
 /*
  ** [ builtin/cd.c ] NORMED
@@ -243,11 +255,11 @@ int		ft_pwd(t_data *data);
  ** [ builtin/export_2.c ] NORMED
  */
 
-/* static void ft_explist_export_2(t_data *data, char *cmd, t_dlist *temp, char **val) */
-/* static void ft_explist_export_1(t_data *data, char *cmd, char **key, char **val) */
+/* ft_explist_export_2(t_data *data, char *cmd, t_dlist *temp, char **val) */
+/* ft_explist_export_1(t_data *data, char *cmd, char **key, char **val) */
 void	ft_explist_export(t_data *data, char *cmd);
-/* static void ft_envlist_export_2(t_data *data, char *cmd, char **val, t_dlist *temp) */
-void   	ft_envlist_export(t_data *data, char *cmd);
+/* ft_envlist_export_2(t_data *data, char *cmd, char **val, t_dlist *temp) */
+void	ft_envlist_export(t_data *data, char *cmd);
 
 /*
  ** [ builtin/export.c ] NORMED
@@ -257,7 +269,7 @@ void   	ft_envlist_export(t_data *data, char *cmd);
 /* static void ft_data_export_oldpwd(t_data *data, char *cmd, char **val) */
 /* static void ft_data_export(t_data *data, char *cmd) */
 /* static int  ft_is_valid_export(char *key) */
-int ft_export(t_data *data, char **cmd);
+int		ft_export(t_data *data, char **cmd);
 
 /*
  ** [ builtin/unset.c ] NORMED
@@ -279,11 +291,11 @@ int		ft_echo(t_data *data, char **arg);
  ** [ builtin/env.c ] NORMED
  */
 
-/* static char	**ft_update_envtab (t_data *data) */
+/* static char	**ft_update_envtab(t_data *data) */
 int		ft_env(t_dlist *envlist);
 
 /* #----------------------------------------------------------------------# */
-/* #                  EXECUTION                                           # */
+/* #				  EXECUTION											  # */
 /* #----------------------------------------------------------------------# */
 
 /*
@@ -305,9 +317,9 @@ void	ft_close(t_data *data, t_dlist *cmd, int *fd);
  ** [ exec/exec_builtin.c ] NORMED
  */
 
-int	ft_fork_builtin(t_dlist *cmd);
-int	ft_is_builtin(t_dlist *cmd);
-int	ft_exec_builtin(t_data *data, t_dlist *cmd, int builtin_id);
+int		ft_fork_builtin(t_dlist *cmd);
+int		ft_is_builtin(t_dlist *cmd);
+int		ft_exec_builtin(t_data *data, t_dlist *cmd, int builtin_id);
 
 /*
  ** [ exec/exec_2.c ] NORMED
@@ -326,20 +338,19 @@ void	ft_exec_cmd(t_data *data, t_dlist *cmd);
 /* static t_dlist *ft_init_pipe(t_data *data) */
 int		ft_exec(t_data *data);
 
-
 /* #----------------------------------------------------------------------# */
-/* #                  PARSER                                              # */
+/* #				  PARSER											  # */
 /* #----------------------------------------------------------------------# */
 
 /*
  ** [ utils/cmdlist.c ] NORMED
  */
 
-void    ft_remove_cmd(t_dlist *cmdlist, t_dlist *cmd);
-void    ft_init_cmd(t_data *data, t_cmd **cmd);
-void    ft_create_cmdlist(t_data *data);
-void    ft_add_cmd(t_data *data);
-void    ft_clearlist_cmd(t_dlist **lst, void (*del)(void *));
+void	ft_remove_cmd(t_dlist *cmdlist, t_dlist *cmd);
+void	ft_init_cmd(t_data *data, t_cmd **cmd);
+void	ft_create_cmdlist(t_data *data);
+void	ft_add_cmd(t_data *data);
+void	ft_clearlist_cmd(t_dlist **lst, void (*del)(void *));
 
 /*
  ** [ parser/parser_utils.c ] NORMED
@@ -351,7 +362,7 @@ int		ft_is_tokid(t_dlist *toklist, int tokid);
  ** [ parser/parse_command.c ] TODO
  */
 
-char	*ft_expand_cwd (char *command);
+char	*ft_expand_cwd(char *command);
 char	*ft_command(t_data *data, char *command);
 char	**ft_arg_cmd(t_data *data, t_dlist **cmd, t_dlist **toklist);
 void	ft_parse_command(t_data *data);
@@ -366,10 +377,10 @@ void	ft_count_pipe(t_data *data);
  ** [ parser/expand_tilde.c ] NORMED
  */
 
-char    *ft_concat_path(t_data *data, char *home, char *path);
-t_dlist *ft_expand_tilde_3(t_data *data, t_dlist *temp, char *home);
-t_dlist *ft_expand_tilde_2(t_dlist *temp);
-void    ft_expand_tilde(t_data *data);
+char	*ft_concat_path(t_data *data, char *home, char *path);
+t_dlist	*ft_expand_tilde_3(t_data *data, t_dlist *temp, char *home);
+t_dlist	*ft_expand_tilde_2(t_dlist *temp);
+void	ft_expand_tilde(t_data *data);
 
 /*
  ** [ utils/redlist.c ] NORMED
@@ -391,7 +402,7 @@ void	ft_parse_redir(t_data *data);
  */
 
 /* static void ft_remove_spaces(t_data *data) */
-void    ft_parse_space(t_data *data);
+void	ft_parse_space(t_data *data);
 
 /*
  ** [ parser/expand_quote.c ] TODO
@@ -422,7 +433,7 @@ void	ft_expand_vars(t_data *data);
 /* static int  ft_multiple_pipe(t_dlist **token) */
 /* static int  ft_last_tok_is_pipe(t_dlist *token) */
 /* static int  ft_just_pipe(t_dlist *token) */
-int ft_parse_pipe(t_data *data);
+int		ft_parse_pipe(t_data *data);
 
 /*
  ** [ parser/parse_quote.c ] NORMED
@@ -432,7 +443,7 @@ int ft_parse_pipe(t_data *data);
 /* static void ft_set_word_token(t_dlist **token) */
 /* static void ft_quoted_becomes_words(t_dlist *toklist) */
 /* static int  ft_check_quote_pairs(t_dlist *toklist) */
-int ft_parse_quote(t_data *data, t_dlist *toklist);
+int		ft_parse_quote(t_data *data, t_dlist *toklist);
 
 /*
  ** [ parser/parser.c ] NORMED
@@ -441,10 +452,10 @@ int ft_parse_quote(t_data *data, t_dlist *toklist);
 /* static int  ft_parse_special_tok(t_data *data) */
 /* static int  ft_parse_empty_cmd(t_data *data) */
 /* static int  ft_check_redir(t_data *data) */
-void    ft_parser(t_data *data);
+void	ft_parser(t_data *data);
 
 /* #----------------------------------------------------------------------# */
-/* #                  LEXER                                               # */
+/* #				  LEXER												  # */
 /* #----------------------------------------------------------------------# */
 
 /*
@@ -467,7 +478,7 @@ void	ft_clearlist_tok(t_dlist **toklist, void (*del)(void *));
 void	ft_lexer(t_data *data);
 
 /* #----------------------------------------------------------------------# */
-/* #                                                                      # */
+/* #																	  # */
 /* #----------------------------------------------------------------------# */
 
 /*
@@ -478,7 +489,7 @@ void	ft_lexer(t_data *data);
 /* static char *ft_prompt_line(t_data *data) */
 /* static void ft_readline(t_data *data) */
 /* static char **ft_split_path(t_data *data) */
-void    ft_prompt(t_data *data);
+void	ft_prompt(t_data *data);
 
 /*
  ** [ utils/explist_3.c ] NORMED
@@ -512,7 +523,7 @@ void	ft_clearlist_exp(t_dlist **explist, void (*del)(void *));
  ** [ utils/envlist_2.c ] NORMED
  */
 
-char    **ft_update_envtab(t_data *data);
+char	**ft_update_envtab(t_data *data);
 int		ft_check_env_entry(t_dlist *envlist, char *key);
 char	*ft_getenv(t_data *data, t_dlist *envlist, char *key);
 void	ft_init_minimal_env(t_data *data);
@@ -532,15 +543,15 @@ void	ft_clearlist_env(t_dlist **envlist, void (*del)(void *));
  ** [ utils/shlvl.c ] NORMED
  */
 
-void    ft_shlvl_update(t_data *data);
+void	ft_shlvl_update(t_data *data);
 
 /*
  ** [ main.c ] NORMED
  */
 
 /* static void ft_sigint(int sig) */
-void    ft_init_signals(void);
+void	ft_init_signals(void);
 /* static void ft_init_data(t_data *data) */
-int main(int ac, char **av);
+int		main(int ac, char **av);
 
 #endif
