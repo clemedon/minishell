@@ -32,6 +32,7 @@ SRCS		= main.c 				\
 			  parser/expand_tilde.c	\
 			  utils/pipe.c			\
 			  parser/parse_command.c\
+			  parser/parse_command_2.c\
 			  parser/parser_utils.c	\
 			  utils/cmdlist.c		\
 			  exec/exec.c			\

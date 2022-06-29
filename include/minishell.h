@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 15:39:23 by athirion          #+#    #+#             */
-/*   Updated: 2022/06/29 15:54:55 by athirion         ###   ########.fr       */
+/*   Updated: 2022/06/29 16:41:16 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,8 +197,12 @@ typedef struct s_data
  ** =========[ Prototypes ]========
  */
 
+/* #----------------------------------------------------------------------# */
+/* #				  UTILS   											  # */
+/* #----------------------------------------------------------------------# */
+
 /*
- ** [ utils/wrappers.c ]
+ ** [ utils/wrappers.c ] NORMED
  */
 
 void	*ft_w_malloc(t_data *data, size_t size);
@@ -207,7 +211,7 @@ char	*ft_w_substr(t_data *data, char const *s, size_t start, size_t len);
 char	*ft_w_strdup(t_data *data, const char *s1);
 
 /*
- ** [ utils/exit_utils.c ]
+ ** [ utils/exit_utils.c ] NORMED
  */
 
 void	ft_free_tab(char **tab);
@@ -215,7 +219,7 @@ void	ft_free(void *ptr);
 void	ft_exitmsg(t_data *data, char *str);
 
 /*
- ** [ utils/utils.c ]
+ ** [ utils/utils.c ] NORMED
  */
 
 void	ft_dlst_elem_dup(t_data *data, t_dlist **lst, t_dlist *dup);
@@ -367,12 +371,18 @@ void	ft_clearlist_cmd(t_dlist **lst, void (*del)(void *));
 int		ft_is_tokid(t_dlist *toklist, int tokid);
 
 /*
+ ** [ parser/parse_command_2.c ] TODO
+ */
+
+char	*ft_command(t_data *data, char *command);
+char	**ft_arg_cmd(t_data *data, t_dlist **cmd, t_dlist **toklist);
+/*
  ** [ parser/parse_command.c ] TODO
  */
 
-char	*ft_expand_cwd(char *command);
-char	*ft_command(t_data *data, char *command);
-char	**ft_arg_cmd(t_data *data, t_dlist **cmd, t_dlist **toklist);
+void	ft_parse_command_redir_1(t_data *data, t_dlist **cmd, t_dlist **temp);
+void	ft_parse_command_redir_2(t_data *data, t_dlist **cmd, t_dlist **temp);
+void	ft_parse_command_2(t_data *data, t_dlist **cmd, t_dlist **temp);
 void	ft_parse_command(t_data *data);
 
 /*
