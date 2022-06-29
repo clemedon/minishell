@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 15:39:23 by athirion          #+#    #+#             */
-/*   Updated: 2022/06/29 16:41:16 by athirion         ###   ########.fr       */
+/*   Updated: 2022/06/29 17:44:41 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ typedef struct s_exp
 }			t_exp;
 
 /*
- ** Redirection TODO:USELESS?
+ ** Redirection
  */
 
 typedef struct s_redir
@@ -189,7 +189,7 @@ typedef struct s_data
 	int		shlvl;
 	int		status;
 
-	int		debug;
+	int		toggle;
 
 }			t_data;
 
@@ -322,9 +322,6 @@ void	ft_perror(t_data *data, t_dlist *cmd, int error);
  ** [ exec/heredoc.c ] TODO
  */
 
-int		ft_open(t_data *data, t_dlist *cmd);
-void	ft_close(t_data *data, t_dlist *cmd, int *fd);
-
 /*
  ** [ exec/exec_builtin.c ] NORMED
  */
@@ -371,13 +368,13 @@ void	ft_clearlist_cmd(t_dlist **lst, void (*del)(void *));
 int		ft_is_tokid(t_dlist *toklist, int tokid);
 
 /*
- ** [ parser/parse_command_2.c ] TODO
+ ** [ parser/parse_command_2.c ]
  */
 
 char	*ft_command(t_data *data, char *command);
 char	**ft_arg_cmd(t_data *data, t_dlist **cmd, t_dlist **toklist);
 /*
- ** [ parser/parse_command.c ] TODO
+ ** [ parser/parse_command.c ]
  */
 
 void	ft_parse_command_redir_1(t_data *data, t_dlist **cmd, t_dlist **temp);
@@ -423,25 +420,50 @@ void	ft_parse_redir(t_data *data);
 void	ft_parse_space(t_data *data);
 
 /*
- ** [ parser/expand_quote.c ] TODO
+ ** [ parser/expand_quote_2.c ] NORMED
  */
 
-/* static char	*ft_concat_quoted_words(t_data *data, t_dlist *toklist); */
-/* static void	ft_remove_empty_quotes(t_data *data); */
-/* static void	ft_expand_quote2(t_dlist **new, t_dlist **temp) */
+void	ft_clear_emptyquote(t_data *data);
+char	*ft_concat_quoted_words(t_data *data, t_dlist *toklist);
+void	ft_remove_empty_q_2(t_data *data, t_dlist **tmp, t_dlist **new, int wt);
+void	ft_remove_empty_quotes(t_data *data);
+int		ft_is_equal_sign(char *str);
+
+/*
+ ** [ parser/expand_quote.c ] NORMED
+ */
+
+void	ft_expand_quote2_2(t_data *data, t_dlist **new, t_dlist **tmp, char *s);
+void	ft_expand_quote2(t_data *data, t_dlist **new, t_dlist **temp);
 void	ft_expand_quote(t_data *data);
 
 /*
- ** [ parser/expand_var.c ] TODO
+ ** [ parser/expand_var_3.c ] NORMED
  */
 
-/* static char *ft_expand_var(t_data *data, char *key) */
-/* static void ft_remove_dollar(t_data *data) */
-/* static void ft_heredoc_dollar(t_data *data) */
-/* static void ft_simple_quote(t_data *data) */
-/* static void ft_expand_dollar(t_data *data) */
-/* static void ft_var_exit_status(t_data *data) */
-/* static void ft_multiple_dollar(t_data *data) */
+char	*ft_expand_var(t_data *data, char *key);
+void	ft_expand_to_word(t_data *data);
+void	ft_concat_expand(t_data *data);
+void	ft_remove_dollar(t_data *data);
+void	ft_heredoc_dollar_2(t_dlist **temp);
+
+/*
+ ** [ parser/expand_var_2.c ] NORMED
+ */
+
+void	ft_heredoc_dollar(t_data *data);
+void	ft_simple_quote_2(t_data *data, t_dlist **temp, char *str);
+void	ft_simple_quote(t_data *data);
+void	ft_expand_dollar(t_data *data);
+void	ft_var_exit_status(t_data *data);
+
+/*
+ ** [ parser/expand_var.c ] NORMED
+ */
+
+void	ft_multiple_dollar_2(t_data *data, t_dlist **temp, t_dlist **new);
+void	ft_multiple_dollar(t_data *data);
+void	ft_expand_vars_2(t_data *data, t_dlist **temp);
 void	ft_expand_vars(t_data *data);
 
 /*

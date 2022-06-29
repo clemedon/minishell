@@ -6,7 +6,7 @@
 /*   By: clem </var/mail/clem>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:34:00 by clem              #+#    #+#             */
-/*   Updated: 2022/06/28 15:34:00 by clem             888   ########.fr       */
+/*   Updated: 2022/06/29 17:28:51 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	ft_init_data(t_data *data)
 	data->redlist = NULL;
 	data->cmd_path = NULL;
 	data->status = 0;
-	data->debug = 0;
+	data->toggle = 0;
 	data->cwd = ft_w_getcwd(data);
 	data->oldcwd = ft_w_getcwd(data);
 }

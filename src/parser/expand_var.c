@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand_var.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/29 17:37:27 by athirion          #+#    #+#             */
+/*   Updated: 2022/06/29 17:37:28 by athirion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 /*
@@ -26,237 +38,30 @@
  **			echo $USERR
  */
 
-static char *ft_expand_var(t_data *data, char *key)
+void	ft_multiple_dollar_2(t_data *data, t_dlist **temp, t_dlist **new)
 {
-	char		*val;
-	char		*ptr;
-	size_t		i;
-
-	if (key[0] == '0')
-		return (ft_strjoin_free_s2 ("minishell", ft_w_substr(data, key, 1, ft_strlen(key - 1))));
-	if (ft_isdigit (key[0]))
-		return (ft_w_substr(data, key, 1, ft_strlen(key - 1)));
-	if (!(ft_isalpha (key[0]) || key[0] == '_'))
-		return (ft_strjoin ("$", key));
-	i = 0;
-	while (1)
+	while (*temp)
 	{
-		if (!(ft_isalnum (key[i]) || key[i] == '_'))
+		if ((*temp)->next && ft_is_tokid(*temp, DO)
+			&& ft_is_tokid((*temp)->next, DO))
 		{
-			val = ft_w_substr(data, key, 0, i);
-			ptr = val;
-			val = ft_getenv(data, data->envlist, val);
-			free (ptr);
-			return (ft_strjoin_free_s1 (val, key + i));
+			while ((*temp)->next && ft_is_tokid(*temp, DO)
+				&& ft_is_tokid((*temp)->next, DO))
+				*temp = (*temp)->next;
 		}
-		i++;
-	}
-}
-
-void	ft_expand_to_word(t_data *data)
-{
-	t_dlist *temp;
-
-	temp = data->toklist;
-	while (temp)
-	{
-		if (temp && ft_is_tokid(temp, EX))
-			((t_tok *)temp->content)->tokid = WD;
-		temp = temp->next;
-	}
-}
-
-void	ft_concat_expand(t_data *data)
-{
-	t_dlist *temp;
-	char	*str;
-
-	temp = data->toklist;
-	while (temp)
-	{
-		/* printf(">>> WHILE(temp) <<<\n"); */
-		/* ft_printlist_tok(data->toklist); */
-		/* printf(">>> IN CONCAT <<<\n"); */
-		/* printf(">>>>>>> IN CONCAT ->> TEMP = [%s] <<<\n", ((t_tok *)temp->content)->tok); */
-		if (temp && ft_is_tokid(temp, EX))
+		else
 		{
-			while (temp && temp->next && ft_is_tokid(temp, EX) && ft_is_tokid(temp->next, EX))
-			{
-				str = ft_strjoin(((t_tok *)temp->content)->tok, ((t_tok *)temp->next->content)->tok);
-				/* printf(">>> IN CONCAT -> STR = [%s] <<<\n", str); */
-				free(((t_tok *)temp->content)->tok);
-				((t_tok *)temp->content)->tok = ft_w_strdup(data, str);
-				/* printf(">>> IN CONCAT -> AFTER STRDUP  = [%s] <<<\n", ((t_tok *)temp->content)->tok); */
-				free(str);
-				/* printf(">>> IN CONCAT ->> TEMP = [%s] <<<\n", ((t_tok *)temp->content)->tok); */
-				/* printf(">>> IN CONCAT ->> TEMP->NEXT  = [%s] <<<\n", ((t_tok *)temp->next->content)->tok); */
-				/* temp = temp->next; */
-				/* printf(">>> IN CONCAT ->> TEMP = [%s] <<<\n", ((t_tok *)temp->content)->tok); */
-				/* printf(">>> BEFORE REMOVE <<<\n"); */
-				/* ft_printlist_tok(data->toklist); */
-				ft_remove_tok(data->toklist, temp->next);
-				/* printf(">>> IN CONCAT ->> TEMP->PREV  = [%s] <<<\n", ((t_tok *)temp->prev->content)->tok); */
-				/* printf(">>> AFTER REMOVE <<<\n"); */
-				/* ft_printlist_tok(data->toklist); */
-			}
+			ft_dlst_elem_dup(data, new, *temp);
+			*temp = (*temp)->next;
 		}
-		/* printf(">>> IN CONCAT <<<\n"); */
-		/* printf(">>>>>>> IN CONCAT ->> TEMP = [%s] <<<\n", ((t_tok *)temp->content)->tok); */
-		if (temp)
-			temp = temp->next;
 	}
-	/* printf(">>> OUT OF WHILE <<<\n"); */
 }
 
-/*
- ** Remove DOLLAR from toklist.
- */
-
-static void	ft_remove_dollar(t_data *data)
+void	ft_multiple_dollar(t_data *data)
 {
 	t_dlist	*temp;
-	t_dlist	*ptrcpy[2];
+	t_dlist	*freetemp;
 	t_dlist	*new;
-
-	temp = data->toklist;
-	ptrcpy[0] = temp;
-	new = ft_w_malloc(data, sizeof(t_dlist));
-	ptrcpy[1] = new;
-	new = NULL;
-	while (temp)
-	{
-		if (!ft_is_tokid(temp, DO))
-			ft_dlst_elem_dup(data, &new, temp);
-		temp = temp->next;
-	}
-	data->toklist = new;
-	ft_clearlist_tok(&ptrcpy[0], ft_free);
-	ft_free(ptrcpy[1]); // TODO useful??
-}
-
-static void	ft_heredoc_dollar(t_data *data)
-{
-	t_dlist *temp;
-	char	*str;
-
-	temp = data->toklist;
-	while(temp)
-	{
-		if (temp && ft_is_tokid(temp, DL))
-		{
-			temp = temp->next;
-			if (temp && ft_is_tokid(temp, WS))
-				temp = temp->next;
-			if (temp && ft_is_tokid(temp, DQ))
-				temp = temp->next;
-			if (temp && temp->next && ft_is_tokid(temp, DO)
-					&& ft_is_tokid(temp->next, WD))
-			{
-				str = ft_strjoin(((t_tok *)temp->content)->tok, ((t_tok *)temp->next->content)->tok);
-				free(((t_tok *)temp->next->content)->tok);
-				((t_tok *)temp->next->content)->tok = str;
-				temp = temp->next;
-				ft_remove_tok(data->toklist, temp->prev);
-			}
-		}
-		if (temp)
-			temp = temp->next;
-	}
-}
-
-static void	ft_simple_quote(t_data *data)
-{
-	t_dlist *temp;
-	char	*str;
-
-	temp = data->toklist;
-	while (temp)
-	{
-		if (ft_is_tokid(temp, QT))
-		{
-			temp = temp->next;
-			while (temp && !ft_is_tokid(temp, QT))
-			{
-				if (temp->next && ft_is_tokid(temp, DO) && ft_is_tokid(temp->next, WD))
-				{
-					str = ft_strjoin(((t_tok *)temp->content)->tok, ((t_tok *)temp->next->content)->tok);
-					free(((t_tok *)temp->next->content)->tok);
-					((t_tok *)temp->next->content)->tok = str;
-					((t_tok *)temp->next->content)->tokid = WD;
-					temp = temp->next;
-					ft_remove_tok(data->toklist, temp->prev);
-				}
-				temp = temp->next;
-			}
-			if (temp && ft_is_tokid(temp, QT))
-				temp = temp->next;
-		}
-		if (temp)
-			temp = temp->next;
-	}
-}
-
-static void ft_expand_dollar(t_data *data)
-{
-	t_dlist *temp;
-	char	*str;
-
-	temp = data->toklist;
-	while (temp)
-	{
-		if (temp->prev && ft_is_tokid(temp, DO) && ft_is_tokid(temp->prev, WD) && !ft_is_tokid(temp->next, WD))
-		{
-			str = ft_strjoin(((t_tok *)temp->prev->content)->tok, ((t_tok *)temp->content)->tok);
-			free(((t_tok *)temp->content)->tok);
-			((t_tok *)temp->content)->tok = str;
-			((t_tok *)temp->content)->tokid = WD;
-			ft_remove_tok(data->toklist, temp->prev);
-		}
-		else if (temp->next && ft_is_tokid(temp, DO) && !ft_is_tokid(temp->next, WD))
-			((t_tok *)temp->content)->tokid = WD;
-		else if (!temp->next && ft_is_tokid(temp, DO))
-			((t_tok *)temp->content)->tokid = WD;
-		else if (!temp->next && !temp->prev && ft_is_tokid(temp, DO))
-			((t_tok *)temp->content)->tokid = WD;
-		temp = temp->next;
-	}
-}
-
-static void	ft_var_exit_status(t_data *data)
-{
-	t_dlist *temp;
-	char	*str;
-	extern	int	g_sig_status;
-
-	temp = data->toklist;
-	while (temp)
-	{
-		if (temp->next && ft_is_tokid(temp, DO)
-				&& ft_is_tokid(temp->next, WD)
-				&& !ft_strncmp(((t_tok *)temp->next->content)->tok, "?", 1))
-		{
-			if (g_sig_status)
-			{
-				str = ft_itoa(g_sig_status);
-				g_sig_status = 0;
-			}
-			else
-				str = ft_itoa(data->status);
-			free(((t_tok *)temp->content)->tok);
-			((t_tok *)temp->content)->tok = str;
-			((t_tok *)temp->content)->tokid = WD;
-			ft_remove_tok(data->toklist, temp->next);
-		}
-		if (temp)
-			temp = temp->next;
-	}
-}
-
-static void	ft_multiple_dollar(t_data *data)
-{
-	t_dlist	*temp;
-	t_dlist *freetemp;
-	t_dlist *new;
 	t_dlist	*newfree;
 
 	new = ft_w_malloc(data, sizeof(t_dlist *));
@@ -264,29 +69,45 @@ static void	ft_multiple_dollar(t_data *data)
 	new = NULL;
 	temp = data->toklist;
 	freetemp = temp;
-	while (temp)
-	{
-		if (temp->next && ft_is_tokid(temp, DO) && ft_is_tokid(temp->next, DO))
-		{
-			while (temp->next && ft_is_tokid(temp, DO) && ft_is_tokid(temp->next, DO))
-				temp = temp->next;
-		}
-		else
-		{
-			ft_dlst_elem_dup(data, &new, temp);
-			temp = temp->next;
-		}
-	}
+	ft_multiple_dollar_2(data, &temp, &new);
 	ft_clearlist_tok(&freetemp, ft_free);
 	free(freetemp);
 	data->toklist = new;
 	ft_free(newfree);
 }
 
+void	ft_expand_vars_2(t_data *data, t_dlist **temp)
+{
+	char	*str;
+
+	data->toggle = 0;
+	str = ft_expand_var (data, ((t_tok *)(*temp)->content)->tok);
+	if (!ft_strcmp(str, ""))
+	{
+		if (!(*temp)->next)
+		{
+			ft_remove_tok(data->toklist, *temp);
+			ft_free(str);
+			data->toggle = 1;
+			return ;
+		}
+		*temp = (*temp)->next;
+		if ((*temp)->prev)
+			ft_remove_tok(data->toklist, (*temp)->prev);
+		*temp = (*temp)->prev;
+	}
+	else
+	{
+		free (((t_tok *)(*temp)->content)->tok);
+		((t_tok *)(*temp)->content)->tok = ft_w_strdup(data, str);
+		((t_tok *)(*temp)->content)->tokid = EX;
+	}
+	ft_free(str);
+}
+
 void	ft_expand_vars(t_data *data)
 {
-	t_dlist *temp;
-	char	*str;
+	t_dlist	*temp;
 
 	ft_multiple_dollar(data);
 	ft_simple_quote(data);
@@ -300,30 +121,9 @@ void	ft_expand_vars(t_data *data)
 		{
 			temp = temp->next;
 			if (ft_strcmp(((t_tok *)temp->content)->tok, "$?"))
-			{
-				str = ft_expand_var (data, ((t_tok *)temp->content)->tok);
-				if (!ft_strcmp(str, ""))
-				{
-					if (!temp->next)
-					{
-						ft_remove_tok(data->toklist, temp);
-						ft_free(str);
-						break;
-					}
-					temp = temp->next;
-					if (temp->prev)
-						ft_remove_tok(data->toklist, temp->prev);
-					temp = temp->prev;
-					ft_free(str);
-				}
-				else
-				{
-					free (((t_tok *)temp->content)->tok);
-					((t_tok *)temp->content)->tok = ft_w_strdup(data, str);
-					((t_tok *)temp->content)->tokid = EX;
-					ft_free(str);
-				}
-			}
+				ft_expand_vars_2(data, &temp);
+			if (data->toggle)
+				break ;
 		}
 		if (temp)
 			temp = temp->next;

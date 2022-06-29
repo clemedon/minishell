@@ -25,7 +25,10 @@ SRCS		= main.c 				\
 			  parser/parse_quote.c	\
 			  parser/parse_pipe.c	\
 			  parser/expand_var.c	\
+			  parser/expand_var_2.c	\
+			  parser/expand_var_3.c	\
 			  parser/expand_quote.c	\
+			  parser/expand_quote_2.c	\
 			  parser/parse_space.c	\
 			  parser/parse_redir.c	\
 			  utils/redlist.c		\
