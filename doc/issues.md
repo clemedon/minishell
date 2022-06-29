@@ -23,6 +23,9 @@
 
 ##  Wtf
 
+- Prompt on hold
+> `$""$`
+
 - Backslash is a character
 > `rm \\  <-`
 

@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 15:39:23 by athirion          #+#    #+#             */
-/*   Updated: 2022/06/29 15:39:24 by athirion         ###   ########.fr       */
+/*   Updated: 2022/06/29 15:54:55 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,22 +198,30 @@ typedef struct s_data
  */
 
 /*
- ** [ utils/utils.c ]
+ ** [ utils/wrappers.c ]
  */
 
-char	*ft_w_getcwd(t_data *data);
 void	*ft_w_malloc(t_data *data, size_t size);
+char	*ft_w_getcwd(t_data *data);
 char	*ft_w_substr(t_data *data, char const *s, size_t start, size_t len);
 char	*ft_w_strdup(t_data *data, const char *s1);
 
+/*
+ ** [ utils/exit_utils.c ]
+ */
+
+void	ft_free_tab(char **tab);
+void	ft_free(void *ptr);
+void	ft_exitmsg(t_data *data, char *str);
+
+/*
+ ** [ utils/utils.c ]
+ */
+
+void	ft_dlst_elem_dup(t_data *data, t_dlist **lst, t_dlist *dup);
 char	*ft_strjoin_free_s2(char *s1, char *s2);
 char	*ft_strjoin_free_s1(char *s1, char *s2);
 char	*ft_strjoin_free(char *s1, char *s2);
-void	ft_free(void *ptr);
-void	ft_free_tab(char **tab);
-void	*ft_backfree(char **tab, int i);
-void	ft_exitmsg(t_data *data, char *str);
-void	ft_dlst_elem_dup(t_data *data, t_dlist **lst, t_dlist *dup);
 
 /* #----------------------------------------------------------------------# */
 /* #				  BUILTINS											  # */

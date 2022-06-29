@@ -46,6 +46,8 @@ SRCS		= main.c 				\
 			  builtin/pwd.c			\
 			  builtin/echo.c		\
 			  utils/utils.c			\
+			  utils/exit_utils.c			\
+			  utils/wrappers.c			\
 			  builtin/cd.c			\
 			  builtin/cd_2.c		\
 			  builtin/exit.c
