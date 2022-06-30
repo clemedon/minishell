@@ -76,6 +76,7 @@ static void	ft_child_2(t_data *data, t_dlist *cmd)
 		((t_cmd *)cmd->content)->error = 127;
 		ft_perror(data, cmd, 127);
 	}
+	ft_close(data, cmd, &((t_cmd *)cmd->content)->fd[0]); // TODO
 	if (!ft_is_builtin(cmd)
 		&& execve(((t_cmd *)cmd->content)->prg,
 			((t_cmd *)cmd->content)->cmd, data->envtab) == -1)
