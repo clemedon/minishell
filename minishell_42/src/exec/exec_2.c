@@ -27,7 +27,7 @@ static void	ft_parent_2(t_data *data, t_dlist *cmd, int pid)
 		if (WTERMSIG(data->status) == SIGQUIT)
 		{
 			data->status = 128 + WTERMSIG(data->status);
-			ft_putstr_fd("Quit\n", 1);
+			ft_putstr_fd("Quit (core dumped)\n", 1);
 		}
 		if (WTERMSIG(data->status) == SIGINT)
 		{
