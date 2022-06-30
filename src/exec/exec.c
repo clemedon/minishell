@@ -21,13 +21,13 @@ void	ft_exec_cmd(t_data *data, t_dlist *cmd)
 		ft_perror(data, cmd, errno);
 	if (pid > 0)
 	{
-		signal(SIGQUIT, SIG_IGN);
-		signal(SIGINT, SIG_IGN);
+		ft_w_signal(data, SIGQUIT, SIG_IGN);
+		ft_w_signal(data, SIGINT, SIG_IGN);
 		ft_parent (data, cmd, pid);
 	}
 	if (pid == 0)
 	{
-		signal(SIGQUIT, SIG_DFL);
+		ft_w_signal(data, SIGQUIT, SIG_DFL);
 		ft_child(data, cmd);
 	}
 }
@@ -71,5 +71,5 @@ int	ft_exec(t_data *data)
 	}
 	while (wait(NULL) != -1)
 		;
-	return (ft_init_signals (), data->status);
+	return (ft_init_signals (data), data->status);
 }

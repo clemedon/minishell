@@ -40,14 +40,14 @@ void	ft_here_doc_3(t_data *data, t_hd *hd)
 	else
 		write(hd->fd_file, hd->temp, ft_strlen(hd->temp));
 	ft_free(hd->temp);
-	ft_init_signals ();
+	ft_init_signals (data);
 }
 
-int	ft_here_doc_2(t_hd *hd)
+int	ft_here_doc_2(t_data *data, t_hd *hd)
 {
 	extern int	g_sig_status;
 
-	ft_heredoc_signals ();
+	ft_heredoc_signals (data);
 	write(1, "> ", 2);
 	hd->temp = get_next_line(0);
 	return (g_sig_status);
@@ -64,7 +64,7 @@ void	ft_here_doc(t_data *data, t_dlist *cmd, t_dlist *redir, char *file)
 	g_sig_status = 0;
 	while (1)
 	{
-		if (ft_here_doc_2 (&hd))
+		if (ft_here_doc_2 (data, &hd))
 			break ;
 		if (hd.temp == NULL)
 		{

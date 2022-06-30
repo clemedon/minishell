@@ -82,6 +82,8 @@
  ** =========[ Structures ]========
  */
 
+typedef void	(*t_sighandler)(int);
+
 /*
  ** Tokens
  */
@@ -220,6 +222,12 @@ typedef struct s_data
 /* #----------------------------------------------------------------------# */
 
 /*
+ ** [ utils/wrappers_2.c ] NORMED
+ */
+
+void	ft_w_signal(t_data *data, int signum, t_sighandler handler);
+
+/*
  ** [ utils/wrappers.c ] NORMED
  */
 
@@ -351,7 +359,7 @@ int		ft_len_var(t_data *data, char *str);
  */
 
 void	ft_heredoc_sigint(int sig);
-void	ft_heredoc_signals(void);
+void	ft_heredoc_signals(t_data *data);
 
 /*
  ** [ exec/expand_heredoc.c ] NORMED
@@ -368,7 +376,7 @@ char	*ft_update_here_doc(t_data *data, char *str);
 void	ft_end_heredoc(t_dlist *cmd);
 void	ft_here_doc_4(t_data *data, t_dlist *cmd, t_hd *hd, char *file);
 void	ft_here_doc_3(t_data *data, t_hd *hd);
-int		ft_here_doc_2(t_hd *hd);
+int		ft_here_doc_2(t_data *data, t_hd *hd);
 void	ft_here_doc(t_data *data, t_dlist *cmd, t_dlist *redir, char *file);
 
 /*
@@ -648,7 +656,7 @@ void	ft_shlvl_update(t_data *data);
  */
 
 /* static void ft_sigint(int sig) */
-void	ft_init_signals(void);
+void	ft_init_signals(t_data *data);
 /* static void ft_init_data(t_data *data) */
 int		main(int ac, char **av);
 

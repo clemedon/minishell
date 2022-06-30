@@ -28,15 +28,15 @@ static void	ft_sigint(int sig)
 	rl_redisplay();
 }
 
-void	ft_init_signals(void)
+void	ft_init_signals(t_data *data)
 {
-	signal(SIGHUP, SIG_IGN);
-	signal(SIGTERM, SIG_IGN);
-	signal(SIGTTIN, SIG_IGN);
-	signal(SIGTTOU, SIG_IGN);
-	signal(SIGTSTP, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, ft_sigint);
+	ft_w_signal(data, SIGHUP, SIG_IGN);
+	ft_w_signal(data, SIGTERM, SIG_IGN);
+	ft_w_signal(data, SIGTTIN, SIG_IGN);
+	ft_w_signal(data, SIGTTOU, SIG_IGN);
+	ft_w_signal(data, SIGTSTP, SIG_IGN);
+	ft_w_signal(data, SIGQUIT, SIG_IGN);
+	ft_w_signal(data, SIGINT, ft_sigint);
 }
 
 /*
@@ -77,8 +77,8 @@ int	main(int ac, char **av)
 
 	if (ac == 1)
 	{
-		ft_init_signals ();
 		ft_init_data (&data);
+		ft_init_signals (&data);
 		ft_init_env (&data);
 		ft_init_exp (&data);
 		ft_shlvl_update (&data);

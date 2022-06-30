@@ -24,13 +24,13 @@ void	ft_heredoc_sigint(int sig)
 	rl_redisplay();
 }
 
-void	ft_heredoc_signals(void)
+void	ft_heredoc_signals(t_data *data)
 {
-	signal(SIGHUP, SIG_IGN);
-	signal(SIGTERM, SIG_IGN);
-	signal(SIGTTIN, SIG_IGN);
-	signal(SIGTTOU, SIG_IGN);
-	signal(SIGTSTP, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, ft_heredoc_sigint);
+	ft_w_signal(data, SIGHUP, SIG_IGN);
+	ft_w_signal(data, SIGTERM, SIG_IGN);
+	ft_w_signal(data, SIGTTIN, SIG_IGN);
+	ft_w_signal(data, SIGTTOU, SIG_IGN);
+	ft_w_signal(data, SIGTSTP, SIG_IGN);
+	ft_w_signal(data, SIGQUIT, SIG_IGN);
+	ft_w_signal(data, SIGINT, ft_heredoc_sigint);
 }
