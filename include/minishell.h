@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 15:39:23 by athirion          #+#    #+#             */
-/*   Updated: 2022/06/30 11:30:47 by athirion         ###   ########.fr       */
+/*   Updated: 2022/06/30 12:32:36 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,6 +223,7 @@ typedef struct s_data
  ** [ utils/wrappers.c ] NORMED
  */
 
+void	ft_w_dup2(t_data *data, int fd, int std);
 void	*ft_w_malloc(t_data *data, size_t size);
 char	*ft_w_getcwd(t_data *data);
 char	*ft_w_substr(t_data *data, char const *s, size_t start, size_t len);

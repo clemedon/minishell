@@ -5,6 +5,9 @@
 
 # //////////////////////// ATHIRION
 
+- Fix redir
+> echo salut > out > toto
+
 # //////////////////////// CVIDON
 
 - Protect all the signal

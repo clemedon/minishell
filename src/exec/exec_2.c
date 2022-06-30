@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 10:57:08 by athirion          #+#    #+#             */
-/*   Updated: 2022/06/30 11:38:26 by athirion         ###   ########.fr       */
+/*   Updated: 2022/06/30 12:27:36 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,16 +90,16 @@ void	ft_child(t_data *data, t_dlist *cmd)
 	if (((t_cmd *)cmd->content)->file_in)
 	{
 		ft_check_fd(data, ((t_cmd *)cmd->content)->fd_in);
-		dup2(((t_cmd *)cmd->content)->fd_in, STDIN_FILENO);
+		ft_w_dup2(data, ((t_cmd *)cmd->content)->fd_in, STDIN_FILENO);
 	}
 	else if (!(cmd == data->cmdlist))
-		dup2(((t_cmd *)cmd->prev->content)->fd[0], STDIN_FILENO);
+		ft_w_dup2(data, ((t_cmd *)cmd->prev->content)->fd[0], STDIN_FILENO);
 	if (((t_cmd *)cmd->content)->file_out)
 	{
 		ft_check_fd(data, ((t_cmd *)cmd->content)->fd_out);
-		dup2(((t_cmd *)cmd->content)->fd_out, STDOUT_FILENO);
+		ft_w_dup2(data, ((t_cmd *)cmd->content)->fd_out, STDOUT_FILENO);
 	}
 	else if (cmd->next)
-		dup2(((t_cmd *)cmd->content)->fd[1], STDOUT_FILENO);
+		ft_w_dup2(data, ((t_cmd *)cmd->content)->fd[1], STDOUT_FILENO);
 	ft_child_2(data, cmd);
 }

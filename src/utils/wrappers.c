@@ -6,11 +6,17 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 15:52:30 by athirion          #+#    #+#             */
-/*   Updated: 2022/06/29 17:29:17 by athirion         ###   ########.fr       */
+/*   Updated: 2022/06/30 12:36:55 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_w_dup2(t_data *data, int fd, int std)
+{
+	if (dup2(fd, std) == -1)
+		ft_exitmsg(data, "dup2");
+}
 
 void	*ft_w_malloc(t_data *data, size_t size)
 {
