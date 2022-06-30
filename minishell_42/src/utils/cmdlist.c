@@ -72,49 +72,6 @@ void	ft_add_cmd(t_data *data)
 }
 
 /*
- ** Print cmd list.
- */
-
-/* void	ft_printlist_cmd(t_dlist *lst) */
-/* { */
-/* 	t_dlist	*temp; */
-/* 	size_t	i; */
-
-/* 	printf("IN FT_PRINTLIST_CMD\n"); */
-/* 	temp = lst; */
-/* 	while (temp) */
-/* 	{ */
-/* 		i = 0; */
-/* 		ft_printf(" [ error: '%i', id: '%i', ", */
-/* 				((t_cmd *)temp->content)->error, */
-/* 				((t_cmd *)temp->content)->cmdid); */
-/* 		while (((t_cmd *)temp->content)->cmd && i */
-/* 				< ((t_cmd *)temp->content)->nb_arg) */
-/* 		{ */
-/* 			printf("cmd[%ld]: '%s', ", i, ((t_cmd *)temp->content)->cmd[i]); */
-/* 			i++; */
-/* 		} */
-/* 		printf */
-/* 			("pg: '%s', type_in: '%i', type_out: '%i', */
-/* 				file_in: '%s', */
-/* 				file_out: '%s', stop_word: '%s', is_here_doc: '%i', */
-/* 				fd_in: '%i', fd_out: '%i' ]\n", */
-/* 				((t_cmd *)temp->content)->prg, */
-/* 				((t_cmd *)temp->content)->type_in, */
-/* 				((t_cmd *)temp->content)->type_out, */
-/* 				((t_cmd *)temp->content)->file_in, */
-/* 				((t_cmd *)temp->content)->file_out, */
-/* 				((t_cmd *)temp->content)->stop_word, */
-/* 				((t_cmd *)temp->content)->is_here_doc, */
-/* 				((t_cmd *)temp->content)->fd_in, */
-/* 				((t_cmd *)temp->content)->fd_out); */
-/* 		temp = temp->next; */
-/* 	} */
-/* 	ft_printf(" (NULL / list back)\n"); */
-/* 	ft_printf("\n"); */
-/* } */
-
-/*
  ** Clear a cmd list.
  */
 

@@ -84,7 +84,7 @@ CFLAGS		:= $(CFLAGS) -Wconversion -Wsign-conversion
 CPPFLAGS	:= $(CPPFLAGS) $(INC:%=-I%)
 LDFLAGS 	:= $(LDFLAGS) $(LIB:%=-L%)
 LDLIBS		:= $(LDLIBS) $(LIB:$(LIB_DIR)/lib%=-l%)
-CFLAGS		:= $(CFLAGS) -fsanitize=address,undefined,signed-integer-overflow -g3
+CFLAGS		:= $(CFLAGS) -fsanitize=address,undefined,signed-integer-overflow
 
 #------------------------------------------------------------------------------#
 #                  SHELL CMDS                                                  #
@@ -100,6 +100,9 @@ MAKE		= make --silent --jobs --directory
 .PHONY: all sani clean fclean norm update re test leak
 
 all: $(NAME)
+
+simple: CFLAGS = -Wall -Wextra -Werror
+simple: $(NAME)
 
 $(NAME): $(OBJS)
 	@for f in $(LIB); do $(MAKE) $$f --no-print-directory; done
