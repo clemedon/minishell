@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 15:39:23 by athirion          #+#    #+#             */
-/*   Updated: 2022/06/30 12:32:36 by athirion         ###   ########.fr       */
+/*   Updated: 2022/06/30 12:44:18 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -376,7 +376,7 @@ void	ft_here_doc(t_data *data, t_dlist *cmd, t_dlist *redir, char *file);
  */
 
 int		ft_open_2(t_data *data, t_dlist *cmd, t_dlist *temp, int redir_in_ok);
-void	ft_open_3(t_data *data, t_dlist *cmd, t_dlist *temp, int redir_in_ok);
+int		ft_open_3(t_data *data, t_dlist *cmd, t_dlist *temp, int redir_in_ok);
 int		ft_open(t_data *data, t_dlist *cmd);
 void	ft_close(t_data *data, t_dlist *cmd, int *fd);
 

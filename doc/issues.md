@@ -5,7 +5,7 @@
 
 # //////////////////////// ATHIRION
 
-- Fix redir
+- Fix redir out
 > echo salut > out > toto
 
 # //////////////////////// CVIDON

@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 20:38:32 by athirion          #+#    #+#             */
-/*   Updated: 2022/06/29 20:47:06 by athirion         ###   ########.fr       */
+/*   Updated: 2022/06/30 12:46:20 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_open_2(t_data *data, t_dlist *cmd, t_dlist *temp, int redir_in_ok)
 	return (1);
 }
 
-void	ft_open_3(t_data *data, t_dlist *cmd, t_dlist *temp, int redir_in_ok)
+int	ft_open_3(t_data *data, t_dlist *cmd, t_dlist *temp, int redir_in_ok)
 {
 	if ((((t_redir *)temp->content)->type == GT
 			|| ((t_redir *)temp->content)->type == DG) && redir_in_ok)
@@ -45,7 +45,11 @@ void	ft_open_3(t_data *data, t_dlist *cmd, t_dlist *temp, int redir_in_ok)
 					O_CREAT | O_TRUNC | O_RDWR, 0644);
 	}
 	if (((t_cmd *)cmd->content)->fd_out == -1)
+	{
 		ft_file_error(data, ((t_redir *)temp->content)->file, errno);
+		return (0);
+	}
+	return (1);
 }
 
 int	ft_open(t_data *data, t_dlist *cmd)
@@ -63,7 +67,8 @@ int	ft_open(t_data *data, t_dlist *cmd)
 	{
 		if (!ft_open_2 (data, cmd, temp, redir_in_ok))
 			return (0);
-		ft_open_3 (data, cmd, temp, redir_in_ok);
+		if (!ft_open_3 (data, cmd, temp, redir_in_ok))
+			return (0);
 		temp = temp->next;
 	}
 	return (1);
