@@ -21,7 +21,7 @@ int	ft_pwd(t_data *data)
 	char	*env_pwd;
 	char	*check_value;
 
-	env_pwd = ft_w_getcwd(data);
+	env_pwd = getcwd (NULL, PATH_MAX);
 	check_value = ft_getexp(data, data->explist, "PWD");
 	if (!check_value)
 		ft_putstr_fd (env_pwd, 1);
