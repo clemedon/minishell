@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 15:52:36 by athirion          #+#    #+#             */
-/*   Updated: 2022/06/29 15:52:36 by athirion         ###   ########.fr       */
+/*   Updated: 2022/06/30 11:37:59 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,19 @@ void	ft_free(void *ptr)
 		free(ptr);
 		ptr = NULL;
 	}
+}
+
+void	ft_free_all(t_data *data)
+{
+	ft_free (data->cwd);
+	ft_free (data->oldcwd);
+	ft_free_tab (data->cmd_path);
+	ft_free_tab (data->envtab);
+	ft_clearlist_env (&data->envlist, ft_free);
+	ft_clearlist_cmd (&data->cmdlist, ft_free);
+	ft_clearlist_exp (&data->explist, ft_free);
+	ft_clearlist_red (&data->redlist, ft_free);
+	ft_clearlist_tok (&data->toklist, ft_free);
 }
 
 /*

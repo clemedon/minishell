@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 15:39:23 by athirion          #+#    #+#             */
-/*   Updated: 2022/06/29 20:55:03 by athirion         ###   ########.fr       */
+/*   Updated: 2022/06/30 11:30:47 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,6 +234,7 @@ char	*ft_w_strdup(t_data *data, const char *s1);
 
 void	ft_free_tab(char **tab);
 void	ft_free(void *ptr);
+void	ft_free_all(t_data *data);
 void	ft_exitmsg(t_data *data, char *str);
 
 /*
