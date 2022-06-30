@@ -342,7 +342,7 @@ int		ft_env(t_dlist *envlist);
  ** [ exec/exec_error.c ] NORMED
  */
 
-/* static void ft_cmd_error(t_dlist *cmd, int error) */
+/* static void ft_cmd_error(t_data *data, t_dlist *cmd, int error) */
 void	ft_file_error(t_data *data, char *file, int error);
 void	ft_perror(t_data *data, t_dlist *cmd, int error);
 

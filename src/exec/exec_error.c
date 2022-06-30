@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static void	ft_cmd_error(t_dlist *cmd, int error)
+static void	ft_cmd_error(t_data *data, t_dlist *cmd, int error)
 {
 	if (((t_cmd *)cmd->content)->cmd)
 	{
@@ -25,7 +25,7 @@ static void	ft_cmd_error(t_dlist *cmd, int error)
 			ft_putendl_fd(strerror(errno), 2);
 		}
 	}
-	exit(error);
+	ft_exitmsg(data, "");
 }
 
 void	ft_file_error(t_data *data, char *file, int error)
@@ -44,7 +44,7 @@ void	ft_perror(t_data *data, t_dlist *cmd, int error)
 	data->status = error;
 	if (error == 127 || error == 126)
 	{
-		ft_cmd_error(cmd, error);
+		ft_cmd_error(data, cmd, error);
 	}
 	else if (error == 2)
 		ft_putstr_fd("minishell: syntax error\n", 2);

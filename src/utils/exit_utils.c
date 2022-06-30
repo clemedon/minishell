@@ -49,6 +49,8 @@ void	ft_free(void *ptr)
 
 void	ft_free_all(t_data *data)
 {
+	int	fd;
+
 	ft_free (data->cwd);
 	ft_free (data->oldcwd);
 	ft_free_tab (data->cmd_path);
@@ -58,6 +60,9 @@ void	ft_free_all(t_data *data)
 	ft_clearlist_exp (&data->explist, ft_free);
 	ft_clearlist_red (&data->redlist, ft_free);
 	ft_clearlist_tok (&data->toklist, ft_free);
+	fd = 3;
+	while (fd < OPEN_MAX)
+		close (fd++);
 }
 
 /*
@@ -73,15 +78,7 @@ void	ft_exitmsg(t_data *data, char *str)
 		write(2, str, ft_strlen (str));
 		write(2, " error\n", 7);
 	}
-	ft_free (data->cwd);
-	ft_free (data->oldcwd);
-	ft_free_tab (data->cmd_path);
-	ft_free_tab (data->envtab);
-	ft_clearlist_env (&data->envlist, ft_free);
-	ft_clearlist_cmd (&data->cmdlist, ft_free);
-	ft_clearlist_exp (&data->explist, ft_free);
-	ft_clearlist_red (&data->redlist, ft_free);
-	ft_clearlist_tok (&data->toklist, ft_free);
+	ft_free_all(data);
 	rl_clear_history ();
 	exit(data->status);
 }
