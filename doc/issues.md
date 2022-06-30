@@ -5,20 +5,7 @@
 
 # //////////////////////// ATHIRION
 
-- Fix redir out
-> echo salut > out > toto
-
 # //////////////////////// CVIDON
-
-- Protect all the signal
-> if (signal(blabla) == SIG_ERR) print(errno);
-
-- Protect every dup2
-
-- Close all fds that remains open
-
-- Check every output STD
-> Check that they're displayed the right STD.OUT/ERROR
 
 # //////////////////////// ???
 
