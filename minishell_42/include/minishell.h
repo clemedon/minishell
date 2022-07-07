@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 15:39:23 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/07 15:36:24 by athirion         ###   ########.fr       */
+/*   Updated: 2022/07/07 19:28:01 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,6 +205,7 @@ typedef struct s_data
 	char	**cmd_path;
 	int		last_in;
 	int		last_out;
+	int		prevpipeout;
 
 	int		shlvl;
 	int		status;

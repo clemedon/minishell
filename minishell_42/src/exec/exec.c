@@ -6,7 +6,7 @@
 /*   By: clem </var/mail/clem>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 14:44:33 by clem              #+#    #+#             */
-/*   Updated: 2022/06/30 10:37:36 by athirion         ###   ########.fr       */
+/*   Updated: 2022/07/07 19:45:16 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,31 @@ void	ft_exec_cmd(t_data *data, t_dlist *cmd)
 	int	pid;
 
 	pid = fork();
+
 	if (pid == -1)
 		ft_perror(data, cmd, errno);
 	if (pid > 0)
 	{
+
+		/* //print */
+		/* ft_putstr_fd ("  ft_exec_cmd: parent node: ", 2); */
+		/* ft_putnbr_fd (((t_cmd *)cmd->content)->fd[0], 2); */
+		/* ft_putendl_fd ("", 2); */
+
 		ft_w_signal(data, SIGQUIT, SIG_IGN);
 		ft_w_signal(data, SIGINT, SIG_IGN);
+
+
 		ft_parent (data, cmd, pid);
 	}
 	if (pid == 0)
 	{
+
+		/* //print */
+		/* ft_putstr_fd ("  ft_exec_cmd: child node: ", 2); */
+		/* ft_putnbr_fd (((t_cmd *)cmd->content)->fd[0], 2); */
+		/* ft_putendl_fd ("", 2); */
+
 		ft_w_signal(data, SIGQUIT, SIG_DFL);
 		ft_child(data, cmd);
 	}
@@ -40,6 +55,15 @@ static t_dlist	*ft_init_pipe(t_data *data)
 	while (cmd)
 	{
 		pipe(((t_cmd *)cmd->content)->fd);
+
+		/* //print */
+		/* ft_putendl_fd ("  PIPE", 2); */
+		/* ft_putstr_fd ("  fd0: ", 2); */
+		/* ft_putnbr_fd (((t_cmd *)cmd->content)->fd[0], 2); */
+		/* ft_putendl_fd ("", 2); */
+		/* ft_putstr_fd ("  fd1: ", 2); */
+		/* ft_putnbr_fd (((t_cmd *)cmd->content)->fd[1], 2); */
+		/* ft_putendl_fd ("", 2); */
 		cmd = cmd->next;
 	}
 	return (data->cmdlist);
