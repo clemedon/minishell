@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 15:39:23 by athirion          #+#    #+#             */
-/*   Updated: 2022/06/30 12:44:18 by athirion         ###   ########.fr       */
+/*   Updated: 2022/07/07 15:36:24 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -347,12 +347,13 @@ void	ft_file_error(t_data *data, char *file, int error);
 void	ft_perror(t_data *data, t_dlist *cmd, int error);
 
 /*
- ** [ utils/heredoc_utils.c ] NORMED
+ ** [ exec/heredoc_utils.c ] NORMED
  */
 
+int		ft_isspace(char c);
+int		ft_valid_var_format(size_t i, char *str);
+char	*ft_update_str(char **temp, char *str, char *key, char *val);
 int		ft_has_a_var(char *str);
-char	*ft_get_var(t_data *data, char *str);
-int		ft_len_var(t_data *data, char *str);
 
 /*
  ** [ exec/sig_heredoc.c ] NORMED
@@ -365,9 +366,7 @@ void	ft_heredoc_signals(t_data *data);
  ** [ exec/expand_heredoc.c ] NORMED
  */
 
-char	*ft_update_here_doc_3(t_data *data, t_hd *hd, char *str);
-void	ft_update_here_doc_2(t_data *data, t_hd *hd, char *str);
-char	*ft_update_here_doc(t_data *data, char *str);
+char	*ft_expand_heredoc(t_data *data, char *str);
 
 /*
  ** [ exec/heredoc.c ] NORMED

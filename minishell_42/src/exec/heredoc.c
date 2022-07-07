@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 20:38:35 by athirion          #+#    #+#             */
-/*   Updated: 2022/06/29 20:53:21 by athirion         ###   ########.fr       */
+/*   Updated: 2022/07/07 15:55:24 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,15 @@ void	ft_here_doc_3(t_data *data, t_hd *hd)
 	hd->expand = NULL;
 	if (ft_has_a_var(hd->temp) && ft_strlen(hd->temp) > 2)
 	{
-		hd->expand = ft_update_here_doc(data, hd->temp);
+		hd->expand = ft_expand_heredoc(data, hd->temp);
 		write(hd->fd_file, hd->expand, ft_strlen(hd->expand));
 		ft_free(hd->expand);
 	}
 	else
+	{
 		write(hd->fd_file, hd->temp, ft_strlen(hd->temp));
-	ft_free(hd->temp);
+		ft_free(hd->temp);
+	}
 	ft_init_signals (data);
 }
 

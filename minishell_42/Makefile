@@ -19,7 +19,7 @@ SRCS		= main.c 					\
 			  utils/explist_2.c			\
 			  utils/explist_3.c			\
 			  utils/prompt.c			\
-			  utils/heredoc_utils.c		\
+			  exec/heredoc_utils.c		\
 			  lexer/lexer.c				\
 			  utils/toklist.c			\
 			  parser/parser.c			\
@@ -43,7 +43,7 @@ SRCS		= main.c 					\
 			  exec/exec_2.c				\
 			  exec/exec_builtin.c		\
 			  exec/heredoc.c			\
-			  exec/expand_heredoc.c		\
+			  exec/heredoc_expansion.c	\
 			  exec/file.c				\
 			  exec/sig_heredoc.c		\
 			  exec/exec_error.c			\
@@ -84,7 +84,7 @@ CFLAGS		:= $(CFLAGS) -Wconversion -Wsign-conversion
 CPPFLAGS	:= $(CPPFLAGS) $(INC:%=-I%)
 LDFLAGS 	:= $(LDFLAGS) $(LIB:%=-L%)
 LDLIBS		:= $(LDLIBS) $(LIB:$(LIB_DIR)/lib%=-l%)
-CFLAGS		:= $(CFLAGS) -fsanitize=address,undefined,signed-integer-overflow
+CFLAGS		:= $(CFLAGS) -g3 -fsanitize=address,undefined,signed-integer-overflow
 
 #------------------------------------------------------------------------------#
 #                  SHELL CMDS                                                  #
