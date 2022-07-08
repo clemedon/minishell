@@ -113,26 +113,22 @@ typedef struct s_env
 
 typedef struct s_cmd
 {
-	int		error;
 	int		cmdid;
 	int		cmdpos;
 	size_t	nb_arg;
 	char	**cmd;
 	char	*prg;
-
 	int		fd[2];
-
 	int		type_in;
 	int		type_out;
-
 	char	*file_in;
 	char	*file_out;
-
 	char	*stop_word;
 	int		is_here_doc;
-
 	int		fd_in;
 	int		fd_out;
+	int		in;
+	int		out;
 
 }			t_cmd;
 

@@ -34,7 +34,8 @@ void	ft_remove_cmd(t_dlist *cmdlist, t_dlist *cmd)
 
 void	ft_init_cmd(t_data *data, t_cmd **cmd)
 {
-	(*cmd)->error = 0;
+	(*cmd)->in = 0;
+	(*cmd)->out = 1;
 	(*cmd)->cmdid = data->cmdid ++;
 	(*cmd)->nb_arg = 0;
 	(*cmd)->cmd = NULL;

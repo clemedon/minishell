@@ -16,6 +16,8 @@ void	ft_exec_cmd(t_data *data, t_dlist *cmd)
 {
 	int	pid;
 
+	if (cmd->next)
+		pipe(((t_cmd *)cmd->content)->fd);
 	pid = fork();
 
 	if (pid == -1)
@@ -47,34 +49,12 @@ void	ft_exec_cmd(t_data *data, t_dlist *cmd)
 	}
 }
 
-static t_dlist	*ft_init_pipe(t_data *data)
-{
-	t_dlist	*cmd;
-
-	cmd = data->cmdlist;
-	while (cmd)
-	{
-		pipe(((t_cmd *)cmd->content)->fd);
-
-		/* //print */
-		/* ft_putendl_fd ("  PIPE", 2); */
-		/* ft_putstr_fd ("  fd0: ", 2); */
-		/* ft_putnbr_fd (((t_cmd *)cmd->content)->fd[0], 2); */
-		/* ft_putendl_fd ("", 2); */
-		/* ft_putstr_fd ("  fd1: ", 2); */
-		/* ft_putnbr_fd (((t_cmd *)cmd->content)->fd[1], 2); */
-		/* ft_putendl_fd ("", 2); */
-		cmd = cmd->next;
-	}
-	return (data->cmdlist);
-}
-
 int	ft_exec(t_data *data)
 {
 	t_dlist		*cmd;
 	int			builtin_id;
 
-	cmd = ft_init_pipe(data);
+	cmd = data->cmdlist;
 	while (cmd)
 	{
 		if (!ft_open(data, cmd))
@@ -87,7 +67,6 @@ int	ft_exec(t_data *data)
 		if (data->cmdid == 1 && builtin_id && !ft_fork_builtin(cmd))
 		{
 			data->status = ft_exec_builtin(data, cmd, builtin_id);
-			((t_cmd *)cmd->content)->error = data->status;
 		}
 		else
 			ft_exec_cmd(data, cmd);
