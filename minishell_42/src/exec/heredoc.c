@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 20:38:35 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/07 15:55:24 by athirion         ###   ########.fr       */
+/*   Updated: 2022/07/10 07:51:47 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_end_heredoc(t_dlist *cmd)
 	ft_putendl_fd("')", 2);
 }
 
-void	ft_here_doc_4(t_data *data, t_dlist *cmd, t_hd *hd, char *file)
+void	ft_close_heredoc(t_data *data, t_dlist *cmd, t_hd *hd, char *file)
 {
 	ft_free(hd->temp);
 	ft_close(data, cmd, &hd->fd_file);
@@ -28,7 +28,7 @@ void	ft_here_doc_4(t_data *data, t_dlist *cmd, t_hd *hd, char *file)
 	unlink(file);
 }
 
-void	ft_here_doc_3(t_data *data, t_hd *hd)
+void	ft_write_heredoc(t_data *data, t_hd *hd)
 {
 	hd->expand = NULL;
 	if (ft_has_a_var(hd->temp) && ft_strlen(hd->temp) > 2)
@@ -45,7 +45,7 @@ void	ft_here_doc_3(t_data *data, t_hd *hd)
 	ft_init_signals (data);
 }
 
-int	ft_here_doc_2(t_data *data, t_hd *hd)
+int	ft_heredoc_prompt(t_data *data, t_hd *hd)
 {
 	extern int	g_sig_status;
 
@@ -66,7 +66,7 @@ void	ft_here_doc(t_data *data, t_dlist *cmd, t_dlist *redir, char *file)
 	g_sig_status = 0;
 	while (1)
 	{
-		if (ft_here_doc_2 (data, &hd))
+		if (ft_heredoc_prompt (data, &hd))
 			break ;
 		if (hd.temp == NULL)
 		{
@@ -78,7 +78,7 @@ void	ft_here_doc(t_data *data, t_dlist *cmd, t_dlist *redir, char *file)
 			&& !(ft_strncmp(hd.temp,
 					((t_redir *)redir->content)->file, ft_strlen(hd.temp) - 1)))
 			break ;
-		ft_here_doc_3(data, &hd);
+		ft_write_heredoc(data, &hd);
 	}
-	ft_here_doc_4(data, cmd, &hd, file);
+	ft_close_heredoc(data, cmd, &hd, file);
 }

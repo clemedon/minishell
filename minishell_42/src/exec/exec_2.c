@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_2.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/10 08:11:49 by athirion          #+#    #+#             */
+/*   Updated: 2022/07/10 08:14:41 by athirion         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static void	ft_parent_2(t_data *data, t_dlist *cmd, int pid)
@@ -58,9 +70,19 @@ static void	ft_check_fd(t_data *data, int fd)
 
 static void	ft_child_2(t_data *data, t_dlist *cmd)
 {
-	/* ft_close(data, cmd, &((t_cmd *)cmd->content)->fd[0]); */
-	/* if (cmd->prev) */
-	/* 	ft_close(data, cmd, &((t_cmd *)cmd->prev->content)->fd[1]); */
+	if (((t_cmd *)cmd->content)->file_out)
+	{
+		ft_check_fd(data, ((t_cmd *)cmd->content)->fd_out);
+		ft_w_dup2(data, ((t_cmd *)cmd->content)->fd_out,
+			((t_cmd *)cmd->content)->out);
+	}
+	else if (cmd->next)
+	{
+		ft_close (data, cmd, &((t_cmd *)cmd->content)->fd[0]);
+		ft_w_dup2(data, ((t_cmd *)cmd->content)->fd[1],
+			((t_cmd *)cmd->content)->out);
+		ft_close (data, cmd, &((t_cmd *)cmd->content)->fd[1]);
+	}
 	if (ft_is_builtin(cmd) && ft_fork_builtin(cmd))
 	{
 		data->status = ft_exec_builtin(data, cmd, ft_is_builtin(cmd));
@@ -72,9 +94,7 @@ static void	ft_child_2(t_data *data, t_dlist *cmd)
 	if (!ft_is_builtin(cmd)
 		&& execve(((t_cmd *)cmd->content)->prg,
 			((t_cmd *)cmd->content)->cmd, data->envtab) == -1)
-	{
 		ft_perror(data, cmd, 126);
-	}
 }
 
 void	ft_child(t_data *data, t_dlist *cmd)
@@ -97,19 +117,6 @@ void	ft_child(t_data *data, t_dlist *cmd)
 		ft_w_dup2(data, ((t_cmd *)cmd->prev->content)->fd[0],
 			((t_cmd *)cmd->content)->in);
 		ft_close (data, cmd, &((t_cmd *)cmd->prev->content)->fd[0]);
-	}
-	if (((t_cmd *)cmd->content)->file_out)
-	{
-		ft_check_fd(data, ((t_cmd *)cmd->content)->fd_out);
-		ft_w_dup2(data, ((t_cmd *)cmd->content)->fd_out,
-			((t_cmd *)cmd->content)->out);
-	}
-	else if (cmd->next)
-	{
-		ft_close (data, cmd, &((t_cmd *)cmd->content)->fd[0]);
-		ft_w_dup2(data, ((t_cmd *)cmd->content)->fd[1],
-			((t_cmd *)cmd->content)->out);
-		ft_close (data, cmd, &((t_cmd *)cmd->content)->fd[1]);
 	}
 	ft_child_2(data, cmd);
 }

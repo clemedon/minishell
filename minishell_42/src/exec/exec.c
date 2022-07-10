@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: clem </var/mail/clem>                      +#+  +:+       +#+        */
+/*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/28 14:44:33 by clem              #+#    #+#             */
-/*   Updated: 2022/07/07 19:45:16 by cvidon           ###   ########.fr       */
+/*   Created: 2022/07/10 08:10:50 by athirion          #+#    #+#             */
+/*   Updated: 2022/07/10 08:11:06 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,31 +19,16 @@ void	ft_exec_cmd(t_data *data, t_dlist *cmd)
 	if (cmd->next)
 		pipe(((t_cmd *)cmd->content)->fd);
 	pid = fork();
-
 	if (pid == -1)
 		ft_perror(data, cmd, errno);
 	if (pid > 0)
 	{
-
-		/* //print */
-		/* ft_putstr_fd ("  ft_exec_cmd: parent node: ", 2); */
-		/* ft_putnbr_fd (((t_cmd *)cmd->content)->fd[0], 2); */
-		/* ft_putendl_fd ("", 2); */
-
 		ft_w_signal(data, SIGQUIT, SIG_IGN);
 		ft_w_signal(data, SIGINT, SIG_IGN);
-
-
 		ft_parent (data, cmd, pid);
 	}
 	if (pid == 0)
 	{
-
-		/* //print */
-		/* ft_putstr_fd ("  ft_exec_cmd: child node: ", 2); */
-		/* ft_putnbr_fd (((t_cmd *)cmd->content)->fd[0], 2); */
-		/* ft_putendl_fd ("", 2); */
-
 		ft_w_signal(data, SIGQUIT, SIG_DFL);
 		ft_child(data, cmd);
 	}
