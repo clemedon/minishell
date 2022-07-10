@@ -58,9 +58,9 @@ static void	ft_check_fd(t_data *data, int fd)
 
 static void	ft_child_2(t_data *data, t_dlist *cmd)
 {
-	ft_close(data, cmd, &((t_cmd *)cmd->content)->fd[0]);
-	if (cmd->prev)
-		ft_close(data, cmd, &((t_cmd *)cmd->prev->content)->fd[1]);
+	/* ft_close(data, cmd, &((t_cmd *)cmd->content)->fd[0]); */
+	/* if (cmd->prev) */
+	/* 	ft_close(data, cmd, &((t_cmd *)cmd->prev->content)->fd[1]); */
 	if (ft_is_builtin(cmd) && ft_fork_builtin(cmd))
 	{
 		data->status = ft_exec_builtin(data, cmd, ft_is_builtin(cmd));
