@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 08:10:50 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/10 08:28:53 by athirion         ###   ########.fr       */
+/*   Updated: 2022/07/10 08:34:48 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	ft_exec_cmd(t_data *data, t_dlist *cmd)
 	}
 	if (pid == 0)
 	{
+		ft_w_signal(data, SIGTTIN, SIG_IGN);
 		ft_w_signal(data, SIGQUIT, SIG_DFL);
 		ft_child(data, cmd);
 	}

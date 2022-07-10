@@ -63,7 +63,7 @@ SRCS		= main.c 					\
 
 OBJ_DIR 	= obj
 
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		=
 CPPFLAGS	=
 LDFLAGS		=
 LDLIBS		= -lreadline
@@ -80,11 +80,10 @@ INC			= $(INC_DIR) \
 SRCS		:= $(SRCS:%=$(SRC_DIR)/%)
 OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 CC			= gcc
-CFLAGS		:= $(CFLAGS) -Wconversion -Wsign-conversion
+CFLAGS		:= $(CFLAGS) -Wall -Wextra -Werror
 CPPFLAGS	:= $(CPPFLAGS) $(INC:%=-I%)
 LDFLAGS 	:= $(LDFLAGS) $(LIB:%=-L%)
 LDLIBS		:= $(LDLIBS) $(LIB:$(LIB_DIR)/lib%=-l%)
-CFLAGS		:= $(CFLAGS) -g3 -fsanitize=address,undefined,signed-integer-overflow
 
 #------------------------------------------------------------------------------#
 #                  SHELL CMDS                                                  #
@@ -101,8 +100,8 @@ MAKE		= make --silent --jobs --directory
 
 all: $(NAME)
 
-simple: CFLAGS = -Wall -Wextra -Werror
-simple: $(NAME)
+sani: CFLAGS = $(CFLAGS) -g3 -fsanitize=address,undefined,signed-integer-overflow -Wconversion -Wsign-conversion
+sani: $(NAME)
 
 $(NAME): $(OBJS)
 	@for f in $(LIB); do $(MAKE) $$f --no-print-directory; done
