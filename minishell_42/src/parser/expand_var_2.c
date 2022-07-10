@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 17:37:39 by athirion          #+#    #+#             */
-/*   Updated: 2022/06/29 17:37:51 by athirion         ###   ########.fr       */
+/*   Updated: 2022/07/10 10:44:36 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,7 @@ void	ft_var_exit_status(t_data *data)
 	temp = data->toklist;
 	while (temp)
 	{
-		if (temp->next && ft_is_tokid(temp, DO) && ft_is_tokid(temp->next, WD)
-			&& !ft_strncmp(((t_tok *)temp->next->content)->tok, "?", 1))
+		if (ft_is_tokid(temp, RV))
 		{
 			if (g_sig_status)
 			{
@@ -127,8 +126,6 @@ void	ft_var_exit_status(t_data *data)
 				str = ft_itoa(data->status);
 			free(((t_tok *)temp->content)->tok);
 			((t_tok *)temp->content)->tok = str;
-			((t_tok *)temp->content)->tokid = WD;
-			ft_remove_tok(data->toklist, temp->next);
 		}
 		if (temp)
 			temp = temp->next;

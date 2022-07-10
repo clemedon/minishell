@@ -6,7 +6,7 @@
 /*   By: clem </var/mail/clem>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 18:35:31 by clem              #+#    #+#             */
-/*   Updated: 2022/06/28 18:35:31 by clem             888   ########.fr       */
+/*   Updated: 2022/07/10 09:35:20 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static int	ft_check_last_tok(t_dlist *toklist)
 		&& ((t_tok *) temp->content)->tokid != QT
 		&& ((t_tok *) temp->content)->tokid != DQ
 		&& ((t_tok *) temp->content)->tokid != WS
+		&& ((t_tok *) temp->content)->tokid != RV
 		&& ((t_tok *) temp->content)->tokid != DO)
 		return (0);
 	return (1);

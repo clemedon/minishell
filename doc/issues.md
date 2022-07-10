@@ -9,6 +9,15 @@
 
 # //////////////////////// ???
 
+- Fix parse command
+> `"" "" ""` break minishell.
+
+- Fix parsing
+> `echo "d"d` should print `dd` not `d d`.
+
+- Fix exit code offset
+> `exi; exit; echo $?` Should not return 127.
+
 ##  Wtf
 
 - Prompt on hold

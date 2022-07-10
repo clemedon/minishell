@@ -6,7 +6,7 @@
 /*   By: clem </var/mail/clem>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 18:30:37 by clem              #+#    #+#             */
-/*   Updated: 2022/06/28 18:30:37 by clem             888   ########.fr       */
+/*   Updated: 2022/07/10 09:32:55 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,15 @@ static int	ft_set_token(char *tok)
 
 	id = WS * (!ft_strncmp(" ", tok, 1) || (!ft_strncmp("\t", tok, 1)))
 		+ PP * (!ft_strncmp("|", tok, 1))
-		+ DO * (!ft_strncmp("$", tok, 1))
+		+ DO * (!ft_strncmp("$", tok, 1) && ft_strncmp("$?", tok, 2))
 		+ QT * (!ft_strncmp("\'", tok, 1))
 		+ DQ * (!ft_strncmp("\"", tok, 1))
 		+ GT * (!ft_strncmp(">", tok, 1) && ft_strncmp(">>", tok, 2))
 		+ DG * (!ft_strncmp(">>", tok, 2))
 		+ LS * (!ft_strncmp("<", tok, 1) && ft_strncmp("<<", tok, 2))
 		+ DL * (!ft_strncmp("<<", tok, 2))
-		+ WD * (!ft_strchr("\t \n|\\$\'\"><", *tok));
+		+ WD * (!ft_strchr("\t \n|\\$\'\"><", *tok))
+		+ RV * (!ft_strncmp("$?", tok, 2));
 	return (id);
 }
 
@@ -44,7 +45,8 @@ static size_t	ft_token_size(char *cmdline)
 	size = 0;
 	if (ft_strchr("\t \n|$\'\"><", *cmdline))
 	{
-		if (!ft_strncmp("<<", cmdline, 2) || !ft_strncmp(">>", cmdline, 2))
+		if (!ft_strncmp("<<", cmdline, 2) || !ft_strncmp(">>", cmdline, 2)
+			|| !ft_strncmp("$?", cmdline, 2))
 			return (2);
 		else
 			return (1);
