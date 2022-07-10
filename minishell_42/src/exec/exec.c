@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 08:10:50 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/10 08:11:06 by athirion         ###   ########.fr       */
+/*   Updated: 2022/07/10 08:28:53 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	ft_exec_cmd(t_data *data, t_dlist *cmd)
 	int	pid;
 
 	if (cmd->next)
-		pipe(((t_cmd *)cmd->content)->fd);
+		if (pipe(((t_cmd *)cmd->content)->fd) == -1)
+			ft_perror(data, cmd, errno);
 	pid = fork();
 	if (pid == -1)
 		ft_perror(data, cmd, errno);
