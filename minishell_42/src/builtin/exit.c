@@ -107,6 +107,7 @@ void	ft_exit(t_data *data, char **cmd)
 {
 	int	fd;
 
+	data->status = 0;
 	fd = open ("/dev/stdin", O_WRONLY, 0777);
 	if (fd == -1)
 		ft_exitmsg (data, "open");
