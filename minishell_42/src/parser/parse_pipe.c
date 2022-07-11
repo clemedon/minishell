@@ -6,7 +6,7 @@
 /*   By: clem </var/mail/clem>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 18:36:39 by clem              #+#    #+#             */
-/*   Updated: 2022/06/28 18:36:39 by clem             888   ########.fr       */
+/*   Updated: 2022/07/11 22:39:40 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ static int	ft_last_tok_is_pipe(t_dlist *token)
 	while (temp->next)
 		temp = temp->next;
 	last = temp;
+	if (ft_is_tokid(last, WS))
+	{
+		while (last->prev && ft_is_tokid(last, WS))
+			last = last->prev;
+	}
 	temp = token;
 	while (temp && temp != last)
 		temp = temp->next;

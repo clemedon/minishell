@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 17:02:45 by athirion          #+#    #+#             */
-/*   Updated: 2022/06/29 17:02:46 by athirion         ###   ########.fr       */
+/*   Updated: 2022/07/11 22:20:57 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	ft_expand_quote2(t_data *data, t_dlist **new, t_dlist **temp)
 
 	str = NULL;
 	ft_expand_quote2_2(data, new, temp, str);
-	if ((*temp)->next && (ft_is_tokid (*temp, QT) || ft_is_tokid (*temp, DQ)))
+	if ((*temp)->next && (ft_is_tokid (*temp, QT) || ft_is_tokid (*temp, DQ))
+			&& ft_is_tokid ((*temp)->next, QT) && !ft_is_tokid ((*temp)->next, DQ))
 	{
 		*temp = (*temp)->next;
 		str = ft_concat_quoted_words (data, *temp);

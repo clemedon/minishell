@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 17:02:50 by athirion          #+#    #+#             */
-/*   Updated: 2022/06/29 17:02:51 by athirion         ###   ########.fr       */
+/*   Updated: 2022/07/11 21:09:11 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ void	ft_clear_emptyquote(t_data *data)
 	while (temp)
 	{
 		if ((ft_is_tokid(temp, DQ) || ft_is_tokid(temp, QT))
-			&& !ft_strcmp(((t_tok *)temp->content)->tok, ""))
+			&& (!ft_strcmp(((t_tok *)temp->content)->tok, "")
+				|| !ft_strcmp(((t_tok *)temp->content)->tok, "\' ")
+				|| !ft_strcmp(((t_tok *)temp->content)->tok, "\" ")))
 		{
 			if (!temp->next)
 			{
