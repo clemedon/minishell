@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 17:02:45 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/12 13:35:43 by athirion         ###   ########.fr       */
+/*   Updated: 2022/07/12 15:47:15 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ void	ft_expand_quote2_2(t_data *data, t_dlist **new, t_dlist **tmp, char *s)
 	while ((*tmp)->next
 		&& !ft_is_tokid (*tmp, QT) && !ft_is_tokid (*tmp, DQ))
 	{
-		if (!ft_is_equal_sign(((t_tok *)(*tmp)->content)->tok))
+		if (!ft_is_equal_sign(((t_tok *)(*tmp)->content)->tok) ||
+				((*tmp)->prev && ft_is_tokid((*tmp)->prev, WS)
+				 && ft_is_tokid((*tmp)->next, WS)))
 			ft_dlst_elem_dup (data, new, *tmp);
 		*tmp = (*tmp)->next;
 	}
