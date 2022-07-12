@@ -9,6 +9,19 @@
 
 # //////////////////////// ???
 
+- Fix parsing segfault
+> `env | grep "="`
+
+- Fix parsing quote
+> `echo ""=""` should print `=`
+> `echo "="` shouldn't segfaut.
+
+- Fix parsing quote
+> `''c` should print `c`
+
+- Fix parsing quote infinityloop
+> `anything''c` shoudlnt infinity loop
+
 - Fix parse command
 > `"" "" ""` break minishell.
 
