@@ -10,8 +10,8 @@
 # //////////////////////// ???
 
 
-- Fix heredoc signals
-> `SIG_INT` then `<< STOP cat |` then `echo $?` shouldnt return 130.
+- Fix status code
+> `<C-C>` then `|` then `echo $?`
 
 - Check substr
 > Check substr (strlen **-1**)
