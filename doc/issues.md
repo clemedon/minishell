@@ -10,10 +10,13 @@
 # //////////////////////// ???
 
 
+- Fix heredoc signals
 > `SIG_INT` then `<< STOP cat |` then `echo $?` shouldnt return 130.
 
+- Check substr
 > Check substr (strlen **-1**)
 
+- Normify
 > Norm
 
 ##  Wtf
