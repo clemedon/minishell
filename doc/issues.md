@@ -9,18 +9,18 @@
 
 # //////////////////////// ???
 
-- Fix parsing segfault
-> env | grep "="
+- Fix parse command
+>
 
-- Fix parsing quote
-> echo ""="" should print =
-> echo "=" shouldn't segfaut.
+- Fix expand numeric var
+> `echo "$100"` should print `00`
 
-- Fix parsing quote
-> ''c should print c
+- Fix expand var =
+> `echo "$USER="` should print `cvidon=`
 
-- Fix parsing quote infinityloop
-> anything''c shoudlnt infinity loop
+- Fix leak redir
+> 2 files 1 redir
+> leak & redir pas
 
 - Fix parse command
 > "" "" "" break minishell.

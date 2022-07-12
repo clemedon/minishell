@@ -100,7 +100,7 @@ MAKE		= make --silent --jobs --directory
 
 all: $(NAME)
 
-sani: CFLAGS = $(CFLAGS) -g3 -fsanitize=address,undefined,signed-integer-overflow -Wconversion -Wsign-conversion
+sani: CFLAGS := $(CFLAGS) -g3 -fsanitize=address,undefined,signed-integer-overflow -Wconversion -Wsign-conversion
 sani: $(NAME)
 
 $(NAME): $(OBJS)
