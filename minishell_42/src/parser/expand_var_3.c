@@ -12,17 +12,44 @@
 
 #include "minishell.h"
 
+/*
+ ** if $0something -> return to join('minishell' + 'something')
+ **
+ **            echo $0tray
+ **                 bashtray
+ **
+ ** if $+1 == digit -> substr(key, 1, strlend(key - 1));
+ **
+ **            echo $100
+ **                 00
+ **
+ ** if $+1 = !alpha_ -> return join('$', key);
+ **
+ **            echo $=42
+ **                 $=42
+ **
+ ** while alphanum_ until !alphanum_ -> join (getenv_var + after !alphanum_)
+ **
+ **            echo 1. "$t=TEST" 2. $USER=USER
+ **                 1. =TEST     2. cvidon=USER
+ **
+ ** if all alphanum_ -> return getenv_var
+ **
+ **            echo $USERR
+ */
+
+
 char	*ft_expand_var(t_data *data, char *key)
 {
-	char		*val;
+	char		*var;
 	char		*ptr;
 	size_t		i;
 
 	if (key[0] == '0')
 		return (ft_strjoin_free_s2
-			("minishell", ft_w_substr(data, key, 1, ft_strlen(key - 1))));
+				("minishell", ft_w_substr(data, key, 1, ft_strlen(key))));
 	if (ft_isdigit (key[0]))
-		return (ft_w_substr(data, key, 1, ft_strlen(key - 1)));
+		return (ft_w_substr(data, key, 1, ft_strlen(key)));
 	if (!(ft_isalpha (key[0]) || key[0] == '_'))
 		return (ft_strjoin ("$", key));
 	i = 0;
@@ -30,11 +57,14 @@ char	*ft_expand_var(t_data *data, char *key)
 	{
 		if (!(ft_isalnum (key[i]) || key[i] == '_'))
 		{
-			val = ft_w_substr(data, key, 0, i);
-			ptr = val;
-			val = ft_getenv(data, data->envlist, val);
+			if (ft_isdigit (key[0]))
+				var = ft_w_substr(data, key, 0, 1);
+			else
+				var = ft_w_substr(data, key, 0, i);
+			ptr = var;
+			var = ft_getenv(data, data->envlist, var);
 			free (ptr);
-			return (ft_strjoin_free_s1 (val, key + i));
+			return (ft_strjoin_free_s1 (var, key + i));
 		}
 		i++;
 	}
@@ -64,7 +94,7 @@ void	ft_concat_expand(t_data *data)
 		if (temp && ft_is_tokid(temp, EX))
 		{
 			while (temp && temp->next && ft_is_tokid(temp, EX)
-				&& ft_is_tokid(temp->next, EX))
+					&& ft_is_tokid(temp->next, EX))
 			{
 				str = ft_strjoin(((t_tok *)temp->content)->tok,
 						((t_tok *)temp->next->content)->tok);
