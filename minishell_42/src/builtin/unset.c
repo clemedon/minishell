@@ -90,9 +90,6 @@ static void	ft_envlist_unset(t_data *data, char *key)
 
 static int	ft_is_valid_unset(char *key)
 {
-	char	*keyptr;
-
-	keyptr = key;
 	if (!ft_isdigit (*key))
 	{
 		while (*key && (ft_isalnum (*key) || *key == '_'))
@@ -100,9 +97,6 @@ static int	ft_is_valid_unset(char *key)
 		if (*key == '\0')
 			return (TRUE);
 	}
-	ft_putstr_fd ("minishell: unset: `", 2);
-	ft_putstr_fd (keyptr, 2);
-	ft_putstr_fd ("': not a valid identifier\n", 2);
 	return (FALSE);
 }
 
@@ -120,7 +114,7 @@ int	ft_unset(t_data *data, char **cmd)
 	while (cmd[i])
 	{
 		if (!ft_is_valid_unset (cmd[i]))
-			ret = FAILURE;
+			ret = SUCCESS;
 		else
 		{
 			ft_data_unset (data, cmd[i]);
