@@ -9,14 +9,27 @@
 
 # //////////////////////// ???
 
+- Fix parsing segfault
+> env | grep "="
+
+- Fix parsing quote
+> echo ""="" should print =
+> echo "=" shouldn't segfaut.
+
+- Fix parsing quote
+> ''c should print c
+
+- Fix parsing quote infinityloop
+> anything''c shoudlnt infinity loop
+
 - Fix parse command
-> `"" "" ""` break minishell.
+> "" "" "" break minishell.
 
 - Fix parsing
-> `echo "d"d` should print `dd` not `d d`.
+> echo "d"d should print dd not d d.
 
 - Fix exit code offset
-> `exi; exit; echo $?` Should not return 127.
+> exi; exit; echo $? Should not return 127.
 
 ##  Wtf
 
