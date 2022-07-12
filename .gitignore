@@ -1,6 +1,7 @@
 # Compiled Source #
 ###################
 *.o
+*.a
 
 # Code Editor #
 ###############
