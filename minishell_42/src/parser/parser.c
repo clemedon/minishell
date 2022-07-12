@@ -6,7 +6,7 @@
 /*   By: clem </var/mail/clem>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 18:33:44 by clem              #+#    #+#             */
-/*   Updated: 2022/07/11 23:43:41 by athirion         ###   ########.fr       */
+/*   Updated: 2022/07/12 13:34:58 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,15 +172,34 @@ void	ft_parser(t_data *data)
 		data->status = 2;
 		return ;
 	}
+	/* printf(">>> START <<<\n"); */
+	/* ft_printlist_tok(data->toklist); */
 	ft_expand_vars(data);
+	/* printf(">>> AFTER EXPAND VAR <<<\n"); */
+	/* ft_printlist_tok(data->toklist); */
 	ft_expand_tilde(data);
+	/* printf(">>> AFTER EXPAND TILDE <<<\n"); */
+	/* ft_printlist_tok(data->toklist); */
 	ft_expand_quote(data);
+	/* printf(">>> AFTER EXPAND QUOTE <<<\n"); */
+	/* ft_printlist_tok(data->toklist); */
 	ft_concat_consecutive_word(data);
+	/* printf(">>> AFTER CONCAT WORD <<<\n"); */
+	/* ft_printlist_tok(data->toklist); */
 	ft_parse_space(data);
+	/* printf(">>> AFTER PARSE SPACE <<<\n"); */
+	/* ft_printlist_tok(data->toklist); */
 	ft_parse_redir(data);
+	/* printf(">>> AFTER PARSE REDIR <<<\n"); */
+	/* ft_printlist_tok(data->toklist); */
 	ft_count_pipe(data);
+	/* printf(">>> AFTER COUNT PIPE <<<\n"); */
+	/* ft_printlist_tok(data->toklist); */
 	if (!ft_parse_empty_cmd(data))
 		return ;
+	/* printf(">>> END <<<\n"); */
+	/* ft_printlist_tok(data->toklist); */
 	ft_create_cmdlist(data);
+	/* ft_printlist_cmd(data->cmdlist); */
 	ft_create_redlist(data);
 }

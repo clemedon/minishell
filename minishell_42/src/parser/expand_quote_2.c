@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 17:02:50 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/11 21:09:11 by athirion         ###   ########.fr       */
+/*   Updated: 2022/07/12 13:30:34 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,15 @@ void	ft_remove_empty_q_2(t_data *data, t_dlist **tmp, t_dlist **new, int wt)
 	{
 		if (ft_is_tokid(*tmp, WD))
 			wt = 1;
-		if (!wt && ((ft_is_tokid (*tmp, QT)
+		if (!wt && (*tmp)->next && ((ft_is_tokid (*tmp, QT)
 					&& ft_is_tokid ((*tmp)->next, QT))
 				|| (ft_is_tokid (*tmp, DQ) && ft_is_tokid ((*tmp)->next, DQ))))
 		{
+			if ((*tmp)->next->next && ft_is_tokid((*tmp)->next->next, WD))
+			{
+				*tmp = (*tmp)->next->next;
+				continue ;
+			}
 			free(((t_tok *)(*tmp)->next->content)->tok);
 			if (ft_is_tokid(*tmp, QT))
 				((t_tok *)(*tmp)->next->content)->tok = ft_w_strdup(data, "''");
@@ -111,9 +116,7 @@ void	ft_remove_empty_quotes(t_data *data)
 	ptrcpy[1] = new;
 	new = NULL;
 	ft_remove_empty_q_2(data, &temp, &new, word_token);
-		data->toklist = new;
-	if (data->toklist)
-		ft_update_tokpos (data->toklist);
+	data->toklist = new;
 	ft_clearlist_tok (&ptrcpy[0], ft_free);
 	ft_free (ptrcpy[1]);
 }
