@@ -6,7 +6,7 @@
 /*   By: clem </var/mail/clem>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 18:33:44 by clem              #+#    #+#             */
-/*   Updated: 2022/07/12 13:34:58 by athirion         ###   ########.fr       */
+/*   Updated: 2022/07/12 14:44:27 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,4 +202,5 @@ void	ft_parser(t_data *data)
 	ft_create_cmdlist(data);
 	/* ft_printlist_cmd(data->cmdlist); */
 	ft_create_redlist(data);
+	/* ft_printlist_redir(data->redlist); */
 }

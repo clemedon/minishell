@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 15:39:23 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/10 11:31:49 by cvidon           ###   ########.fr       */
+/*   Updated: 2022/07/12 14:37:22 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -442,7 +442,7 @@ char	**ft_arg_cmd(t_data *data, t_dlist **cmd, t_dlist **toklist);
 
 void	ft_parse_command_redir_1(t_data *data, t_dlist **cmd, t_dlist **temp);
 void	ft_parse_command_redir_2(t_data *data, t_dlist **cmd, t_dlist **temp);
-void	ft_parse_command_2(t_data *data, t_dlist **cmd, t_dlist **temp);
+void	ft_parse_command_2(t_data *data, t_dlist **cmd, t_dlist **temp, int *c);
 void	ft_parse_command(t_data *data);
 
 /*
