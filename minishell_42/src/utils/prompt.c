@@ -89,7 +89,8 @@ static void	ft_readline(t_data *data)
 		ft_putendl_fd ("exit", 1);
 		ft_exitmsg (data, "");
 	}
-	add_history (cmdline);
+	if (*cmdline)
+		add_history (cmdline);
 	data->cmdline = cmdline;
 }
 
