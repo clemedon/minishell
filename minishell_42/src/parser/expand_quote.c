@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 17:02:45 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/12 15:47:15 by athirion         ###   ########.fr       */
+/*   Updated: 2022/07/13 11:41:13 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_expand_quote2_2(t_data *data, t_dlist **new, t_dlist **tmp, char *s)
 	{
 		if (!ft_is_equal_sign(((t_tok *)(*tmp)->content)->tok) ||
 				((*tmp)->prev && ft_is_tokid((*tmp)->prev, WS)
-				 && ft_is_tokid((*tmp)->next, WS)))
+					&& ft_is_tokid((*tmp)->next, WS)))
 			ft_dlst_elem_dup (data, new, *tmp);
 		*tmp = (*tmp)->next;
 	}
@@ -44,32 +44,32 @@ void	ft_expand_quote2_2(t_data *data, t_dlist **new, t_dlist **tmp, char *s)
 	}
 }
 
-void	ft_expand_quote2(t_data *data, t_dlist **new, t_dlist **temp)
+void	ft_expand_quote2(t_data *data, t_dlist **new, t_dlist **tp)
 {
 	char	*str;
 
 	str = NULL;
-	ft_expand_quote2_2(data, new, temp, str);
-	if ((*temp)->next && ((ft_is_tokid (*temp, QT) && ft_is_tokid ((*temp)->next, QT))
-			|| (ft_is_tokid (*temp, DQ) && ft_is_tokid ((*temp)->next, DQ))))
-		*temp = (*temp)->next->next;
-	else if (((*temp)->next && (ft_is_tokid (*temp, QT) || ft_is_tokid (*temp, DQ))
-			&& !ft_is_tokid ((*temp)->next, QT) && !ft_is_tokid ((*temp)->next, DQ)))
+	ft_expand_quote2_2(data, new, tp, str);
+	if ((*tp)->next && ((ft_is_tokid(*tp, QT) && ft_is_tokid((*tp)->next, QT))
+			|| (ft_is_tokid(*tp, DQ) && ft_is_tokid((*tp)->next, DQ))))
+		*tp = (*tp)->next->next;
+	else if (((*tp)->next && (ft_is_tokid(*tp, QT) || ft_is_tokid(*tp, DQ))
+			&& !ft_is_tokid((*tp)->next, QT) && !ft_is_tokid((*tp)->next, DQ)))
 	{
-		*temp = (*temp)->next;
-		str = ft_concat_quoted_words (data, *temp);
-		free (((t_tok *)(*temp)->content)->tok);
-		((t_tok *)(*temp)->content)->tok = ft_w_strdup(data, str);
+		*tp = (*tp)->next;
+		str = ft_concat_quoted_words (data, *tp);
+		free (((t_tok *)(*tp)->content)->tok);
+		((t_tok *)(*tp)->content)->tok = ft_w_strdup(data, str);
 		free (str);
-		ft_dlst_elem_dup (data, new, *temp);
-		*temp = (*temp)->next;
-		while (*temp && !ft_is_tokid (*temp, QT) && !ft_is_tokid (*temp, DQ))
-			*temp = (*temp)->next;
+		ft_dlst_elem_dup (data, new, *tp);
+		*tp = (*tp)->next;
+		while (*tp && !ft_is_tokid (*tp, QT) && !ft_is_tokid (*tp, DQ))
+			*tp = (*tp)->next;
 	}
-	if (*temp && !ft_is_tokid (*temp, QT) && !ft_is_tokid (*temp, DQ))
-		ft_dlst_elem_dup (data, new, *temp);
-	if (*temp)
-		*temp = (*temp)->next;
+	if (*tp && !ft_is_tokid (*tp, QT) && !ft_is_tokid (*tp, DQ))
+		ft_dlst_elem_dup (data, new, *tp);
+	if (*tp)
+		*tp = (*tp)->next;
 }
 
 void	ft_expand_quote(t_data *data)
