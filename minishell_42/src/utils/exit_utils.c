@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 15:52:36 by athirion          #+#    #+#             */
-/*   Updated: 2022/06/30 11:37:59 by athirion         ###   ########.fr       */
+/*   Updated: 2022/07/13 09:53:53 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,16 @@ void	ft_free_all(t_data *data)
 
 void	ft_exitmsg(t_data *data, char *str)
 {
+	extern int	g_sig_status;
+
 	if (str && *str)
 	{
-		data->status = EXIT_FAILURE;
+		g_sig_status = EXIT_FAILURE;
 		write(2, "minishell: ", 12);
 		write(2, str, ft_strlen (str));
 		write(2, " error\n", 7);
 	}
 	ft_free_all(data);
 	rl_clear_history ();
-	exit(data->status);
+	exit(g_sig_status);
 }

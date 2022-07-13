@@ -6,7 +6,7 @@
 /*   By: cvidon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 15:49:26 by cvidon            #+#    #+#             */
-/*   Updated: 2022/06/27 15:49:26 by cvidon           ###   ########.fr       */
+/*   Updated: 2022/07/13 09:51:17 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,16 @@ static int	ft_isnumeric(char *str)
 
 static void	ft_exit_cases(t_data *data, char **cmd)
 {
+	extern int	g_sig_status;
+
+	(void)data;
 	if (cmd[1])
 	{
 		if (!cmd[2] && ft_isnumeric (cmd[1]))
-			data->status = ft_atoi(cmd[1]) % 256;
+			g_sig_status = ft_atoi(cmd[1]) % 256;
 		else if (!cmd[2] && !ft_isnumeric (cmd[1]))
 		{
-			data->status = 2;
+			g_sig_status = 2;
 			write (2, "minishell: exit: ", 17);
 			write (2, cmd[1], ft_strlen(cmd[1]));
 			write (2, ": numeric argument required\n", 28);
@@ -90,12 +93,12 @@ static void	ft_exit_cases(t_data *data, char **cmd)
 		else if (cmd[2] && ft_isnumeric (cmd[1]))
 		{
 			write (2, "minishell: exit: too many arguments\n", 36);
-			data->status = 1;
+			g_sig_status = 1;
 			return ;
 		}
 		else if (cmd[2] && !ft_isnumeric (cmd[1]))
 		{
-			data->status = 2;
+			g_sig_status = 2;
 			write (2, "minishell: exit: ", 17);
 			write (2, cmd[1], ft_strlen(cmd[1]));
 			write (2, ": numeric argument required\n", 28);
@@ -106,8 +109,10 @@ static void	ft_exit_cases(t_data *data, char **cmd)
 void	ft_exit(t_data *data, char **cmd)
 {
 	int	fd;
+	extern int	g_sig_status;
 
-	data->status = 0;
+
+	g_sig_status = 0;
 	fd = open ("/dev/stdin", O_WRONLY, 0777);
 	if (fd == -1)
 		ft_exitmsg (data, "open");

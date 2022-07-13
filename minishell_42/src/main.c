@@ -6,7 +6,7 @@
 /*   By: clem </var/mail/clem>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 15:34:00 by clem              #+#    #+#             */
-/*   Updated: 2022/06/29 17:28:51 by athirion         ###   ########.fr       */
+/*   Updated: 2022/07/13 10:35:28 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	ft_init_signals(t_data *data)
 static void	ft_init_data(t_data *data)
 {
 	extern char		**environ;
+	extern int		g_sig_status;
 
 	data->cmdid = 0;
 	data->cmdcount = 0;
@@ -61,7 +62,7 @@ static void	ft_init_data(t_data *data)
 	data->explist = NULL;
 	data->redlist = NULL;
 	data->cmd_path = NULL;
-	data->status = 0;
+	g_sig_status = 0;
 	data->toggle = 0;
 	data->cwd = ft_w_getcwd(data);
 	data->oldcwd = ft_w_getcwd(data);
@@ -89,7 +90,7 @@ int	main(int ac, char **av)
 		write (2, "minishell: ", 11);
 		write (2, av[1], ft_strlen(av[1]));
 		write (2, ": No such file or directory\n", 28);
-		data.status = 127;
+		g_sig_status = 127;
 	}
-	return (data.status);
+	return (g_sig_status);
 }

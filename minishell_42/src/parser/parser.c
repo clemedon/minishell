@@ -6,7 +6,7 @@
 /*   By: clem </var/mail/clem>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 18:33:44 by clem              #+#    #+#             */
-/*   Updated: 2022/07/12 15:48:09 by athirion         ###   ########.fr       */
+/*   Updated: 2022/07/13 09:45:59 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 static int	ft_parse_special_tok(t_data *data)
 {
+	extern int	g_sig_status;
 	t_dlist	*temp;
 
 	temp = data->toklist;
@@ -32,19 +33,19 @@ static int	ft_parse_special_tok(t_data *data)
 	if (!ft_strcmp(((t_tok *)temp->content)->tok, "."))
 	{
 		ft_putstr_fd("minishell: .: filename argument required\n", 2);
-		data->status = 2;
+		g_sig_status = 2;
 		return (0);
 	}
 	if (!ft_strcmp(((t_tok *)temp->content)->tok, "&"))
 	{
 		ft_putstr_fd("minishell: syntax error near token `&'\n", 2);
-		data->status = 2;
+		g_sig_status = 2;
 		return (0);
 	}
 	if (!ft_strncmp(((t_tok *)temp->content)->tok, "&&", 2))
 	{
 		ft_putstr_fd("minishell: syntax error near token `&&'\n", 2);
-		data->status = 2;
+		g_sig_status = 2;
 		return (0);
 	}
 	return (1);
@@ -157,19 +158,21 @@ void	ft_concat_consecutive_word(t_data *data)
 
 void	ft_parser(t_data *data)
 {
+	extern int	g_sig_status;
+
 	if (!ft_parse_special_tok(data))
 	{
-		data->status = 2;
+		g_sig_status = 2;
 		return ;
 	}
 	if (!ft_parse_pipe(data) || !ft_parse_quote(data, data->toklist))
 	{
-		data->status = 2;
+		g_sig_status = 2;
 		return ;
 	}
 	if (!ft_check_redir(data))
 	{
-		data->status = 2;
+		g_sig_status = 2;
 		return ;
 	}
 	ft_expand_vars(data);

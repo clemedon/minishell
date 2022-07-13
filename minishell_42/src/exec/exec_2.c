@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 08:11:49 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/10 08:14:41 by athirion         ###   ########.fr       */
+/*   Updated: 2022/07/13 09:54:04 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,25 @@
 
 static void	ft_parent_2(t_data *data, t_dlist *cmd, int pid)
 {
-	dprintf (2, "a. %i\n", data->status);
+	extern int	g_sig_status;
+
 	if (!cmd->next)
-		if (waitpid(pid, &data->status, 0) == -1)
+		if (waitpid(pid, &g_sig_status, 0) == -1)
 			ft_perror(data, cmd, errno); // TODO errno sucks
-	dprintf (2, "b. %i\n", data->status);
-	if (WIFEXITED(data->status) == EXIT_FAILURE)
+	if (WIFEXITED(g_sig_status) == EXIT_FAILURE)
 	{
-		data->status = WEXITSTATUS(data->status);
+		g_sig_status = WEXITSTATUS(g_sig_status);
 	}
-	else if (WIFSIGNALED(data->status) == EXIT_FAILURE)
+	else if (WIFSIGNALED(g_sig_status) == EXIT_FAILURE)
 	{
-		if (WTERMSIG(data->status) == SIGQUIT)
+		if (WTERMSIG(g_sig_status) == SIGQUIT)
 		{
-			data->status = 128 + WTERMSIG(data->status);
+			g_sig_status = 128 + WTERMSIG(g_sig_status);
 			ft_putstr_fd("Quit (core dumped)\n", 1);
 		}
-		if (WTERMSIG(data->status) == SIGINT)
+		if (WTERMSIG(g_sig_status) == SIGINT)
 		{
-			data->status = 128 + WTERMSIG(data->status);
+			g_sig_status = 128 + WTERMSIG(g_sig_status);
 			ft_putstr_fd("\n", 1);
 		}
 		errno = EINTR;
@@ -41,6 +41,8 @@ static void	ft_parent_2(t_data *data, t_dlist *cmd, int pid)
 
 int	ft_parent(t_data *data, t_dlist *cmd, int pid)
 {
+	extern int	g_sig_status;
+
 	if (cmd->next)
 	{
 		ft_close(data, cmd, &((t_cmd *)cmd->content)->fd[1]);
@@ -58,20 +60,24 @@ int	ft_parent(t_data *data, t_dlist *cmd, int pid)
 		ft_close(data, cmd, &((t_cmd *)cmd->content)->fd_out);
 	}
 	ft_parent_2(data, cmd, pid);
-	return (data->status);
+	return (g_sig_status);
 }
 
 static void	ft_check_fd(t_data *data, int fd)
 {
+	extern int	g_sig_status;
+
 	if (fd == -1)
 	{
 		ft_free_all(data);
-		exit(data->status);
+		exit(g_sig_status);
 	}
 }
 
 static void	ft_child_2(t_data *data, t_dlist *cmd)
 {
+	extern int	g_sig_status;
+
 	if (((t_cmd *)cmd->content)->file_out)
 	{
 		ft_check_fd(data, ((t_cmd *)cmd->content)->fd_out);
@@ -87,9 +93,9 @@ static void	ft_child_2(t_data *data, t_dlist *cmd)
 	}
 	if (ft_is_builtin(cmd) && ft_fork_builtin(cmd))
 	{
-		data->status = ft_exec_builtin(data, cmd, ft_is_builtin(cmd));
+		g_sig_status = ft_exec_builtin(data, cmd, ft_is_builtin(cmd));
 		ft_free_all(data);
-		exit(data->status);
+		exit(g_sig_status);
 	}
 	if (!ft_is_builtin(cmd) && !((t_cmd *)cmd->content)->prg)
 		ft_perror(data, cmd, 127);
@@ -101,10 +107,12 @@ static void	ft_child_2(t_data *data, t_dlist *cmd)
 
 void	ft_child(t_data *data, t_dlist *cmd)
 {
+	extern int	g_sig_status;
+
 	if (ft_is_builtin(cmd) && !ft_fork_builtin(cmd))
 	{
 		ft_free_all(data);
-		exit (data->status);
+		exit (g_sig_status);
 	}
 	ft_w_dup2(data, ((t_cmd *)cmd->content)->in, STDIN_FILENO);
 	ft_w_dup2(data, ((t_cmd *)cmd->content)->out, STDOUT_FILENO);

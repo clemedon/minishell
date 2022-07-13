@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 17:37:39 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/10 10:44:36 by cvidon           ###   ########.fr       */
+/*   Updated: 2022/07/13 09:46:09 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void	ft_var_exit_status(t_data *data)
 				g_sig_status = 0;
 			}
 			else
-				str = ft_itoa(data->status);
+				str = ft_itoa(g_sig_status);
 			free(((t_tok *)temp->content)->tok);
 			((t_tok *)temp->content)->tok = str;
 		}
