@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 17:02:50 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/12 13:30:34 by athirion         ###   ########.fr       */
+/*   Updated: 2022/07/13 11:44:24 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ void	ft_remove_empty_q_2(t_data *data, t_dlist **tmp, t_dlist **new, int wt)
 	{
 		if (ft_is_tokid(*tmp, WD))
 			wt = 1;
-		if (!wt && (*tmp)->next && ((ft_is_tokid (*tmp, QT)
-					&& ft_is_tokid ((*tmp)->next, QT))
+		if (!wt && (*tmp)->next && ((ft_is_tokid(*tmp, QT)
+					&& ft_is_tokid((*tmp)->next, QT))
 				|| (ft_is_tokid (*tmp, DQ) && ft_is_tokid ((*tmp)->next, DQ))))
 		{
 			if ((*tmp)->next->next && ft_is_tokid((*tmp)->next->next, WD))

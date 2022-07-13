@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 15:39:23 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/13 10:32:55 by cvidon           ###   ########.fr       */
+/*   Updated: 2022/07/13 11:36:35 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -496,14 +496,20 @@ int		ft_is_equal_sign(char *str);
  */
 
 void	ft_expand_quote2_2(t_data *data, t_dlist **new, t_dlist **tmp, char *s);
-void	ft_expand_quote2(t_data *data, t_dlist **new, t_dlist **temp);
+void	ft_expand_quote2(t_data *data, t_dlist **new, t_dlist **tp);
 void	ft_expand_quote(t_data *data);
+
+/*
+ ** [ parser/expand_var_4.c ] NORMED
+ */
+
+char	*ft_expand_var_2(t_data *data, char *key, int i);
+char	*ft_expand_var(t_data *data, char *key);
 
 /*
  ** [ parser/expand_var_3.c ] NORMED
  */
 
-char	*ft_expand_var(t_data *data, char *key);
 void	ft_expand_to_word(t_data *data);
 void	ft_concat_expand(t_data *data);
 void	ft_remove_dollar(t_data *data);
@@ -551,9 +557,17 @@ int		ft_parse_quote(t_data *data, t_dlist *toklist);
  ** [ parser/parser.c ] NORMED
  */
 
-/* static int  ft_parse_special_tok(t_data *data) */
-/* static int  ft_parse_empty_cmd(t_data *data) */
-/* static int  ft_check_redir(t_data *data) */
+int		ft_parse_special_tok(t_data *data);
+int		ft_parse_empty_cmd(t_data *data);
+int		ft_check_redir(t_data *data);
+
+/*
+ ** [ parser/parser.c ] NORMED
+ */
+
+t_dlist	*ft_concat_consec_word_2(t_data *data, t_dlist *temp);
+void	ft_concat_consecutive_word(t_data *data);
+void	ft_parser_2(t_data *data);
 void	ft_parser(t_data *data);
 
 /* #----------------------------------------------------------------------# */

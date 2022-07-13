@@ -6,11 +6,46 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 11:42:17 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/10 11:31:37 by cvidon           ###   ########.fr       */
+/*   Updated: 2022/07/13 10:58:33 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/* void	ft_printlist_cmd(t_dlist *lst) */
+/* { */
+/* 	t_dlist	*temp; */
+/* 	int		i; */
+
+/* 	temp = lst; */
+/* 	while (temp) */
+/* 	{ */
+/* 		i = 0; */
+/* 		ft_printf(" [ id: '%i', ", */
+/* 				((t_cmd *)temp->content)->cmdid); */
+/* 		while (((t_cmd *)temp->content)->cmd &&
+ *  		((t_cmd *)temp->content)->cmd[i]) */
+/* 		{ */
+/* 			printf("cmd[%d]: '%s', ", i, ((t_cmd *)temp->content)->cmd[i]); */
+/* 			i++; */
+/* 		} */
+/* 		printf("pg: '%s', type_in: '%i', type_out: '%i',
+ *  		file_in: '%s', file_out: '%s', stop_word: '%s',
+ *  		is_here_doc: '%i', fd_in: '%i', fd_out: '%i' ]\n", */
+/* 				((t_cmd *)temp->content)->prg, */
+/* 				((t_cmd *)temp->content)->type_in, */
+/* 				((t_cmd *)temp->content)->type_out, */
+/* 				((t_cmd *)temp->content)->file_in, */
+/* 				((t_cmd *)temp->content)->file_out, */
+/* 				((t_cmd *)temp->content)->stop_word, */
+/* 				((t_cmd *)temp->content)->is_here_doc, */
+/* 				((t_cmd *)temp->content)->fd_in, */
+/* 				((t_cmd *)temp->content)->fd_out); */
+/* 		temp = temp->next; */
+/* 	} */
+/* 	ft_printf(" (NULL / list back)\n"); */
+/* 	ft_printf("\n"); */
+/* } */
 
 void	ft_remove_cmd(t_dlist *cmdlist, t_dlist *cmd)
 {

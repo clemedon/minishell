@@ -6,7 +6,7 @@
 /*   By: cvidon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 15:49:26 by cvidon            #+#    #+#             */
-/*   Updated: 2022/07/13 09:51:17 by cvidon           ###   ########.fr       */
+/*   Updated: 2022/07/13 11:46:02 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,8 @@ static void	ft_exit_cases(t_data *data, char **cmd)
 
 void	ft_exit(t_data *data, char **cmd)
 {
-	int	fd;
+	int			fd;
 	extern int	g_sig_status;
-
 
 	g_sig_status = 0;
 	fd = open ("/dev/stdin", O_WRONLY, 0777);
