@@ -5,10 +5,6 @@
 
 # //////////////////////// ATHIRION
 
-# //////////////////////// CVIDON
-
-# //////////////////////// ???
-
 echo    \n hola
 ""''echo hola""'''' que""'' tal""''
 echo \$HOME
@@ -26,24 +22,34 @@ export ""
 export HO$?LA=bonjour ; env
 export HOLA=$HOME
 
+<<<<<<< Updated upstream
 export HOLA="bonjour         "
 export HOLA="  -n bonjour   "
 
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 0 <<<<<<<<<<<<<<<<<<<<
+export HOLA="s -la" ; l$HOLA
+export HOL=A=""
 
-DONE
+export HOLA=p ; export BYE=w ;$""HOLA"$"BYE"d
 
+pwd -p
 
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 280 <<<<<<<<<<<<<<<<<<<<
+unset HOME; export HOME; cd
 
+SHLVL = 2
 
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 523 <<<<<<<<<<<<<<<<<<<<
+exit 9223372036854775808
 
-DONE
+ls | exit 42
 
+export HOLA=hey ; echo bonjour > $HOLA ; echo $HOLA
 
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> 619 <<<<<<<<<<<<<<<<<<<<
+echo hola > > bonjour
 
+# //////////////////////// CVIDON
+
+# //////////////////////// ???
+
+-  Fix make sani
 
 - Fix status code
 > `<C-C>` then `|` then `echo $?`
