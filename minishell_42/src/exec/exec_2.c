@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 08:11:49 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/13 11:45:32 by cvidon           ###   ########.fr       */
+/*   Updated: 2022/07/13 14:43:43 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ void	ft_child(t_data *data, t_dlist *cmd)
 
 	if (ft_is_builtin(cmd) && !ft_fork_builtin(cmd))
 	{
+		if (ft_is_builtin(cmd) == 7)
+			ft_exit_cases(data, ((t_cmd *)cmd->content)->cmd);
 		ft_free_all(data);
 		exit (g_sig_status);
 	}

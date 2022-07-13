@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 15:39:23 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/13 11:36:35 by cvidon           ###   ########.fr       */
+/*   Updated: 2022/07/13 14:43:14 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,7 +261,7 @@ char	*ft_strjoin_free(char *s1, char *s2);
  */
 
 /* static int	ft_isnumeric(char *str) */
-/* static void	ft_exit_cases(t_data *data, char **cmd) */
+void	ft_exit_cases(t_data *data, char **cmd);
 void	ft_exit(t_data *data, char **cmd);
 
 /*

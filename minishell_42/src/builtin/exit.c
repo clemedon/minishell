@@ -6,7 +6,7 @@
 /*   By: cvidon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 15:49:26 by cvidon            #+#    #+#             */
-/*   Updated: 2022/07/13 11:46:02 by cvidon           ###   ########.fr       */
+/*   Updated: 2022/07/13 14:43:59 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	ft_isnumeric(char *str)
  **
  */
 
-static void	ft_exit_cases(t_data *data, char **cmd)
+void	ft_exit_cases(t_data *data, char **cmd)
 {
 	extern int	g_sig_status;
 
