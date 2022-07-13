@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/10 08:11:49 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/13 09:54:04 by cvidon           ###   ########.fr       */
+/*   Updated: 2022/07/13 14:24:32 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	ft_parent_2(t_data *data, t_dlist *cmd, int pid)
 
 	if (!cmd->next)
 		if (waitpid(pid, &g_sig_status, 0) == -1)
-			ft_perror(data, cmd, errno); // TODO errno sucks
+			ft_perror(data, cmd, errno);
 	if (WIFEXITED(g_sig_status) == EXIT_FAILURE)
 	{
 		g_sig_status = WEXITSTATUS(g_sig_status);
@@ -111,6 +111,8 @@ void	ft_child(t_data *data, t_dlist *cmd)
 
 	if (ft_is_builtin(cmd) && !ft_fork_builtin(cmd))
 	{
+		if (ft_is_builtin(cmd) == 7)
+			ft_exit_cases(data, ((t_cmd *)cmd->content)->cmd); 
 		ft_free_all(data);
 		exit (g_sig_status);
 	}
