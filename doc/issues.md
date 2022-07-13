@@ -31,8 +31,6 @@ export HOL=A=""
 
 export HOLA=p ; export BYE=w ;$""HOLA"$"BYE"d
 
-pwd -p
-
 unset HOME; export HOME; cd
 
 SHLVL = 2
@@ -46,6 +44,12 @@ export HOLA=hey ; echo bonjour > $HOLA ; echo $HOLA
 echo hola > > bonjour
 
 # //////////////////////// CVIDON
+
+- Fix export variables
+> `export ZZZ=$USER` should be 'cvidon' not empty.
+
+- Fix export double dot
+> `export USER=$USER:ciao` should be 'cvidon:ciao' not errmsg.
 
 # //////////////////////// ???
 
