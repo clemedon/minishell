@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 17:02:50 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/13 11:44:24 by cvidon           ###   ########.fr       */
+/*   Updated: 2022/07/14 14:33:44 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,8 @@ int	ft_is_equal_sign(char *str)
 		return (0);
 	len = ft_strlen(str);
 	if (str[len -1] == '=')
+	{
 		return (1);
+	}
 	return (0);
 }

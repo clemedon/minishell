@@ -45,12 +45,6 @@ echo hola > > bonjour
 
 # //////////////////////// CVIDON
 
-- Fix export variables
-> `export ZZZ=$USER` should be 'cvidon' not empty.
-
-- Fix export double dot
-> `export USER=$USER:ciao` should be 'cvidon:ciao' not errmsg.
-
 # //////////////////////// ???
 
 -  Fix make sani

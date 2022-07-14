@@ -6,7 +6,7 @@
 /*   By: cvidon <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/13 11:23:18 by cvidon            #+#    #+#             */
-/*   Updated: 2022/07/13 11:23:33 by cvidon           ###   ########.fr       */
+/*   Updated: 2022/07/14 10:54:21 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*ft_expand_var_2(t_data *data, char *key, int i)
 	if (ft_isdigit (key[0]))
 		var = ft_w_substr(data, key, 0, 1);
 	else
-		var = ft_w_substr(data, key, 0, i);
+		var = ft_w_substr(data, key, 0, (size_t)i);
 	ptr = var;
 	var = ft_getenv(data, data->envlist, var);
 	ft_free (ptr);
@@ -69,7 +69,7 @@ char	*ft_expand_var(t_data *data, char *key)
 	{
 		if (!(ft_isalnum (key[i]) || key[i] == '_'))
 		{
-			var = ft_expand_var_2 (data, key, i);
+			var = ft_expand_var_2 (data, key, (int)i);
 			return (ft_strjoin_free_s1 (var, key + i));
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 17:37:39 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/13 14:22:46 by athirion         ###   ########.fr       */
+/*   Updated: 2022/07/14 14:34:38 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	ft_simple_quote(t_data *data)
 void	ft_expand_dollar(t_data *data)
 {
 	t_dlist	*temp;
-	char	*str;
 
 	temp = data->toklist;
 	while (temp)
@@ -88,12 +87,7 @@ void	ft_expand_dollar(t_data *data)
 		if (temp->prev && ft_is_tokid(temp, DO)
 			&& ft_is_tokid(temp->prev, WD) && !ft_is_tokid(temp->next, WD))
 		{
-			str = ft_strjoin(((t_tok *)temp->prev->content)->tok,
-					((t_tok *)temp->content)->tok);
-			free(((t_tok *)temp->content)->tok);
-			((t_tok *)temp->content)->tok = str;
 			((t_tok *)temp->content)->tokid = WD;
-			ft_remove_tok(data->toklist, temp->prev);
 		}
 		else if (temp->next && ft_is_tokid(temp, DO)
 			&& !ft_is_tokid(temp->next, WD))
@@ -118,10 +112,7 @@ void	ft_var_exit_status(t_data *data)
 		if (ft_is_tokid(temp, RV))
 		{
 			if (g_sig_status)
-			{
 				str = ft_itoa(g_sig_status);
-				/* g_sig_status = 0; */
-			}
 			else
 				str = ft_itoa(g_sig_status);
 			free(((t_tok *)temp->content)->tok);
