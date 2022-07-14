@@ -24,8 +24,6 @@ export HOL=A=""
 
 export HOLA=p ; export BYE=w ;$""HOLA"$"BYE"d
 
-unset HOME; export HOME; cd
-
 SHLVL = 2
 
 exit 9223372036854775808

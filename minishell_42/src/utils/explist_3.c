@@ -6,7 +6,7 @@
 /*   By: clem </var/mail/clem>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 18:20:20 by clem              #+#    #+#             */
-/*   Updated: 2022/06/28 18:20:20 by clem             888   ########.fr       */
+/*   Updated: 2022/07/14 15:19:18 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,12 @@ char	*ft_getexp(t_data *data, t_dlist *explist, char *key)
 		expkey = ((t_exp *)temp->content)->key;
 		expkeylen = ft_strlen (expkey);
 		if (keylen == expkeylen && !ft_strncmp (expkey, key, expkeylen))
-			return (ft_w_strdup(data, ((t_exp *)temp->content)->val));
+		{
+			if (((t_exp *)temp->content)->val)
+				return (ft_w_strdup(data, ((t_exp *)temp->content)->val));
+			else
+				return (ft_w_strdup(data, ""));
+		}
 		temp = temp->next;
 	}
 	return (NULL);
