@@ -6,38 +6,11 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 17:37:39 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/14 15:25:18 by cvidon           ###   ########.fr       */
+/*   Updated: 2022/07/14 16:39:48 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_heredoc_dollar(t_data *data)
-{
-	t_dlist	*temp;
-	char	*str;
-
-	temp = data->toklist;
-	while (temp)
-	{
-		if (temp && ft_is_tokid(temp, DL))
-		{
-			ft_heredoc_dollar_2(&temp);
-			if (temp && temp->next && ft_is_tokid(temp, DO)
-				&& ft_is_tokid(temp->next, WD))
-			{
-				str = ft_strjoin(((t_tok *)temp->content)->tok,
-						((t_tok *)temp->next->content)->tok);
-				free(((t_tok *)temp->next->content)->tok);
-				((t_tok *)temp->next->content)->tok = str;
-				temp = temp->next;
-				ft_remove_tok(data->toklist, temp->prev);
-			}
-		}
-		if (temp)
-			temp = temp->next;
-	}
-}
 
 void	ft_simple_quote_2(t_data *data, t_dlist **temp, char *str)
 {
@@ -77,6 +50,35 @@ void	ft_simple_quote(t_data *data)
 	}
 }
 
+t_dlist	*ft_expand_dollar_2(t_dlist *temp)
+{
+	if (temp->prev && ft_is_tokid(temp, DO)
+		&& ft_is_tokid(temp->prev, WD) && !ft_is_tokid(temp->next, WD))
+		((t_tok *)temp->content)->tokid = WD;
+	else if (temp->next && ft_is_tokid(temp, DO)
+		&& !ft_is_tokid(temp->next, WD))
+	{
+		if (temp->next && ft_is_tokid(temp, DO)
+			&& (ft_is_tokid(temp->next, QT) || ft_is_tokid(temp->next, DQ)))
+		{
+			if (!temp->prev || (temp->prev && ((ft_is_tokid(temp->next, QT)
+							&& !ft_is_tokid(temp->prev, QT))
+						|| (ft_is_tokid(temp->next, DQ)
+							&& !ft_is_tokid(temp->prev, DQ)))))
+			{
+				temp = temp->next;
+				return (temp);
+			}
+		}
+		((t_tok *)temp->content)->tokid = WD;
+	}
+	else if (!temp->next && ft_is_tokid(temp, DO))
+		((t_tok *)temp->content)->tokid = WD;
+	else if (!temp->next && !temp->prev && ft_is_tokid(temp, DO))
+		((t_tok *)temp->content)->tokid = WD;
+	return (temp);
+}
+
 void	ft_expand_dollar(t_data *data)
 {
 	t_dlist	*temp;
@@ -84,32 +86,9 @@ void	ft_expand_dollar(t_data *data)
 	temp = data->toklist;
 	while (temp)
 	{
-		if (temp->prev && ft_is_tokid(temp, DO)
-			&& ft_is_tokid(temp->prev, WD) && !ft_is_tokid(temp->next, WD))
-		{
-			((t_tok *)temp->content)->tokid = WD;
-		}
-		else if (temp->next && ft_is_tokid(temp, DO)
-			&& !ft_is_tokid(temp->next, WD))
-		{
-			if (temp->next && ft_is_tokid(temp, DO)
-				&& (ft_is_tokid(temp->next, QT) || ft_is_tokid(temp->next, DQ)))
-			{
-				if (!temp->prev || (temp->prev && ((ft_is_tokid(temp->next, QT)
-								&& !ft_is_tokid(temp->prev, QT))
-							|| (ft_is_tokid(temp->next, DQ)
-								&& !ft_is_tokid(temp->prev, DQ)))))
-				{
-					temp = temp->next;
-					continue ;
-				}
-			}
-			((t_tok *)temp->content)->tokid = WD;
-		}
-		else if (!temp->next && ft_is_tokid(temp, DO))
-			((t_tok *)temp->content)->tokid = WD;
-		else if (!temp->next && !temp->prev && ft_is_tokid(temp, DO))
-			((t_tok *)temp->content)->tokid = WD;
+		temp = ft_expand_dollar_2 (temp);
+		if (temp == temp->next)
+			continue ;
 		temp = temp->next;
 	}
 }

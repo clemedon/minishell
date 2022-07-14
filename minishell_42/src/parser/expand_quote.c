@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 17:02:45 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/14 15:25:53 by cvidon           ###   ########.fr       */
+/*   Updated: 2022/07/14 16:24:13 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@
 
 void	ft_expand_quote2_2(t_data *data, t_dlist **new, t_dlist **tmp, char *s)
 {
-	while ((*tmp)->next
-		&& !ft_is_tokid (*tmp, QT) && !ft_is_tokid (*tmp, DQ))
+	while ((*tmp)->next && !ft_is_tokid (*tmp, QT) && !ft_is_tokid (*tmp, DQ))
 	{
 		if (!ft_is_equal_sign(((t_tok *)(*tmp)->content)->tok) ||
 				((*tmp)->prev && ft_is_tokid((*tmp)->prev, WS)
@@ -38,9 +37,9 @@ void	ft_expand_quote2_2(t_data *data, t_dlist **new, t_dlist **tmp, char *s)
 			s = ft_strjoin(((t_tok *)(*tmp)->prev->content)->tok,
 					((t_tok *)(*tmp)->next->content)->tok);
 			*tmp = (*tmp)->next;
-			free(((t_tok *)(*tmp)->content)->tok);
+			ft_free(((t_tok *)(*tmp)->content)->tok);
 			((t_tok *)(*tmp)->content)->tok = ft_w_strdup(data, s);
-			free(s);
+			ft_free(s);
 			*tmp = (*tmp)->prev;
 		}
 	}
@@ -60,9 +59,9 @@ void	ft_expand_quote2(t_data *data, t_dlist **new, t_dlist **tp)
 	{
 		*tp = (*tp)->next;
 		str = ft_concat_quoted_words (data, *tp);
-		free (((t_tok *)(*tp)->content)->tok);
+		ft_free (((t_tok *)(*tp)->content)->tok);
 		((t_tok *)(*tp)->content)->tok = ft_w_strdup(data, str);
-		free (str);
+		ft_free (str);
 		ft_dlst_elem_dup (data, new, *tp);
 		*tp = (*tp)->next;
 		while (*tp && !ft_is_tokid (*tp, QT) && !ft_is_tokid (*tp, DQ))

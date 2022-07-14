@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 17:37:41 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/13 11:23:37 by cvidon           ###   ########.fr       */
+/*   Updated: 2022/07/14 16:39:46 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,31 @@ void	ft_heredoc_dollar_2(t_dlist **temp)
 		*temp = (*temp)->next;
 	if (*temp && ft_is_tokid(*temp, DQ))
 		*temp = (*temp)->next;
+}
+
+void	ft_heredoc_dollar(t_data *data)
+{
+	t_dlist	*temp;
+	char	*str;
+
+	temp = data->toklist;
+	while (temp)
+	{
+		if (temp && ft_is_tokid(temp, DL))
+		{
+			ft_heredoc_dollar_2(&temp);
+			if (temp && temp->next && ft_is_tokid(temp, DO)
+				&& ft_is_tokid(temp->next, WD))
+			{
+				str = ft_strjoin(((t_tok *)temp->content)->tok,
+						((t_tok *)temp->next->content)->tok);
+				free(((t_tok *)temp->next->content)->tok);
+				((t_tok *)temp->next->content)->tok = str;
+				temp = temp->next;
+				ft_remove_tok(data->toklist, temp->prev);
+			}
+		}
+		if (temp)
+			temp = temp->next;
+	}
 }

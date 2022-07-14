@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 15:39:23 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/13 14:43:14 by cvidon           ###   ########.fr       */
+/*   Updated: 2022/07/14 16:56:25 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -261,7 +261,7 @@ char	*ft_strjoin_free(char *s1, char *s2);
  */
 
 /* static int	ft_isnumeric(char *str) */
-void	ft_exit_cases(t_data *data, char **cmd);
+void	ft_exit_cases(char **cmd);
 void	ft_exit(t_data *data, char **cmd);
 
 /*
@@ -482,11 +482,16 @@ void	ft_parse_redir(t_data *data);
 void	ft_parse_space(t_data *data);
 
 /*
- ** [ parser/expand_quote_2.c ] NORMED
+ ** [ parser/expand_quote_3.c ] NORMED
  */
 
 void	ft_clear_emptyquote(t_data *data);
 char	*ft_concat_quoted_words(t_data *data, t_dlist *toklist);
+
+/*
+ ** [ parser/expand_quote_2.c ] NORMED
+ */
+
 void	ft_remove_empty_q_2(t_data *data, t_dlist **tmp, t_dlist **new, int wt);
 void	ft_remove_empty_quotes(t_data *data);
 int		ft_is_equal_sign(char *str);
