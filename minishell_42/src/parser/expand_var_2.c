@@ -6,7 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 17:37:39 by athirion          #+#    #+#             */
-/*   Updated: 2022/07/14 14:34:38 by cvidon           ###   ########.fr       */
+/*   Updated: 2022/07/14 15:03:28 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,19 @@ void	ft_expand_dollar(t_data *data)
 		}
 		else if (temp->next && ft_is_tokid(temp, DO)
 			&& !ft_is_tokid(temp->next, WD))
+		{
+			if (temp->next && ft_is_tokid(temp, DO)
+				&& (ft_is_tokid(temp->next, QT) || ft_is_tokid(temp->next, DQ)))
+			{
+				if (!temp->prev || (temp->prev && ((ft_is_tokid(temp->next, QT) && !ft_is_tokid(temp->prev, QT))
+					|| (ft_is_tokid(temp->next, DQ) && !ft_is_tokid(temp->prev, DQ)))))
+				{
+					temp = temp->next;
+					continue ;
+				}
+			}
 			((t_tok *)temp->content)->tokid = WD;
+		}
 		else if (!temp->next && ft_is_tokid(temp, DO))
 			((t_tok *)temp->content)->tokid = WD;
 		else if (!temp->next && !temp->prev && ft_is_tokid(temp, DO))

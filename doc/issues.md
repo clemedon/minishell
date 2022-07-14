@@ -10,13 +10,6 @@ echo    \n hola
 echo \$HOME
 echo $UID
 echo $USER$var\$USER$USER\$USERtest$USER
-echo $""
-echo $"HOME"
-echo $''HOME
-echo $""HOME
-echo $"HO""ME"
-echo $'HO''ME'
-echo $'HOME'
 
 export ""
 export HO$?LA=bonjour ; env
