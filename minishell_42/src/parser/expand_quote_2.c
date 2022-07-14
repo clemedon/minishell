@@ -6,11 +6,7 @@
 /*   By: athirion <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 17:02:50 by athirion          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2022/07/14 17:29:39 by athirion         ###   ########.fr       */
-=======
-/*   Updated: 2022/07/14 17:30:40 by cvidon           ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2022/07/14 17:48:54 by cvidon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +25,6 @@ int	ft_while_quote(t_dlist **tmp, int tokid)
 		return (1);
 	}
 	return (0);
-	
 }
 /*
  ** Remove the "" and ''.
