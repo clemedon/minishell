@@ -6,7 +6,7 @@
 /*   By: clem </var/mail/clem>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 18:33:44 by clem              #+#    #+#             */
-/*   Updated: 2022/07/14 14:41:19 by cvidon           ###   ########.fr       */
+/*   Updated: 2022/07/14 17:16:25 by athirion         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,19 @@ void	ft_concat_consecutive_word(t_data *data)
 
 void	ft_parser_2(t_data *data)
 {
+	ft_printlist_tok(data->toklist);
 	ft_expand_vars(data);
+	ft_printlist_tok(data->toklist);
 	ft_expand_tilde(data);
+	ft_printlist_tok(data->toklist);
 	ft_expand_quote(data);
+	ft_printlist_tok(data->toklist);
 	ft_concat_consecutive_word(data);
+	ft_printlist_tok(data->toklist);
 	ft_parse_space(data);
+	ft_printlist_tok(data->toklist);
 	ft_parse_redir(data);
+	ft_printlist_tok(data->toklist);
 	ft_count_pipe(data);
 }
 
