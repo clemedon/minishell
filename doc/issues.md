@@ -36,6 +36,9 @@ echo hola > > bonjour
 
 # //////////////////////// CVIDON
 
+> echo '' ''salut
+> echo ''''salut
+
 # //////////////////////// ???
 
 -  Fix make sani
